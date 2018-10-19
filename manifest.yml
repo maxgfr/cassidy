@@ -1,0 +1,5 @@
+---
+applications:
+ - name: Runtime-NodeJS
+   random-route: true
+   memory: 512M

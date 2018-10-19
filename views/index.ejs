@@ -1,0 +1,108 @@
+<% include partials/head %>
+<!-- Content Wrapper. Contains page content-->
+<div class="content-wrapper">
+    <!-- Content Header (Page header)-->
+    <section class="content-header">
+        <h1>Dashboard</h1>
+        <ol class="breadcrumb">
+            <li class="active"><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        </ol>
+    </section>
+    <!-- Main content-->
+    <section class="content">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- DIRECT CHAT PRIMARY -->
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Watson chatbot</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <!-- Conversations are loaded here -->
+                        <div id="chat" class="direct-chat-messages">
+
+                        </div>
+                        <!--/.direct-chat-messages-->
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <input type="text" name="message" id="the_message" placeholder="Ecrivez un message ..." class="form-control">
+                                <span class="input-group-btn">
+                                    <button id="send_message" type="button" class="btn btn-primary btn-flat">Envoyer</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+                <!--/.direct-chat -->
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content-->
+</div>
+<% include partials/foot %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+    $(document).keypress(function(event){
+        if (event.which == '13') {
+            event.preventDefault();
+            $("#send_message").click();
+        }
+    });
+    $(function () {
+        var socket = io();
+        socket.emit('new_message', "yo");
+        $(document).on("click", '#send_message',function(e) {
+            if ($('#the_message').val() != "") {
+                socket.connect();
+                socket.emit('new_message', $('#the_message').val());
+                var currentdate = new Date();
+                var my_message_to_display = '<div class="direct-chat-msg">'+
+                                                '<div class="direct-chat-info clearfix">' +
+                                                    '<span class="direct-chat-name pull-left">Maxime Golfier</span>'+
+                                                    '<span class="direct-chat-timestamp pull-right">'+ currentdate.getDate() + "/" + (currentdate.getMonth()+1)  + "/" + currentdate.getFullYear() + " @ "  + currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds()+'</span>'+
+                                                '</div>'+
+                                                '<img class="direct-chat-img" src="https://www.wizbii.com/profile/maxime-golfier/avatar/large" alt="Moi">'+
+                                                '<div class="direct-chat-text">' +
+                                                    $('#the_message').val()
+                                                '</div>'+
+                                            '</div>';
+                $('#chat').append(my_message_to_display);
+                $("#chat").animate({ scrollTop: $("#chat")[0].scrollHeight});
+                $('#the_message').val('');
+                return false;
+            }
+        });
+        socket.on('new_message', function(msg){
+            console.log(msg);
+            var currentdate = new Date();
+            var my_message_to_display = '<div class="direct-chat-msg right">'+
+                                            '<div class="direct-chat-info clearfix">' +
+                                                '<span class="direct-chat-name pull-right">Watson</span>'+
+                                                '<span class="direct-chat-timestamp pull-left">'+ currentdate.getDate() + "/" + (currentdate.getMonth()+1)  + "/" + currentdate.getFullYear() + " @ "  + currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds()+'</span>'+
+                                            '</div>'+
+                                            '<img class="direct-chat-img" src="https://www-356.ibm.com/partnerworld/wps/static/watsonbuild/img/Watson_Avatar_Pos_BlueTeal_RGB.png" alt="Moi">'+
+                                            '<div class="direct-chat-text">' +
+                                                msg +
+                                            '</div>'+
+                                        '</div>';
+            socket.disconnect();
+            $('#chat').append(my_message_to_display);
+            $("#chat").animate({ scrollTop: $("#chat")[0].scrollHeight});
+        });
+    });
+</script>
