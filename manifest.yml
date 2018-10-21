@@ -1,5 +1,5 @@
 ---
 applications:
- - name: Runtime-NodeJS
+ - name: cassidy
    random-route: true
-   memory: 512M
+   memory: 1024M
