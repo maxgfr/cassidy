@@ -69,7 +69,11 @@ if (appEnv.services['conversation']) {
 /***** IBM part *****/
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', [path.join(__dirname, 'views'),
+                  path.join(__dirname, 'views/partials/'),
+                  path.join(__dirname, 'views/automobile/'),
+                  path.join(__dirname, 'views/home/')
+                ]);
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public

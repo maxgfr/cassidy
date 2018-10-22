@@ -36,16 +36,16 @@ router.get('/', function(req, res, next) {
             console.log('Déconnexion effectuée' + socket.id);
         });
     });
-    res.render('index');
+    res.render('home/index');
 });
 /**** CONVERSATION ****/
 
-router.get('/display_actor', function(req, res, next) {
-  res.render('display_actor');
+router.get('/automobile/display', function(req, res, next) {
+  res.render('automobile/display');
 });
 
-router.get('/register_actor', function(req, res, next) {
-  res.render('register_actor');
+router.get('/automobile/add', function(req, res, next) {
+  res.render('automobile/add');
 });
 
 /**** CLOUDANT  ****/
