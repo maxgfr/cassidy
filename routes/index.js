@@ -102,4 +102,12 @@ router.delete('/get_actor', function(req, res, next) {
 });
 /**** CLOUDANT ****/
 
+router.get('/login', function(req, res, next) {
+  res.render('connection/login');
+});
+
+router.get('/register', function(req, res, next) {
+  res.render('connection/register');
+});
+
 module.exports = router;
