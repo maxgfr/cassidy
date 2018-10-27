@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
+var indexRouter = require('./routes/index');
+var chatbotRouter = require('./routes/chatbot');
 
 var app = express();
 
@@ -72,7 +73,8 @@ if (appEnv.services['conversation']) {
 app.set('views', [path.join(__dirname, 'views'),
                   path.join(__dirname, 'views/partials/'),
                   path.join(__dirname, 'views/automobile/'),
-                   path.join(__dirname, 'views/connection/'),
+                  path.join(__dirname, 'views/connection/'),
+                  path.join(__dirname, 'views/chatbot/'),
                   path.join(__dirname, 'views/home/')
                 ]);
 app.set('view engine', 'ejs');
@@ -90,7 +92,8 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use('/', index);
+app.use('/', indexRouter);
+app.use('/chatbot', chatbotRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
