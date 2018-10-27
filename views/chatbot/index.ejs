@@ -28,7 +28,7 @@
 	<div class="chat">
 		<div class="chat-title">
 			<h1>Your lifestyle - Your car</h1>
-			<!-- <h2>Chatbot</h2>-->
+
 			<figure class="avatar">
 				<img src="images/bot.png" /></figure>
 			</div>
@@ -58,7 +58,7 @@
 			setTimeout(function() {
 				$.ajax({
 					type: "POST",
-					url: "/",
+					url: "/chatbot/",
 					data: {input: ""},
 					dataType: 'json',
 					success: function (res) {
@@ -194,7 +194,7 @@
 							 $("#validate").remove();
 							 $.ajax({
 			 					type: "POST",
-			 					url: "/giveinfo",
+			 					url: "/chatbot/giveinfo",
 			 					data: {input: {
 									Safety : info[0],
 									Comfort_and_Convenience : info[1] ,
@@ -267,7 +267,7 @@
 			msg = $('.message-input').val();
 			$.ajax({
 				type: "POST",
-				url: "/",
+				url: "/chatbot/",
 				data: {input: msg},
 				dataType: 'json',
 				success: function (res) {
@@ -285,7 +285,7 @@
 				msg = $('.message-input').val();
 				$.ajax({
 					type: "POST",
-					url: "/",
+					url: "/chatbot/",
 					data: {input: msg},
 					dataType: 'json',
 					success: function (res) {

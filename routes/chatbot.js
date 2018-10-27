@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     res.render('error');
   } else {
     console.log("Conversation initialisée");
-    res.render('chatbot.index', {
+    res.render('chatbot/index', {
       conversation: conversation
     });
   }
