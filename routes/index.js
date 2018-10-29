@@ -5,38 +5,44 @@ var number = 0;
 
 /**** CONVERSATION ****/
 router.get('/', function(req, res, next) {
-    res.io.on('connection', function(socket){
-        console.log('Connexion effectuée');
-        socket.on('new_message', function(msg){
-            //console.log('Le message: ' + msg);
-            //res.io.emit('new_message', msg);
-            if(!conversation) {
-                res.send("Pas de conversation...");
-                return;
-            }
-            conversation.message({
-                input: { text: msg },
-                workspace_id: '00bcde6f-43d6-4f33-ac34-caa4f7a1a44e',
-                context : context_array[context_array.length-1]
-            }, function(err, response) {
-                if (err) {
-                   console.error(err);
-               } else {
-                   context_array[number] = response.context;
-                   number++;
-                   //console.log(response);
-                   //console.log(response.output);
-                   //console.log(response.output.text);
-                   res.io.emit('new_message', response.output.text);
-                   //console.log('response done');
-               }
-           });
+    var connected = false;
+    if (connected) {
+        res.io.on('connection', function(socket){
+            console.log('Connexion effectuée');
+            socket.on('new_message', function(msg){
+                //console.log('Le message: ' + msg);
+                //res.io.emit('new_message', msg);
+                if(!conversation) {
+                    res.send("Pas de conversation...");
+                    return;
+                }
+                conversation.message({
+                    input: { text: msg },
+                    workspace_id: '00bcde6f-43d6-4f33-ac34-caa4f7a1a44e',
+                    context : context_array[context_array.length-1]
+                }, function(err, response) {
+                    if (err) {
+                       console.error(err);
+                   } else {
+                       context_array[number] = response.context;
+                       number++;
+                       //console.log(response);
+                       //console.log(response.output);
+                       //console.log(response.output.text);
+                       res.io.emit('new_message', response.output.text);
+                       //console.log('response done');
+                   }
+               });
+            });
+            socket.on('disconnect', function(msg){
+                console.log('Déconnexion effectuée' + socket.id);
+            });
         });
-        socket.on('disconnect', function(msg){
-            console.log('Déconnexion effectuée' + socket.id);
-        });
-    });
-    res.render('home/index');
+        res.render('home/index');
+    } else {
+        res.render('chatbot/index');
+    }
+
 });
 /**** CONVERSATION ****/
 
