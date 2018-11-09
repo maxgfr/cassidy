@@ -1,5 +1,0 @@
----
-applications:
- - name: cassidy
-   random-route: true
-   memory: 1024M

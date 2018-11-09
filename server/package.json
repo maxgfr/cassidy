@@ -1,0 +1,10 @@
+{
+    "name": "server",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "~4.16.0",
+        "body-parser": "~1.0.1"
+    }
+}
