@@ -50,8 +50,6 @@ router.post('/', function(req, res, next) {
           name_image = 'images/5008Access' + color + '.jpg';
         }
       }
-      type = "display_car";
-      name_image = 'images/5008AccessGreen.jpg';
       res.send([response, type, name_image]);
     }
   });
