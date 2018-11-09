@@ -320,7 +320,6 @@ Message Box
     height: 26px;
     margin: 0;
     padding-right: 29px;
-    width: 1500px;
 }
 
 .message-box textarea:focus:-webkit-placeholder {
@@ -494,6 +493,7 @@ Bounce
     z-index: 1;
     top: 0;
     overflow-x: hidden;
+    resize: horizontal;
 }
 
 /* Control the right side */
@@ -506,4 +506,16 @@ Bounce
   z-index: 1;
   top: 0;
   overflow-x: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .left {
+    width: 100%;
+    display: block;
+  }
+  .right {
+    width: 100%;
+    display: block;
+    position: fixed;
+  }
 }
