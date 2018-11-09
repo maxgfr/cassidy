@@ -35,7 +35,7 @@ body {
     top: 0;
     left: 0;
     z-index: 1;
-    background: url("https://images.unsplash.com/photo-1451186859696-371d9477be93?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925") no-repeat 0 0;
+    background: rgb(225, 226, 225);
     -webkit-filter: blur(80px);
     filter: blur(80px);
     -webkit-transform: scale(1);
@@ -81,11 +81,12 @@ Chat Title
     flex: 0 1 45px;
     position: relative;
     z-index: 2;
-    background: rgba(0, 0, 0, 0.2);
+    background: #004ba0;
     color: #fff;
     text-transform: uppercase;
     text-align: left;
     padding: 19px 19px 19px 59px;
+    text-align: center;
 }
 
 .chat-title h1, .chat-title h2 {
@@ -133,6 +134,7 @@ Messages
     color: rgba(255, 255, 255, 0.5);
     overflow: hidden;
     position: relative;
+    margin-top: 70px;
     width: 100%;
 }
 
@@ -197,7 +199,7 @@ Messages
     float: right;
     color: #fff;
     text-align: right;
-    background: #248A52;
+    background: #1976d2;
     border-radius: 10px 10px 0 10px;
 }
 
@@ -484,8 +486,7 @@ Bounce
 
 /* Control the left side */
 .left {
-    background: -webkit-linear-gradient(315deg, #044f48, #2a7561);
-    background: linear-gradient(135deg, #044f48, #2a7561);
+    background: rgb(225, 226, 225);
     left: 0;
     height: 100%;
     width: 30%;
@@ -498,7 +499,7 @@ Bounce
 /* Control the right side */
 .right {
   right: 0;
-  background-color: #d3d3d3; 
+  background-color: #d3d3d3;
   height: 100%;
   width: 70%;
   position: fixed;

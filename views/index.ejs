@@ -24,22 +24,18 @@
 </head>
 
 <body>
-
+<div class="chat-title">
+	<h1>Configuration de ma 5008</h1>
+	</div>
 	<div class="left">
 		<div class="chat">
-  			<div class="chat-title">
-  				<h1>Your lifestyle - Your car</h1>
-
-  				<figure class="avatar">
-  					<img src="images/bot.png" /></figure>
-  				</div>
   				<div class="messages">
   					<div class="messages-content">
   					</div>
   				</div>
   				<div id="msg-box" class="message-box">
   					<textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-  					<button type="submit" class="btn btn-md btn-success message-submit" style="position: absolute;z-index: 1;top: 9px;right: 10px;background: #248A52;padding: 6px 10px;">SEND</button>
+  					<button type="submit" class="btn btn-md message-submit" style="position: absolute;outline: none;z-index: 1;top: 9px;right: 10px;background: #1976d2;border: none; padding: 6px 10px;color: white;">SEND</button>
   				</div>
   		</div>
   		<div class="bg"></div>
@@ -47,9 +43,6 @@
 
 	<div class="right">
 		<div class="panel panel-primary">
-		  <div class="panel-heading" style="background-color:  #FFFFFF;">
-		    <h3 class="panel-title text-center" >Le modèle</h3>
-		  </div>
 		  <div class="panel-body">
 		    <div class='result_car'>
 			</div>
@@ -73,7 +66,7 @@
 			setTimeout(function() {
 				$.ajax({
 					type: "POST",
-					url: "/chatbot/",
+					url: "/",
 					data: {input: ""},
 					dataType: 'json',
 					success: function (res) {
@@ -98,199 +91,14 @@
 			}, 100);
 		});
 
-		function updateScrollbar() {
-			$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
-				scrollInertia: 10,
-				timeout: 0
-			});
-		}
-
-		function insertMessage(msg,res) {
-
-			if ($.trim(msg) == '') {
-				return false;
-			}
-			$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
-			$('.message-input').val(null);
-			updateScrollbar();
-			setTimeout(function() {
-				if ($('.message-input').val() != '') {
-					return false;
-				}
-				$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
-				updateScrollbar();
-
-
-				//console.log(res);
-				var message = res[0].output.text[0];
-
-				var type = res[1];
-
-				if (type == "find_priority") {
-					setTimeout(function() {
-						var name_image = res[2].name_image;
-						var justifications = res[2].justifications;
-						console.log(justifications);
-						var button = '';
-						for (var i=0; i<justifications.length ; i++) {
-							console.log(justifications[i].text,justifications[i].justification);
-							button += '<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="'+justifications[i].justification+'">'+justifications[i].text,+'</button>';
-						}
-						$(function () {
-						  $('[data-toggle="tooltip"]').tooltip()
-						});
-						$("#msg-box").addClass('invisible');
-						$('.message.loading').remove();
-						if (name_image != '') {
-							$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-
-							'<br /><p class="small">Safety<select id="Safety" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Comfort and convenience<select id="Comfort_and_Convenience" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">In-car entertainment and communication<select id="In_Car_Entertainment_and_Communication" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Interior features<select id="Interior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Exterior features<select id="Exterior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Exterior lighting and visibility<select id="Exterior_Lighting_and_Visibility" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Seating<select id="Seating" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<button id="validate" class="btn btn-md btn-success" style="background: #248A52;">DONE</button>' +
-							'</div>').appendTo($('.mCSB_container')).addClass('new');
-
-							$( ".result_car" ).remove();
-							$('<div class="result_car" align="center"><img src="'+name_image+'" class="img-responsive center-block" /><br />' + button + '</div>').appendTo($('.panel-body'));
-						} else {
-							$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-
-							'<br /><p class="small">Safety<select id="Safety" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Comfort and convenience<select id="Comfort_and_Convenience" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">In-car entertainment and communication<select id="In_Car_Entertainment_and_Communication" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Interior features<select id="Interior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Exterior features<select id="Exterior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Exterior lighting and visibility<select id="Exterior_Lighting_and_Visibility" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<p class="small">Seating<select id="Seating" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-							'<button id="validate" class="btn btn-md btn-success" style="background: #248A52;">DONE</button>' +
-							'</div>').appendTo($('.mCSB_container')).addClass('new');
-						}
-
-
-
-						 $('.rating').barrating({
-							 theme: 'fontawesome-stars'
-						 });
-						 $( "#validate").click(function() {
-							 info = [];
-							 var Safety = document.getElementById("Safety");
-							 info[0] = Safety.options[Safety.selectedIndex].value;
-							 var Comfort_and_Convenience = document.getElementById("Comfort_and_Convenience");
-							 info[1] = Comfort_and_Convenience.options[Comfort_and_Convenience.selectedIndex].value;
-							 var In_Car_Entertainment_and_Communication = document.getElementById("In_Car_Entertainment_and_Communication");
-							 info[2] = In_Car_Entertainment_and_Communication.options[In_Car_Entertainment_and_Communication.selectedIndex].value;
-							 var Interior_Features = document.getElementById("Interior_Features");
-							 info[3] = Interior_Features.options[Interior_Features.selectedIndex].value;
-							 var Exterior_Features = document.getElementById("Exterior_Features");
-							 info[4] = Exterior_Features.options[Exterior_Features.selectedIndex].value;
-							 var Exterior_Lighting_and_Visibility = document.getElementById("Exterior_Lighting_and_Visibility");
-							 info[5] = Exterior_Lighting_and_Visibility.options[Exterior_Lighting_and_Visibility.selectedIndex].value;
-							 var Seating = document.getElementById("Seating");
-							 info[6] = Seating.options[Seating.selectedIndex].value;
-
-							 $("#msg-box").removeClass('invisible');
-							 $("#validate").remove();
-							 $.ajax({
-			 					type: "POST",
-			 					url: "/chatbot/giveinfo",
-			 					data: {input: {
-									Safety : info[0],
-									Comfort_and_Convenience : info[1] ,
-									In_Car_Entertainment_and_Communication : info[2],
-									Interior_Features : info[3],
-									Exterior_Features : info[4],
-									Exterior_Lighting_and_Visibility : info[5],
-									Seating : info[6]
-								}},
-			 					dataType: 'json',
-			 					success: function (resultat) {
-			 						if ($('.message-input').val() != '') {
-			 							return false;
-			 						}
-			 						$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
-			 						updateScrollbar();
-			 						setTimeout(function() {
-			 							$('.message.loading').remove();
-			 							$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + resultat[0].output.text[0] +
-			 							'</div>').appendTo($('.mCSB_container')).addClass('new');
-			 							updateScrollbar();
-			 							i++;
-			 						}, 1000 + (Math.random() * 20) * 100);
-			 					},
-			 					error: function (data) {
-			 						console.log('Error:', data);
-			 					}
-			 				});
-						 });
-						updateScrollbar();
-						i++;
-					}, 1000 + (Math.random() * 20) * 100);
-				}
-				else if (type == "display_car") {
-					setTimeout(function() {
-						var image_info = res[2];
-						var name_image = res[2].name_image;
-						var justifications = res[2].justifications;
-						console.log(justifications);
-						var button = '';
-						for (var i=0; i<justifications.length ; i++) {
-							console.log(justifications[i].text,justifications[i].justification);
-							button += '<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="'+justifications[i].justification+'">'+justifications[i].text,+'</button>';
-						}
-						$(function () {
-						  $('[data-toggle="tooltip"]').tooltip()
-						});
-						$('.message.loading').remove();
-						$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
- 						 '</div>').appendTo($('.mCSB_container')).addClass('new');
-
-						$( ".result_car" ).remove();
-						$('<div class="result_car" align="center"><img src="'+name_image+'" class="img-responsive center-block"/><br />' + button + '</div>').appendTo($('.panel-body'));
-
-						updateScrollbar();
-						i++;
-					}, 1000 + (Math.random() * 20) * 100);
-				} else {
-					setTimeout(function() {
-						$('.message.loading').remove();
-						$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-						 '</div>').appendTo($('.mCSB_container')).addClass('new');
-						updateScrollbar();
-						i++;
-					}, 1000 + (Math.random() * 20) * 100);
-				}
-
-
-			}, 100);
-		}
-
 		$('.message-submit').click(function() {
 			msg = $('.message-input').val();
 			$.ajax({
 				type: "POST",
-				url: "/chatbot/",
+				url: "/",
 				data: {input: msg},
 				dataType: 'json',
 				success: function (res) {
-					console.log(res);
 					insertMessage(msg,res)
 				},
 				error: function (data) {
@@ -304,7 +112,7 @@
 				msg = $('.message-input').val();
 				$.ajax({
 					type: "POST",
-					url: "/chatbot/",
+					url: "/",
 					data: {input: msg},
 					dataType: 'json',
 					success: function (res) {
@@ -319,9 +127,199 @@
 			}
 		})
 
+		function updateScrollbar() {
+			$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
+				scrollInertia: 10,
+				timeout: 0
+			});
+		}
+
+		function insertMessage(msg,res) {
+			if ($.trim(msg) == '') {
+				return false;
+			}
+			$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
+			$('.message-input').val(null);
+			updateScrollbar();
+			setTimeout(function() {
+				if ($('.message-input').val() != '') {
+					return false;
+				}
+				$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+				updateScrollbar();
+
+				console.log(res);
+
+				var message = res[0].output.text[0];
+
+				var type = res[1];
+
+				if (type == "find_priority") {
+						findPriority(res)
+				} else if (type == "display_car") {
+						displayCar(res)
+				} else {
+						displayMessage(message);
+				}
+			}, 100);
+		}
+
+		function findPriority (res) {
+			setTimeout(function() {
+				var name_image = res[2].name_image;
+				var justifications = res[2].justifications;
+				console.log(justifications);
+				var button = '';
+				for (var i=0; i<justifications.length ; i++) {
+					console.log(justifications[i].text,justifications[i].justification);
+					button += '<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="'+justifications[i].justification+'">'+justifications[i].text,+'</button>';
+				}
+				$(function () {
+					$('[data-toggle="tooltip"]').tooltip()
+				});
+				$("#msg-box").addClass('invisible');
+				$('.message.loading').remove();
+				if (name_image != '') {
+					$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+
+					'<br /><p class="small">Safety<select id="Safety" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Comfort and convenience<select id="Comfort_and_Convenience" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">In-car entertainment and communication<select id="In_Car_Entertainment_and_Communication" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Interior features<select id="Interior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Exterior features<select id="Exterior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Exterior lighting and visibility<select id="Exterior_Lighting_and_Visibility" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Seating<select id="Seating" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<button id="validate" class="btn btn-md btn-success" style="background: #248A52;">DONE</button>' +
+					'</div>').appendTo($('.mCSB_container')).addClass('new');
+
+					$( ".result_car" ).remove();
+					$('<div class="result_car" align="center"><img src="'+name_image+'" class="img-responsive center-block" /><br />' + button + '</div>').appendTo($('.panel-body'));
+				} else {
+					$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+
+					'<br /><p class="small">Safety<select id="Safety" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Comfort and convenience<select id="Comfort_and_Convenience" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">In-car entertainment and communication<select id="In_Car_Entertainment_and_Communication" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Interior features<select id="Interior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Exterior features<select id="Exterior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Exterior lighting and visibility<select id="Exterior_Lighting_and_Visibility" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<p class="small">Seating<select id="Seating" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
+
+					'<button id="validate" class="btn btn-md btn-success" style="background: #248A52;">DONE</button>' +
+					'</div>').appendTo($('.mCSB_container')).addClass('new');
+				}
+
+
+
+				 $('.rating').barrating({
+					 theme: 'fontawesome-stars'
+				 });
+				 $( "#validate").click(function() {
+					 info = [];
+					 var Safety = document.getElementById("Safety");
+					 info[0] = Safety.options[Safety.selectedIndex].value;
+					 var Comfort_and_Convenience = document.getElementById("Comfort_and_Convenience");
+					 info[1] = Comfort_and_Convenience.options[Comfort_and_Convenience.selectedIndex].value;
+					 var In_Car_Entertainment_and_Communication = document.getElementById("In_Car_Entertainment_and_Communication");
+					 info[2] = In_Car_Entertainment_and_Communication.options[In_Car_Entertainment_and_Communication.selectedIndex].value;
+					 var Interior_Features = document.getElementById("Interior_Features");
+					 info[3] = Interior_Features.options[Interior_Features.selectedIndex].value;
+					 var Exterior_Features = document.getElementById("Exterior_Features");
+					 info[4] = Exterior_Features.options[Exterior_Features.selectedIndex].value;
+					 var Exterior_Lighting_and_Visibility = document.getElementById("Exterior_Lighting_and_Visibility");
+					 info[5] = Exterior_Lighting_and_Visibility.options[Exterior_Lighting_and_Visibility.selectedIndex].value;
+					 var Seating = document.getElementById("Seating");
+					 info[6] = Seating.options[Seating.selectedIndex].value;
+
+					 $("#msg-box").removeClass('invisible');
+					 $("#validate").remove();
+					 $.ajax({
+						type: "POST",
+						url: "/giveinfo",
+						data: {input: {
+							Safety : info[0],
+							Comfort_and_Convenience : info[1] ,
+							In_Car_Entertainment_and_Communication : info[2],
+							Interior_Features : info[3],
+							Exterior_Features : info[4],
+							Exterior_Lighting_and_Visibility : info[5],
+							Seating : info[6]
+						}},
+						dataType: 'json',
+						success: function (resultat) {
+							if ($('.message-input').val() != '') {
+								return false;
+							}
+							$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+							updateScrollbar();
+							setTimeout(function() {
+								$('.message.loading').remove();
+								$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + resultat[0].output.text[0] +
+								'</div>').appendTo($('.mCSB_container')).addClass('new');
+								updateScrollbar();
+								i++;
+							}, 1000 + (Math.random() * 20) * 100);
+						},
+						error: function (data) {
+							console.log('Error:', data);
+						}
+					});
+				 });
+				updateScrollbar();
+				i++;
+			}, 1000 + (Math.random() * 20) * 100);
+		}
+
+		function displayCar (res) {
+			setTimeout(function() {
+				var image_info = res[2];
+				var name_image = res[2].name_image;
+				var justifications = res[2].justifications;
+				console.log(justifications);
+				var button = '';
+				for (var i=0; i<justifications.length ; i++) {
+					console.log(justifications[i].text,justifications[i].justification);
+					button += '<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="'+justifications[i].justification+'">'+justifications[i].text,+'</button>';
+				}
+				$(function () {
+					$('[data-toggle="tooltip"]').tooltip()
+				});
+				$('.message.loading').remove();
+				$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+				 '</div>').appendTo($('.mCSB_container')).addClass('new');
+
+				$( ".result_car" ).remove();
+				$('<div class="result_car" align="center"><img src="'+name_image+'" class="img-responsive center-block"/><br />' + button + '</div>').appendTo($('.panel-body'));
+
+				updateScrollbar();
+				i++;
+			}, 1000 + (Math.random() * 20) * 100);
+		}
+
+		function displayMessage (message) {
+			setTimeout(function() {
+				$('.message.loading').remove();
+				$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+				 '</div>').appendTo($('.mCSB_container')).addClass('new');
+				updateScrollbar();
+				i++;
+			}, 1000 + (Math.random() * 20) * 100);
+		}
+
 	</script>
-
-
 
 </body>
 
