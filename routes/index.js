@@ -1,119 +1,209 @@
 var express = require('express');
 var router = express.Router();
-var context_array= [];
+
+var context_array = [];
 var number = 0;
+var context = null;
 
-/**** CONVERSATION ****/
+/* GET home page. */
 router.get('/', function(req, res, next) {
-    var connected = false;
-    if (connected) {
-        res.io.on('connection', function(socket){
-            console.log('Connexion effectuée');
-            socket.on('new_message', function(msg){
-                //console.log('Le message: ' + msg);
-                //res.io.emit('new_message', msg);
-                if(!conversation) {
-                    res.send("Pas de conversation...");
-                    return;
-                }
-                conversation.message({
-                    input: { text: msg },
-                    workspace_id: '00bcde6f-43d6-4f33-ac34-caa4f7a1a44e',
-                    context : context_array[context_array.length-1]
-                }, function(err, response) {
-                    if (err) {
-                       console.error(err);
-                   } else {
-                       context_array[number] = response.context;
-                       number++;
-                       //console.log(response);
-                       //console.log(response.output);
-                       //console.log(response.output.text);
-                       res.io.emit('new_message', response.output.text);
-                       //console.log('response done');
-                   }
-               });
-            });
-            socket.on('disconnect', function(msg){
-                console.log('Déconnexion effectuée' + socket.id);
-            });
-        });
-        res.render('home/index');
-    } else {
-        res.render('chatbot/index');
-    }
-
-});
-/**** CONVERSATION ****/
-
-router.get('/automobile/display', function(req, res, next) {
-  res.render('automobile/display');
-});
-
-router.get('/automobile/add', function(req, res, next) {
-  res.render('automobile/add');
-});
-
-/**** CLOUDANT  ****/
-router.post('/register_actor', function(req, res, next) {
-  var userName = req.body.name;
-  var id = req.body.id;
-  //console.log(mydb);
-  if(!mydb) {
-    res.send("Pas de database...");
-    return;
+  context_array = [];
+  number = 0;
+  context = null;
+  if (!conversation) {
+    console.log("Conversation non initialisée");
+    res.render('error');
+  } else {
+    console.log("Conversation initialisée");
+    res.render('chatbot/index', {
+      conversation: conversation
+    });
   }
-  mydb.insert({ "name" : userName, "id" : id }, function(err, body, header) {
+});
+
+
+router.post('/', function(req, res, next) {
+  //console.log(req.body.input);
+  //console.log(context);
+  conversation.message({
+    input: {
+      text: req.body.input
+    },
+    context: context_array[context_array.length - 1],
+    workspace_id: '635a4d6e-022d-4e16-88d6-4844c2cdcc99'
+  }, function(err, response) {
     if (err) {
-      return null; res.send('[mydb.insert] ', err.message);
-    }
-    res.send("Nouvelle entrée dans la base de donnée :)");
-  });
-});
-
-router.get('/get_actor', function(req, res, next) {
-  var data = [];
-  if(!mydb) {
-    res.json(data);
-    return;
-  }
-
-  mydb.list({ include_docs: true }, function(err, body) {
-    if (!err) {
-      body.rows.forEach(function(row) {
-        if(row.doc.name && row.doc.id)
-        data.push({id: row.doc.id, name: row.doc.name, id_cloudant : row.doc._id});
-      });
-      res.json(data);
-    }
-  });
-});
-
-router.delete('/get_actor', function(req, res, next) {
-  var id = req.body.id_cloudant;
-
-  var query = { selector: { _id: id}};
-  mydb.find(query, function(err, data) {
-    if(!err) {
-      console.log(data,data.docs, data.docs[0], data.docs[0]["_rev"]);
-      mydb.destroy(id, data.docs[0]["_rev"],function(err, body, header) {
-        if (!err) {
-          console.log("Element supprimé avec success", id);
+      console.error(err);
+    } else {
+      var type = 'nothing';
+      var name_image = '';
+      console.log(response);
+      //var rep = response.output.text;
+      context = response.context;
+      context_array[number] = response.context;
+      number++;
+      if (response.output.text == 'What is your priority ?') {
+        type = "find_priority";
+      }
+      if (response.entities[0]) {
+        //console.log(response.entities[0].entity);
+        if (response.entities[0].entity == 'color') {
+          type = "display_car";
+          var color = response.entities[0].value;
+          name_image = 'images/Access' + color + '.jpg';
         }
-        res.json(id);
-      });
+      }
+      res.send([response, type, name_image]);
     }
   });
-
-});
-/**** CLOUDANT ****/
-
-router.get('/login', function(req, res, next) {
-  res.render('connection/login');
 });
 
-router.get('/register', function(req, res, next) {
-  res.render('connection/register');
-});
+
+function postV2() {
+  router.post('/', function(req, res, next) {
+
+    if (!req.body.input) {
+      macrocontext.init()
+    }
+    var prompt2 = macrocontext.processResponse(req.body.input)
+
+    var text = prompt2.output ? prompt2.output : 'We are done! Are you ready to order?'
+
+    var response = {
+      'output': {
+        'text': [text]
+      }
+    }
+
+    var type = 'nothing'
+    var image = ''
+
+    if (prompt2.options) {
+      console.log('prompt2.options:')
+        console.log(prompt2.options)
+      type = 'display_car'
+      image = {
+        'name_image': 'images/' + prompt2.options.image + '.jpg',
+        'justifications': [{
+          'text': prompt2.options.model.value,
+          'justification': prompt2.options.model.justification
+        }, {
+          'text': prompt2.options.trim_level.value,
+          'justification': prompt2.options.trim_level.justification
+        }, {
+          'text': prompt2.options.color.value,
+          'justification': prompt2.options.color.justification
+        }, {
+          'text': prompt2.options.price.value,
+          'justification': prompt2.options.price.justification
+        }, {
+          'text': prompt2.options.delay.date,
+          'justification': prompt2.options.delay.justification
+        }]
+      }
+    }
+
+    // if (text.includes('What is your top priority')) { // // TODO: Improve
+    if (text.includes('What is important to you?')) {
+      console.log('******* YES ********>')
+      type = "find_priority"
+    }
+
+    res.send([response, type, image]);
+  });
+}
+
+postV2()
+
+function giveinfo1() {
+  router.post('/giveinfo', function(req, res, next) {
+    console.log(req.body);
+
+    var value_security = req.body['input[Safety]'];
+    var value_comfort = req.body['input[Comfort_and_Convenience]'];
+    var value_vitesse = req.body['input[In_Car_Entertainment_and_Communication]'];
+    var value_style = req.body['input[style]'];
+    var dictionary = {
+      "security": value_security,
+      "comfort": value_comfort,
+      "speed": value_vitesse,
+      "style": value_style
+    };
+    // Create items array
+    var items = Object.keys(dictionary).map(function(key) {
+      return [key, dictionary[key]];
+    });
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+      return second[1] - first[1];
+    });
+    console.log(items);
+    var value_max = items[0][0];
+    console.log(value_max);
+    conversation.message({
+      input: {
+        text: value_max
+      },
+      context: context_array[context_array.length - 1],
+      workspace_id: '635a4d6e-022d-4e16-88d6-4844c2cdcc99'
+    }, function(err, response) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(response);
+        res.send([response, "", ""]);
+      }
+    });
+
+  });
+}
+
+function giveinfo2() {
+  router.post('/giveinfo', function(req, res, next) {
+    // console.log(req.body);
+    /*
+    var value_security = req.body['input[security]'];
+    var value_comfort = req.body['input[confort]'];
+    var value_vitesse = req.body['input[vitesse]'];
+    var value_style = req.body['input[style]'];
+    var dictionary = {
+      "security": value_security,
+      "comfort": value_comfort,
+      "speed": value_vitesse,
+      "style": value_style
+    };
+    // Create items array
+    var items = Object.keys(dictionary).map(function(key) {
+      return [key, dictionary[key]];
+    });
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+      return second[1] - first[1];
+    });
+    console.log(items);
+    */
+
+console.log(req.body)
+console.log(req.body['input[Safety]'])
+// macrocontext.ratings = req.body
+// macrocontext.setMicrogoalValue(goals.MICROGOALratings, req.body)
+// console.log(macrocontext.ratings['input[Safety]'])
+    var prompt2 = macrocontext.processResponse(req.body)
+
+    var text = prompt2.output ? prompt2.output : 'We are done! Are you ready to order?'
+
+    var response = {
+      'output': {
+        'text': [text]
+      }
+    }
+    var type = 'nothing'
+    var image = ''
+
+    res.send([response, type, image]);
+  })
+}
+
+giveinfo2()
 
 module.exports = router;
