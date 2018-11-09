@@ -1,0 +1,5 @@
+---
+applications:
+ - name: cassidy-client
+   random-route: true
+   memory: 256M
