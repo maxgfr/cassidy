@@ -1,2 +1,0 @@
-# cassidy
-Configurateur automobile
