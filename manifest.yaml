@@ -1,0 +1,5 @@
+---
+applications:
+ - name: cassidyv2
+   random-route: true
+   memory: 256M
