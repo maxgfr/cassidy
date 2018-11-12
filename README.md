@@ -20,3 +20,11 @@ kubectl expose deployment wrapping-ladybug-chart-auto-848967c6d6-gcj9m --type=Lo
 kubectl get services
 minikube service wrapping-ladybug-chart-auto-848967c6d6-gcj9m
 ```
+
+## Push on cloud
+
+```
+ibmcloud login --sso
+ibmcloud target --cf
+ibmcloud cf push
+```
