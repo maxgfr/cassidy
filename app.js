@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -69,7 +70,8 @@ if (appEnv.services['conversation']) {
 /***** IBM part *****/
 
 // view engine setup
-app.set('views', [path.join(__dirname, 'views')]);
+app.set('views', [path.join(__dirname, 'views'),
+                  path.join(__dirname, 'views/admin/')]);
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -86,6 +88,7 @@ app.use(function(req, res, next){
 });
 
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
