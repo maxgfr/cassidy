@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>IBM</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/png" href="../images/icon.png" />
   <!-- Bootstrap 3.3.7-->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome-->
@@ -40,7 +41,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
 
 <body class="hold-transition skin-blue sidebar-mini">
 
-  <div>
+
     <header class="main-header">
       <a href="#" class="logo">
         <span class="logo-mini"><b>IBM</b></span>
@@ -52,7 +53,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar-->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar" style="height:130%;">
         <!-- sidebar: style can be found in sidebar.less-->
         <section class="sidebar">
           <!-- Sidebar user panel-->
@@ -65,16 +66,11 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           <!-- sidebar menu: : style can be found in sidebar.less-->
           <ul data-widget="tree" class="sidebar-menu">
             <li class="header">Navigation</li>
+            <li><a href="/admin"><i class="fa fa-list"></i><span> Touts les modèles</span></a></li>
 
-            <li><a href="/"><i class="fa fa-dashboard"></i><span> Dashboard</span></a></li>
+            <li class="active"><a href="/admin/add"><i class="fa fa-plus"></i><span> Créer un nouveau modèle</span></a></li>
 
-
-            <li class="treeview">
-              <ul class="treeview-menu">
-                <li><a href="/admin/"><i class="fa fa-circle-o"></i> Afficher les modèles</a></li>
-                <li><a href="/admin/add"><i class="fa fa-circle-o"></i> Créer un modèle</a></li>
-              </ul>
-            </li>
+            <li><a href="/"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
           </ul>
           <!-- /.sidebar-->
         </section>
@@ -83,10 +79,10 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
       <div class="content-wrapper">
         <!-- Content Header (Page header)-->
         <section class="content-header">
-          <h1>Acteurs<small>Création</small></h1>
+          <h1>Modèles<small>Création</small></h1>
           <ol class="breadcrumb">
-            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Acteurs</li>
+            <li><i class="fa fa-car"></i> Modèles</li>
+            <li class="active">Création</li>
           </ol>
         </section>
 
@@ -96,7 +92,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           <!-- Default box -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Ajout d'un acteur</h3>
+              <h3 class="box-title">Ajout d'un modèle</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -110,12 +106,85 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                 <form role="form">
 
                   <div class="form-group">
-                    <label>Identifiant</label>
-                    <input type="text" id="id" class="form-control">
+                    <label>Modèle</label>
+                    <select id="modele" class="form-control">
+                      <option value="Access">Access</option>
+                      <option value="Active">Active</option>
+                      <option value="Allure">Allure</option>
+                      <option value="XWay">XWay</option>
+                      <option value="GTLine">GTLine</option>
+                      <option value="GT">GT</option>
+                    </select>
                   </div>
+
                   <div class="form-group">
-                    <label>Nom</label>
-                    <input type="text" id="name" class="form-control">
+                    <label>Energie</label>
+                    <select id="energie" class="form-control">
+                      <option value="Essence">Essence</option>
+                      <option value="Diesel">Diesel</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Boîte de vitesse</label>
+                    <select id="bv" class="form-control">
+                      <option value="Manuelle">Manuelle</option>
+                      <option value="Automatique">Automatique</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Couleur</label>
+                    <select id="couleur" class="form-control">
+                      <option value="Blanc">Blanc</option>
+                      <option value="Non blanc">Non blanc</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Confort</label>
+                    <select id="confort" class="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Esthétique</label>
+                    <select id="esthetique" class="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Multimédia</label>
+                    <select id="multimedia" class="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Assistance</label>
+                    <select id="assistance" class="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Prix en €</label>
+                    <input type="text" id="prix" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Délai initial en jour</label>
+                    <input type="text" id="delai" class="form-control">
                   </div>
 
                   <div class="pull-right">
@@ -137,7 +206,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           <div class="pull-right hidden-xs"><b>Version</b> 1.0.0</div><strong>Copyright © 2018 <a href="https://www.ibm.com/fr-fr/">IBM FRANCE</a></strong> All rights
           reserved.
         </footer>
-      </div>
+
       <!-- ./wrapper-->
       <!--SCRIPTS-->
       <!-- jQuery 3-->
@@ -182,20 +251,38 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
 <script>
     //Submit data when enter key is pressed
     $('#add_button').on('click', function(e) {
-      var name = $('#name').val();
-      var id = $('#id').val();
+      var prix = $('#prix').val();
+      var delai = $('#delai').val();
+      var modele = $( "#modele option:selected" ).text();
+      var energie = $( "#energie option:selected" ).text();
+      var bv = $( "#bv option:selected" ).text();
+      var couleur = $( "#couleur option:selected" ).text();
+      var confort = $( "#confort option:selected" ).text();
+      var esthetique = $( "#esthetique option:selected" ).text();
+      var assistance = $( "#assistance option:selected" ).text();
+      var multimedia = $( "#multimedia option:selected" ).text();
       $.ajax({
         method: "POST",
         url: "/admin/add",
         contentType: "application/json",
-        data: JSON.stringify({name: name,
-          id: id})
+        data: JSON.stringify({
+          prix: prix,
+          delai: delai,
+          modele: modele,
+          energie: energie,
+          bv: bv,
+          couleur: couleur,
+          confort: confort,
+          esthetique: esthetique,
+          assistance: assistance,
+          multimedia: multimedia,
+        })
         }).done(function(data) {
           console.log(data);
           var res = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Félicitation!</strong>'+data;
           $("#result").html(res);
           $("#result").addClass("alert alert-success alert-dismissable");
-          window.location.replace("/display_actor");
+          //window.location.replace("/admin/");
         });
       });
 </script>

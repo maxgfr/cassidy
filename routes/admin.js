@@ -13,14 +13,22 @@ router.get('/add', function(req, res, next) {
 
 /**** CLOUDANT  ****/
 router.post('/add', function(req, res, next) {
-  var userName = req.body.name;
-  var id = req.body.id;
+  var prix = req.body.prix;
+  var delai = req.body.delai;
+  var modele = req.body.modele;
+  var energie = req.body.energie;
+  var bv = req.body.bv;
+  var couleur = req.body.couleur;
+  var confort = req.body.confort;
+  var esthetique = req.body.esthetique;
+  var assistance = req.body.assistance;
+  var multimedia = req.body.multimedia;
   //console.log(mydb);
   if(!mydb) {
     res.send("Pas de database...");
     return;
   }
-  mydb.insert({ "name" : userName, "id" : id }, function(err, body, header) {
+  mydb.insert({ "prix": prix, "delai": delai, "modele": modele, "energie": energie, "bv": bv, "couleur": couleur, "confort": confort, "esthetique": esthetique, "assistance": assistance, "multimedia": multimedia }, function(err, body, header) {
     if (err) {
       return null; res.send('[mydb.insert] ', err.message);
     }
@@ -39,7 +47,7 @@ router.get('/', function(req, res, next) {
     if (!err) {
       body.rows.forEach(function(row) {
         if(row.doc.name && row.doc.id)
-        data.push({id: row.doc.id, name: row.doc.name, id_cloudant : row.doc._id});
+        data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, couleur: row.doc.couleur, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
       });
       res.json(data);
     }

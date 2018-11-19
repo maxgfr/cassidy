@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>IBM</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" type="image/png" href="../images/icon.png" />
     <!-- Bootstrap 3.3.7-->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome-->
@@ -65,16 +66,11 @@
           <!-- sidebar menu: : style can be found in sidebar.less-->
           <ul data-widget="tree" class="sidebar-menu">
             <li class="header">Navigation</li>
+            <li class="active"><a href="/admin/add"><i class="fa fa-list"></i><span> Touts les modèles</span></a></li>
 
-            <li><a href="/"><i class="fa fa-dashboard"></i><span> Dashboard</span></a></li>
+            <li><a href="/admin/add"><i class="fa fa-plus"></i><span> Créer un nouveau modèle</span></a></li>
 
-
-            <li class="treeview">
-              <ul class="treeview-menu">
-                <li><a href="/admin/"><i class="fa fa-circle-o"></i> Afficher les modèles</a></li>
-                <li><a href="/admin/add"><i class="fa fa-circle-o"></i> Créer un modèle</a></li>
-              </ul>
-            </li>
+            <li><a href="/"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
           </ul>
           <!-- /.sidebar-->
         </section>
@@ -83,10 +79,10 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header)-->
   <section class="content-header">
-    <h1>Acteurs<small>Affichage</small></h1>
+    <h1>Modèles<small>Affichage</small></h1>
     <ol class="breadcrumb">
-      <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Acteurs</li>
+      <li><i class="fa fa-car"></i> Modèles</li>
+      <li class="active">Affichage</li>
     </ol>
   </section>
 
@@ -114,8 +110,18 @@
               <thead>
                 <tr>
                     <th>ID Cloudant</th>
-                    <th>Identifiant</th>
-                    <th>Nom</th>
+                    <th>Modele</th>
+                    <th>Energie</th>
+                    <th>Modele</th>
+                    <th>Boîte de vitesse</th>
+                    <th>Couleur</th>
+                    <th>Confort</th>
+                    <th>Esthétique</th>
+                    <th>Esthétique</th>
+                    <th>Assistance</th>
+                    <th>Multimedia</th>
+                    <th>Prix</th>
+                    <th>Délai</th>
                     <th></th>
                 </tr>
               </thead>
@@ -187,10 +193,18 @@
             console.log(data);
             for(var i=0;i<data.length;i++) {
                 var td1='<tr id="item_'+data[i]["id_cloudant"]+'"><td>'+data[i]["id_cloudant"]+'</td>';
-                var td2='<td>'+data[i]["id"]+'</td>';
-                var td3='<td>'+data[i]["name"]+'</td>';
-                var td4='<td><button id="button_delete_'+data[i]["id_cloudant"]+'" value="'+data[i]["id_cloudant"]+'" class="btn btn-danger delete_button"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
-                $("#myTable_body").append(td1+td2+td3+td4);
+                var td2='<td>'+data[i]["modele"]+'</td>';
+                var td3='<td>'+data[i]["energie"]+'</td>';
+                var td4='<td>'+data[i]["bv"]+'</td>';
+                var td5='<td>'+data[i]["couleur"]+'</td>';
+                var td6='<td>'+data[i]["confort"]+'</td>';
+                var td7='<td>'+data[i]["esthetique"]+'</td>';
+                var td8='<td>'+data[i]["assistance"]+'</td>';
+                var td9='<td>'+data[i]["multimedia"]+'</td>';
+                var td10='<td>'+data[i]["prix"]+'</td>';
+                var td11='<td>'+data[i]["delai"]+'</td>';
+                var td12='<td><button id="button_delete_'+data[i]["id_cloudant"]+'" value="'+data[i]["id_cloudant"]+'" class="btn btn-danger delete_button"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
+                $("#myTable_body").append(td1+td2+td3+td4+td5+td6+td7+td8+td9+td10+td11+td12);
             }
         });
         $(document).on("click", '.delete_button',function(e) {
