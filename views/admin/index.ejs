@@ -70,7 +70,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
 
             <li><a href="/admin/add"><i class="fa fa-plus"></i><span> Créer un nouveau modèle</span></a></li>
 
-            <li><a href="/"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
+            <li><a href="/" target="_blank"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
           </ul>
           <!-- /.sidebar-->
         </section>
@@ -181,8 +181,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           .done(function(data) {
             console.log(data);
             for(var i=0;i<data.length;i++) {
-              //var td1='<tr id="item_'+data[i]["id_cloudant"]+'"><td>'+data[i]["id_cloudant"]+'</td>';
-              var td2='<td>'+data[i]["modele"]+'</td>';
+              var td2='<tr id="item_'+data[i]["id_cloudant"]+'"><td>'+data[i]["modele"]+'</td>';
               var td3='<td>'+data[i]["energie"]+'</td>';
               var td4='<td>'+data[i]["bv"]+'</td>';
               var td5='<td>'+data[i]["couleur"]+'</td>';
