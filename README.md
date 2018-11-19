@@ -28,3 +28,13 @@ ibmcloud login --sso
 ibmcloud target --cf
 ibmcloud cf push
 ```
+
+## ODM Request
+
+```
+curl \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ApiKey $MY_DCOMP_API_KEY" \
+  -d '{"modele":"ACTIVE","couleur":"AUTRE","usage":"EXTRA","energy":"ESSENCE","bv":"AUTOMATIQUE","confort":"MOYEN","esthet":"MOYEN","media":"MOYEN","assistance":"MOYEN"}' \
+  "https://decision-composer.ibm.com/rest/public/v1/execution/5beed4ad2846520012a1114b/execute/v19"
+```
