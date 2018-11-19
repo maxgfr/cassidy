@@ -7,11 +7,46 @@ router.get('/', function(req, res, next) {
   res.render('admin/index');
 });
 
+router.get('/get_model', function(req, res, next) {
+  var data = [];
+  if(!mydb) {
+    res.json(data);
+    return;
+  }
+  mydb.list({ include_docs: true }, function(err, body) {
+    if (!err) {
+      body.rows.forEach(function(row) {
+        if(row.doc.modele)
+          data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, couleur: row.doc.couleur, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
+      });
+      res.json(data);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+router.delete('/', function(req, res, next) {
+  var id = req.body.id_cloudant;
+  var query = { selector: { _id: id}};
+  mydb.find(query, function(err, data) {
+    if(!err) {
+      //console.log(data,data.docs, data.docs[0], data.docs[0]["_rev"]);
+      mydb.destroy(id, data.docs[0]["_rev"],function(err, body, header) {
+        if (!err) {
+          console.log("Element supprimé avec success", id);
+        }
+        res.json(id);
+      });
+    }
+  });
+
+});
+
 router.get('/add', function(req, res, next) {
   res.render('admin/add');
 });
 
-/**** CLOUDANT  ****/
 router.post('/add', function(req, res, next) {
   var prix = req.body.prix;
   var delai = req.body.delai;
@@ -35,42 +70,5 @@ router.post('/add', function(req, res, next) {
     res.send("Nouvelle entrée dans la base de donnée :)");
   });
 });
-
-router.get('/', function(req, res, next) {
-  var data = [];
-  if(!mydb) {
-    res.json(data);
-    return;
-  }
-
-  mydb.list({ include_docs: true }, function(err, body) {
-    if (!err) {
-      body.rows.forEach(function(row) {
-        if(row.doc.name && row.doc.id)
-        data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, couleur: row.doc.couleur, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
-      });
-      res.json(data);
-    }
-  });
-});
-
-router.delete('/', function(req, res, next) {
-  var id = req.body.id_cloudant;
-
-  var query = { selector: { _id: id}};
-  mydb.find(query, function(err, data) {
-    if(!err) {
-      console.log(data,data.docs, data.docs[0], data.docs[0]["_rev"]);
-      mydb.destroy(id, data.docs[0]["_rev"],function(err, body, header) {
-        if (!err) {
-          console.log("Element supprimé avec success", id);
-        }
-        res.json(id);
-      });
-    }
-  });
-
-});
-/**** CLOUDANT ****/
 
 module.exports = router;
