@@ -33,25 +33,25 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">My preferences</h4>
+					<h4 style="font-size:25px" class="modal-title">My preferences</h4>
 				</div>
 					<div class="modal-body">
 							<div class="form-group">
-								 <label for="energie_popup">Energy</label>
+								 <label style="font-size:18px" for="energie_popup">Energy</label>
 								 <select class="form-control" id="energie_popup">
-									 <option value="gasoline">Gasoline</option>
-									 <option value="diesel">Diesel</option>
+									 <option value="Essence">Gasoline</option>
+									 <option value="Diesel">Diesel</option>
 								 </select>
 						 	</div>
 							<div class="form-group">
-								 <label for="bv_popup">Gearbox</label>
+								 <label style="font-size:18px" for="bv_popup">Gearbox</label>
 								 <select class="form-control" id="bv_popup">
-									 <option value="manuelle">Manual</option>
-									 <option value="automatique">Automatic</option>
+									 <option value="Manual">Manual</option>
+									 <option value="Automatic">Automatic</option>
 								 </select>
 						 	</div>
 					  	<div class="form-group">
-						    <label for="budget_popup">Budget</label>
+						    <label style="font-size:18px" for="budget_popup">Budget</label>
 						    <input type="text" id="budget_popup" name="budget_popup" value="" />
 					  	</div>
 					</div>
@@ -218,6 +218,8 @@
 var $messages = $('.messages-content'), d, h, m, i = 0;
 var from = 27000;
 var to = 55000;
+var bv = '';
+var energie = '';
 
 var saveResult = function (data) {
     from = data.from;
@@ -231,6 +233,7 @@ $(document).ready(function() {
 	    max: 55000,
 	    grid: true,
 	    grid_num: 5,
+			step: 100,
 			from: from,
     	to: to,
 			onLoad: function (data) {
@@ -241,84 +244,61 @@ $(document).ready(function() {
 	});
 	$('#myModal').modal('show');
 	$messages.mCustomScrollbar();
-	setTimeout(function() {
-		$.ajax({
-			type: "POST",
-			url: "/",
-			data: {input: ""},
-			dataType: 'json',
-			success: function (res) {
-				if ($('.message-input').val() != '') {
-					return false;
-				}
-				$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
-				updateScrollbar();
-				var message = res[0].output.text;
-				setTimeout(function() {
-					$('.message.loading').remove();
-					$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-					'</div>').appendTo($('.mCSB_container')).addClass('new');
-					updateScrollbar();
-					i++;
-				}, 1000 + (Math.random() * 20) * 100);
-			},
-			error: function (data) {
-				console.log('Error:', data);
-			}
-		});
-	}, 100);
 });
 
 $('#submit_popup').click(function() {
 	bv = $( "#bv_popup option:selected" ).text();
 	energie = $( "#energie_popup option:selected" ).text();
-	console.log(from, to, bv, energie);
-	$('#myModal').modal('hide');
+	if(energie == 'Gasoline') {
+		energie = 'Essence'
+	}
 	$( "#budget" ).html(from+"€ - "+to+"€");
 	$( "#energie" ).html(energie);
 	$( "#bv" ).html(bv);
+	$('#myModal').modal('hide');
+	sendMessage("hello");
 });
 
 $('.message-submit').click(function() {
 	msg = $('.message-input').val();
-	$.ajax({
-		type: "POST",
-		url: "/",
-		data: {input: msg},
-		dataType: 'json',
-		success: function (res) {
-			insertMessage(msg,res)
-		},
-		error: function (data) {
-			console.log('Error:', data);
-		}
-	});
+	sendMessage(msg);
 });
 
 $(window).on('keydown', function(e) {
 	if (e.which == 13) {
 		msg = $('.message-input').val();
-		$.ajax({
-			type: "POST",
-			url: "/",
-			data: {input: msg},
-			dataType: 'json',
-			success: function (res) {
-				console.log(res);
-				insertMessage(msg,res)
-			},
-			error: function (data) {
-				console.log('Error:', data);
-			}
-		});
+		sendMessage(msg);
 		return false;
 	}
-})
+});
 
 function updateScrollbar() {
 	$messages.mCustomScrollbar("update").mCustomScrollbar('scrollTo', 'bottom', {
 		scrollInertia: 10,
 		timeout: 0
+	});
+}
+
+function sendMessage(msg) {
+	//console.log(from, to, bv, energie);
+	$.ajax({
+		type: "POST",
+		url: "/",
+		data: {
+			input: msg,
+			bv: bv,
+			energie: energie,
+			from: from,
+			to: to,
+		},
+		dataType: 'json',
+		success: function (res) {
+			console.log(res);
+			insertMessage(msg, res)
+		},
+		error: function (data) {
+			console.log('Error:', data);
+		}
 	});
 }
 
@@ -335,21 +315,17 @@ function insertMessage(msg,res) {
 		}
 		$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
 		updateScrollbar();
-
 		console.log(res);
-
-		var message = res[0].output.text[0];
-
+		var message = res[0];
 		var type = res[1];
-
+		var data = res[2];
 		if (type == "find_priority") {
 			findPriority(res)
-		} else if (type == "display_car") {
-			displayCar(res)
 		} else {
 			displayMessage(message);
 		}
-	}, 100);
+		displayData(data);
+	}, 100 + (Math.random() * 20) * 100);
 }
 
 function findPriority (res) {
@@ -505,6 +481,12 @@ function displayMessage (message) {
 		updateScrollbar();
 		i++;
 	}, 1000 + (Math.random() * 20) * 100);
+}
+
+function displayData (data) {
+		$( "#watson_finition" ).html(datat.modele);
+		$( "#watson_delai" ).html(data.delai + " days");
+		$( "#watson_prix" ).html(data.prix + " euros");
 }
 
 </script>
