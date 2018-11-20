@@ -66,9 +66,9 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           <!-- sidebar menu: : style can be found in sidebar.less-->
           <ul data-widget="tree" class="sidebar-menu">
             <li class="header">Navigation</li>
-            <li><a href="/admin"><i class="fa fa-list"></i><span> Touts les modèles</span></a></li>
+            <li><a href="/admin"><i class="fa fa-list"></i><span> All models</span></a></li>
 
-            <li class="active"><a href="/admin/add"><i class="fa fa-plus"></i><span> Créer un nouveau modèle</span></a></li>
+            <li class="active"><a href="/admin/add"><i class="fa fa-plus"></i><span> Create a new model</span></a></li>
 
             <li><a href="/" target="_blank"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
           </ul>
@@ -79,10 +79,10 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
       <div class="content-wrapper">
         <!-- Content Header (Page header)-->
         <section class="content-header">
-          <h1>Modèles<small>Création</small></h1>
+          <h1>Model<small>Create</small></h1>
           <ol class="breadcrumb">
-            <li><i class="fa fa-car"></i> Modèles</li>
-            <li class="active">Création</li>
+            <li><i class="fa fa-car"></i> Model</li>
+            <li class="active">Create</li>
           </ol>
         </section>
 
@@ -92,7 +92,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           <!-- Default box -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Ajout d'un modèle</h3>
+              <h3 class="box-title">Add a new model</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -106,7 +106,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                 <form role="form">
 
                   <div class="form-group">
-                    <label>Modèle</label>
+                    <label>Model</label>
                     <select id="modele" class="form-control">
                       <option value="Access">Access</option>
                       <option value="Active">Active</option>
@@ -118,31 +118,31 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                   </div>
 
                   <div class="form-group">
-                    <label>Energie</label>
+                    <label>Energy</label>
                     <select id="energie" class="form-control">
-                      <option value="Essence">Essence</option>
+                      <option value="Gasoline">Essence</option>
                       <option value="Diesel">Diesel</option>
                     </select>
                   </div>
 
                   <div class="form-group">
-                    <label>Boîte de vitesse</label>
+                    <label>Gearbox</label>
                     <select id="bv" class="form-control">
-                      <option value="Manuelle">Manuelle</option>
-                      <option value="Automatique">Automatique</option>
+                      <option value="manual">Manual</option>
+                      <option value="automatic">Automatic</option>
                     </select>
                   </div>
 
                   <div class="form-group">
                     <label>Usage</label>
                     <select id="usage" class="form-control">
-                      <option value="Urbain">Urbain</option>
-                      <option value="Extra">Extra</option>
+                      <option value="City">City</option>
+                      <option value="Out of city">Out of city</option>
                     </select>
                   </div>
 
                   <div class="form-group">
-                    <label>Confort</label>
+                    <label>Comfort</label>
                     <select id="confort" class="form-control">
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -151,7 +151,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                   </div>
 
                   <div class="form-group">
-                    <label>Esthétique</label>
+                    <label>Look</label>
                     <select id="esthetique" class="form-control">
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -160,7 +160,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                   </div>
 
                   <div class="form-group">
-                    <label>Multimédia</label>
+                    <label>Multimedia</label>
                     <select id="multimedia" class="form-control">
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -178,17 +178,17 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                   </div>
 
                   <div class="form-group">
-                    <label>Prix en €</label>
+                    <label>Price in €</label>
                     <input type="text" id="prix" class="form-control">
                   </div>
 
                   <div class="form-group">
-                    <label>Délai initial en jour</label>
+                    <label>Initial time limit in day</label>
                     <input type="text" id="delai" class="form-control">
                   </div>
 
                   <div class="pull-right">
-                    <button type="button" class="btn btn-primary" id="add_button">Ajouter</button>
+                    <button type="button" class="btn btn-primary" id="add_button">Add</button>
                   </div>
 
                 </form>
@@ -279,7 +279,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
         })
         }).done(function(data) {
           console.log(data);
-          var res = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Félicitation!</strong>'+data;
+          var res = '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Congratulations!</strong>'+data;
           $("#result").html(res);
           $("#result").addClass("alert alert-success alert-dismissable");
           //window.location.replace("/admin/");

@@ -27,7 +27,7 @@
 
 <body>
 	<div class="chat-title">
-		<h1>Configuration de ma 5008</h1>
+		<h1>5008 - Configuration</h1>
 	</div>
 	<div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog modal-lg">
@@ -37,17 +37,17 @@
 				</div>
 					<div class="modal-body">
 							<div class="form-group">
-								 <label for="energie_popup">Energie</label>
+								 <label for="energie_popup">Energy</label>
 								 <select class="form-control" id="energie_popup">
-									 <option value="essence">Essence</option>
+									 <option value="gasoline">Gasoline</option>
 									 <option value="diesel">Diesel</option>
 								 </select>
 						 	</div>
 							<div class="form-group">
-								 <label for="bv_popup">Boîte de vitesse</label>
+								 <label for="bv_popup">Gearbox</label>
 								 <select class="form-control" id="bv_popup">
-									 <option value="manuelle">Manuelle</option>
-									 <option value="automatique">Automatique</option>
+									 <option value="manuelle">Manual</option>
+									 <option value="automatique">Automatic</option>
 								 </select>
 						 	</div>
 					  	<div class="form-group">
@@ -81,25 +81,25 @@
 				<div class="row justify-content-center" style="margin-bottom:10px;">
 					<div class="col-md-4" style="padding-bottom:10px;">
 						<div class="card">
-							<div class="card-header" style="font-size:18px" >Budget</div>
+							<div class="card-header" style="font-size:18px">Budget</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 14px;" id="budget">Non indiqué.</p>
+								<p class="card-text" style="font-size: 14px;" id="budget">Not specified</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="card">
-							<div class="card-header" style="font-size:18px">Energie</div>
+							<div class="card-header" style="font-size:18px">Energy</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 15px;" id="energie">Non indiqué.</p>
+								<p class="card-text" style="font-size: 15px;" id="energie">Not specified</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="card">
-							<div class="card-header" style="font-size:15px">Boîte de vitesse</div>
+							<div class="card-header" style="font-size:15px">Gearbox</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 15px;" id="carac">Non indiqué.</p>
+								<p class="card-text" style="font-size: 15px;" id="bv">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -108,7 +108,7 @@
 					<div class="col-sm-3" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Esthétique</h5>
+								<h5 class="card-text">Look</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
 										<div class="br-widget" id="look">
 											<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -125,7 +125,7 @@
 					<div class="col-sm-3" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Confort</h5>
+								<h5 class="card-text">Comfort</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
 										<div class="br-widget" id="confort">
 											<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -142,7 +142,7 @@
 					<div class="col-sm-3">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Multimédia</h5>
+								<h5 class="card-text">Multimedia</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
 									<div class="br-widget" id="navigation">
 										<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -181,21 +181,21 @@
 					<div class="col-sm-4">
 						<div class="card text-white mb-3" style="background-color: #63a4ff;">
 							<div class="card-body">
-								<h5 class="card-text text-center" id="watson_finition">Finition</h5>
+								<h5 class="card-text text-center" id="watson_finition">Model</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #63a4ff;">
 							<div class="card-body">
-								<h5 class="card-text" id="watson_delai">Délai</h5>
+								<h5 class="card-text" id="watson_delai">Time limit</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4">
 						<div class="card text-white mb-3 text-center" style="background-color: #63a4ff;">
 							<div class="card-body">
-								<h5 class="card-text" id="watson_prix">Prix</h5>
+								<h5 class="card-text" id="watson_prix">Price</h5>
 							</div>
 						</div>
 					</div>
@@ -215,14 +215,15 @@
 
 <script>
 
-var $messages = $('.messages-content'),
-d, h, m,
-from, to,
-i = 0;
+var $messages = $('.messages-content'), d, h, m, i = 0;
+var from = 27000;
+var to = 55000;
+
 var saveResult = function (data) {
-    from = data.fromNumber;
-    to = data.toNumber;
+    from = data.from;
+    to = data.to;
 };
+
 $(document).ready(function() {
 	$("#budget_popup").ionRangeSlider({
 			type: "double",
@@ -271,7 +272,11 @@ $(document).ready(function() {
 $('#submit_popup').click(function() {
 	bv = $( "#bv_popup option:selected" ).text();
 	energie = $( "#energie_popup option:selected" ).text();
-	console.log(from, to,bv,energie)
+	console.log(from, to, bv, energie);
+	$('#myModal').modal('hide');
+	$( "#budget" ).html(from+"€ - "+to+"€");
+	$( "#energie" ).html(energie);
+	$( "#bv" ).html(bv);
 });
 
 $('.message-submit').click(function() {

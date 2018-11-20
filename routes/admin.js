@@ -34,7 +34,7 @@ router.delete('/', function(req, res, next) {
       //console.log(data,data.docs, data.docs[0], data.docs[0]["_rev"]);
       mydb.destroy(id, data.docs[0]["_rev"],function(err, body, header) {
         if (!err) {
-          console.log("Element supprimé avec success", id);
+          console.log("Deleted with success", id);
         }
         res.json(id);
       });
@@ -60,14 +60,14 @@ router.post('/add', function(req, res, next) {
   var multimedia = req.body.multimedia;
   //console.log(mydb);
   if(!mydb) {
-    res.send("Pas de database...");
+    res.send("No database linked...");
     return;
   }
   mydb.insert({ "prix": prix, "delai": delai, "modele": modele, "energie": energie, "bv": bv, "usage": usage, "confort": confort, "esthetique": esthetique, "assistance": assistance, "multimedia": multimedia }, function(err, body, header) {
     if (err) {
       return null; res.send('[mydb.insert] ', err.message);
     }
-    res.send("Nouvelle entrée dans la base de donnée :)");
+    res.send("New entry in the database");
   });
 });
 
