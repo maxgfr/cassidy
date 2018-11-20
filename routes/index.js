@@ -21,37 +21,37 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  var message = req.body.input;
-  var result = makeCloudantRequest(req.body);
-  if(result.length != 1) {
-    console.log('Not found');
-    conversation.message({
-      input: {
-        text: msg
-      },
-      context: context_array[context_array.length - 1],
-      workspace_id: '635a4d6e-022d-4e16-88d6-4844c2cdcc99'
-    }, function(err, response) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(response);
-        var rep = response.output.text[0];
-        context = response.context;
-        context_array[number] = response.context;
-        number++;
-        res.send([rep, '', {}]);
-      }
-    });
-  }
-  else {
-    console.log('Found');
-    res.send(["We found a car which matches your expectation !", '', result]);
-  }
-
+  var bdy = req.body;
+  makeCloudantRequest(bdy, function(result){
+    if(result == null || result.length != 1) {
+      console.log('Not found');
+      conversation.message({
+        input: {
+          text: req.body.input
+        },
+        context: context_array[context_array.length - 1],
+        workspace_id: '635a4d6e-022d-4e16-88d6-4844c2cdcc99'
+      }, function(err, response) {
+        if (err) {
+          console.error(err);
+        } else {
+          //console.log(response);
+          var rep = response.output.text[0];
+          context = response.context;
+          context_array[number] = response.context;
+          number++;
+          res.send([rep, '', {}]);
+        }
+      });
+    }
+    else {
+      console.log('Found');
+      res.send(["We found a car which matches your expectation !", 'display_data', result]);
+    }
+  });
 });
 
-function makeCloudantRequest(params) {
+function makeCloudantRequest(params, callback) {
     var from = params["from"];
     var to = params["to"];
     delete params["input"];
@@ -60,21 +60,20 @@ function makeCloudantRequest(params) {
     console.log(params);
     var data = [];
     if(!mydb) {
-      return data;
+      callback(data);
     }
     mydb.find({ selector: params }, function(err, result) {
       if (!err) {
-        //console.log('Found %d documents', result.docs.length);
         for (var i = 0; i < result.docs.length; i++) {
           if (result.docs[i].prix < to && result.docs[i].prix > from) {
-            //console.log(result.docs[i])
+            console.log(result.docs[i])
             data.push(result.docs[i])
           }
         }
-        return data;
+        callback(data);
       } else {
         console.log(err);
-        return data;
+        callback(data);
       }
     });
 }

@@ -220,6 +220,7 @@ var from = 27000;
 var to = 55000;
 var bv = '';
 var energie = '';
+var first_message = true;
 
 var saveResult = function (data) {
     from = data.from;
@@ -303,12 +304,18 @@ function sendMessage(msg) {
 }
 
 function insertMessage(msg,res) {
+	var time_to_rep = 1000 + + (Math.random() * 20) * 100;
 	if ($.trim(msg) == '') {
 		return false;
 	}
-	$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
-	$('.message-input').val(null);
-	updateScrollbar();
+	if(!first_message) {
+		time_to_rep = 100;
+		$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
+		$('.message-input').val(null);
+		updateScrollbar();
+	} else {
+		first_message = false;
+	}
 	setTimeout(function() {
 		if ($('.message-input').val() != '') {
 			return false;
@@ -321,11 +328,11 @@ function insertMessage(msg,res) {
 		var data = res[2];
 		if (type == "find_priority") {
 			findPriority(res)
-		} else {
-			displayMessage(message);
+		} else if (type == "display_data") {
+			displayData(data);
 		}
-		displayData(data);
-	}, 100 + (Math.random() * 20) * 100);
+		displayMessage(message);
+	}, time_to_rep);
 }
 
 function findPriority (res) {
@@ -447,32 +454,6 @@ function findPriority (res) {
 	}, 1000 + (Math.random() * 20) * 100);
 }
 
-function displayCar (res) {
-	setTimeout(function() {
-		var image_info = res[2];
-		var name_image = res[2].name_image;
-		var justifications = res[2].justifications;
-		console.log(justifications);
-		var button = '';
-		for (var i=0; i<justifications.length ; i++) {
-			console.log(justifications[i].text,justifications[i].justification);
-			button += '<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="'+justifications[i].justification+'">'+justifications[i].text,+'</button>';
-		}
-		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
-		});
-		$('.message.loading').remove();
-		$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-		'</div>').appendTo($('.mCSB_container')).addClass('new');
-
-		$( ".result_car" ).remove();
-		$('<div class="result_car" align="center"><img src="'+name_image+'" class="img-responsive center-block"/><br />' + button + '</div>').appendTo($('.panel-body'));
-
-		updateScrollbar();
-		i++;
-	}, 1000 + (Math.random() * 20) * 100);
-}
-
 function displayMessage (message) {
 	setTimeout(function() {
 		$('.message.loading').remove();
@@ -484,9 +465,9 @@ function displayMessage (message) {
 }
 
 function displayData (data) {
-		$( "#watson_finition" ).html(datat.modele);
-		$( "#watson_delai" ).html(data.delai + " days");
-		$( "#watson_prix" ).html(data.prix + " euros");
+		$( "#watson_finition" ).html(data[0].modele);
+		$( "#watson_delai" ).html(data[0].delai + " days");
+		$( "#watson_prix" ).html(data[0].prix + " euros");
 }
 
 </script>
