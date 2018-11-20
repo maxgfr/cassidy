@@ -17,7 +17,7 @@ router.get('/get_model', function(req, res, next) {
     if (!err) {
       body.rows.forEach(function(row) {
         if(row.doc.modele)
-          data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, couleur: row.doc.couleur, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
+          data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, usage: row.doc.usage, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
       });
       res.json(data);
     } else {
@@ -53,7 +53,7 @@ router.post('/add', function(req, res, next) {
   var modele = req.body.modele;
   var energie = req.body.energie;
   var bv = req.body.bv;
-  var couleur = req.body.couleur;
+  var usage = req.body.usage;
   var confort = req.body.confort;
   var esthetique = req.body.esthetique;
   var assistance = req.body.assistance;
@@ -63,7 +63,7 @@ router.post('/add', function(req, res, next) {
     res.send("Pas de database...");
     return;
   }
-  mydb.insert({ "prix": prix, "delai": delai, "modele": modele, "energie": energie, "bv": bv, "couleur": couleur, "confort": confort, "esthetique": esthetique, "assistance": assistance, "multimedia": multimedia }, function(err, body, header) {
+  mydb.insert({ "prix": prix, "delai": delai, "modele": modele, "energie": energie, "bv": bv, "usage": usage, "confort": confort, "esthetique": esthetique, "assistance": assistance, "multimedia": multimedia }, function(err, body, header) {
     if (err) {
       return null; res.send('[mydb.insert] ', err.message);
     }

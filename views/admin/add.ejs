@@ -134,10 +134,10 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
                   </div>
 
                   <div class="form-group">
-                    <label>Couleur</label>
-                    <select id="couleur" class="form-control">
-                      <option value="Blanc">Blanc</option>
-                      <option value="Non blanc">Non blanc</option>
+                    <label>Usage</label>
+                    <select id="usage" class="form-control">
+                      <option value="Urbain">Urbain</option>
+                      <option value="Extra">Extra</option>
                     </select>
                   </div>
 
@@ -256,7 +256,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
       var modele = $( "#modele option:selected" ).text();
       var energie = $( "#energie option:selected" ).text();
       var bv = $( "#bv option:selected" ).text();
-      var couleur = $( "#couleur option:selected" ).text();
+      var usage = $( "#usage option:selected" ).text();
       var confort = $( "#confort option:selected" ).text();
       var esthetique = $( "#esthetique option:selected" ).text();
       var assistance = $( "#assistance option:selected" ).text();
@@ -271,7 +271,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           modele: modele,
           energie: energie,
           bv: bv,
-          couleur: couleur,
+          usage: usage,
           confort: confort,
           esthetique: esthetique,
           assistance: assistance,

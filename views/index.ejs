@@ -18,6 +18,8 @@
 	<link rel="stylesheet" href="stylesheets/font-awesome.min.css">
 	<link rel="stylesheet" href="stylesheets/fontawesome-stars.css">
 	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/ion.rangeSlider.css">
+	<link rel="stylesheet" href="stylesheets/ion.rangeSlider.skinHTML5.css">
 
 	<link rel="stylesheet" href="stylesheets/style.css">
 
@@ -26,6 +28,38 @@
 <body>
 	<div class="chat-title">
 		<h1>Configuration de ma 5008</h1>
+	</div>
+	<div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">My preferences</h4>
+				</div>
+					<div class="modal-body">
+							<div class="form-group">
+								 <label for="energie_popup">Energie</label>
+								 <select class="form-control" id="energie_popup">
+									 <option value="essence">Essence</option>
+									 <option value="diesel">Diesel</option>
+								 </select>
+						 	</div>
+							<div class="form-group">
+								 <label for="bv_popup">Boîte de vitesse</label>
+								 <select class="form-control" id="bv_popup">
+									 <option value="manuelle">Manuelle</option>
+									 <option value="automatique">Automatique</option>
+								 </select>
+						 	</div>
+					  	<div class="form-group">
+						    <label for="budget_popup">Budget</label>
+						    <input type="text" id="budget_popup" name="budget_popup" value="" />
+					  	</div>
+					</div>
+					<div class="modal-footer">
+						<button id="submit_popup" class="btn btn-primary btn-lg">Submit</button>
+					</div>
+			</div>
+		</div>
 	</div>
 	<div class="left">
 		<div class="chat">
@@ -174,15 +208,37 @@
 <script src='javascripts/jquery-3.3.1.min.js'></script>
 <script src='javascripts/jquery.mCustomScrollbar.min.js'></script>
 <script src="javascripts/jquery.barrating.min.js"></script>
+<script src="javascripts/ion.rangeSlider.js"></script>
 <script src="javascripts/umd/popper.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
+
 
 <script>
 
 var $messages = $('.messages-content'),
 d, h, m,
+from, to,
 i = 0;
+var saveResult = function (data) {
+    from = data.fromNumber;
+    to = data.toNumber;
+};
 $(document).ready(function() {
+	$("#budget_popup").ionRangeSlider({
+			type: "double",
+	    min: 27000,
+	    max: 55000,
+	    grid: true,
+	    grid_num: 5,
+			from: from,
+    	to: to,
+			onLoad: function (data) {
+	        saveResult(data);
+	    },
+	    onChange: saveResult,
+	    onFinish: saveResult
+	});
+	$('#myModal').modal('show');
 	$messages.mCustomScrollbar();
 	setTimeout(function() {
 		$.ajax({
@@ -210,6 +266,12 @@ $(document).ready(function() {
 			}
 		});
 	}, 100);
+});
+
+$('#submit_popup').click(function() {
+	bv = $( "#bv_popup option:selected" ).text();
+	energie = $( "#energie_popup option:selected" ).text();
+	console.log(from, to,bv,energie)
 });
 
 $('.message-submit').click(function() {
