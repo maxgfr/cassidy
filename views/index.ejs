@@ -50,6 +50,13 @@
 									 <option value="Automatic">Automatic</option>
 								 </select>
 						 	</div>
+							<div class="form-group">
+								 <label style="font-size:18px" for="usage_popup">Usage</label>
+								 <select class="form-control" id="usage_popup">
+									 <option value="City">City</option>
+									 <option value="Out of city">Out of city</option>
+								 </select>
+						 	</div>
 					  	<div class="form-group">
 						    <label style="font-size:18px" for="budget_popup">Budget</label>
 						    <input type="text" id="budget_popup" name="budget_popup" value="" />
@@ -79,7 +86,7 @@
 		<div class="panel panel-primary">
 			<div class="panel-body" style="margin-top: 70px;padding-right:10px; padding-left:10px;">
 				<div class="row justify-content-center" style="margin-bottom:10px;">
-					<div class="col-md-4" style="padding-bottom:10px;">
+					<div class="col-md-3" style="padding-bottom:10px;">
 						<div class="card">
 							<div class="card-header" style="font-size:18px">Budget</div>
 							<div class="card-body">
@@ -87,7 +94,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="card">
 							<div class="card-header" style="font-size:18px">Energy</div>
 							<div class="card-body">
@@ -95,11 +102,19 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="card">
 							<div class="card-header" style="font-size:15px">Gearbox</div>
 							<div class="card-body">
 								<p class="card-text" style="font-size: 15px;" id="bv">Not specified</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card">
+							<div class="card-header" style="font-size:15px">Usage</div>
+							<div class="card-body">
+								<p class="card-text" style="font-size: 15px;" id="usage">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -114,8 +129,6 @@
 											<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
 											<a data-rating-value="2" data-rating-text="2" class=""></a>
 											<a data-rating-value="3" data-rating-text="3" class=""></a>
-											<a data-rating-value="4" data-rating-text="4" class=""></a>
-											<a data-rating-value="5" data-rating-text="5" class=""></a>
 											<div class="br-current-rating">1</div>
 										</div>
 									</div>
@@ -131,8 +144,6 @@
 											<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
 											<a data-rating-value="2" data-rating-text="2" class=""></a>
 											<a data-rating-value="3" data-rating-text="3" class=""></a>
-											<a data-rating-value="4" data-rating-text="4" class=""></a>
-											<a data-rating-value="5" data-rating-text="5" class=""></a>
 											<div class="br-current-rating">1</div>
 										</div>
 									</div>
@@ -148,8 +159,6 @@
 										<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
 										<a data-rating-value="2" data-rating-text="2" class=""></a>
 										<a data-rating-value="3" data-rating-text="3" class=""></a>
-										<a data-rating-value="4" data-rating-text="4" class=""></a>
-										<a data-rating-value="5" data-rating-text="5" class=""></a>
 										<div class="br-current-rating">1</div>
 									</div>
 								</div>
@@ -165,8 +174,6 @@
 										<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
 										<a data-rating-value="2" data-rating-text="2" class=""></a>
 										<a data-rating-value="3" data-rating-text="3" class=""></a>
-										<a data-rating-value="4" data-rating-text="4" class=""></a>
-										<a data-rating-value="5" data-rating-text="5" class=""></a>
 										<div class="br-current-rating">1</div>
 									</div>
 								</div>
@@ -220,6 +227,7 @@ var from = 27000;
 var to = 55000;
 var bv = '';
 var energie = '';
+var usage = '';
 var first_message = true;
 
 var saveResult = function (data) {
@@ -250,12 +258,14 @@ $(document).ready(function() {
 $('#submit_popup').click(function() {
 	bv = $( "#bv_popup option:selected" ).text();
 	energie = $( "#energie_popup option:selected" ).text();
+	usage = $( "#usage_popup option:selected" ).text();
 	if(energie == 'Gasoline') {
 		energie = 'Essence'
 	}
 	$( "#budget" ).html(from+"€ - "+to+"€");
 	$( "#energie" ).html(energie);
 	$( "#bv" ).html(bv);
+	$( "#usage" ).html(usage);
 	$('#myModal').modal('hide');
 	sendMessage("hello");
 });
@@ -287,6 +297,7 @@ function sendMessage(msg) {
 		data: {
 			input: msg,
 			bv: bv,
+			usage: usage,
 			energie: energie,
 			from: from,
 			to: to,
