@@ -15,33 +15,33 @@
   <!-- Theme style-->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!--
-  AdminLTE Skins. Choose a skin from the css/skins
-  folder instead of downloading all of them to reduce the load.
--->
-<link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-<!-- Morris chart-->
-<link rel="stylesheet" href="../bower_components/morris.js/morris.css">
-<!-- jvectormap-->
-<link rel="stylesheet" href="../bower_components/jvectormap/jquery-jvectormap.css">
-<!-- Date Picker-->
-<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-<!-- Daterange picker-->
-<link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
-<!-- bootstrap wysihtml5 - text editor-->
-<link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
-<!-- WARNING: Respond.js doesn't work if you view the page via file://-->
-<!--if lt IE 9
-script(src='https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')
-script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
--->
-<!-- Google Font-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load.
+  -->
+  <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+  <!-- Morris chart-->
+  <link rel="stylesheet" href="../bower_components/morris.js/morris.css">
+  <!-- jvectormap-->
+  <link rel="stylesheet" href="../bower_components/jvectormap/jquery-jvectormap.css">
+  <!-- Date Picker-->
+  <link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- Daterange picker-->
+  <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- bootstrap wysihtml5 - text editor-->
+  <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file://-->
+  <!--if lt IE 9
+  script(src='https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')
+  script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+  -->
+  <!-- Google Font-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue">
 
-  <div>
     <header class="main-header">
       <a href="#" class="logo">
         <span class="logo-mini"><b>IBM</b></span>
@@ -53,7 +53,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar-->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar navbar" style='height: 100%;'>
         <!-- sidebar: style can be found in sidebar.less-->
         <section class="sidebar">
           <!-- Sidebar user panel-->
@@ -141,7 +141,6 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
           <div class="pull-right hidden-xs"><b>Version</b> 1.0.0</div><strong>Copyright © 2018 <a href="https://www.ibm.com/fr-fr/">IBM FRANCE</a></strong> All rights
           reserved.
         </footer>
-      </div>
       <!-- ./wrapper-->
       <!--SCRIPTS-->
       <!-- jQuery 3-->
@@ -174,9 +173,9 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
       <!-- FastClick-->
       <script src="../bower_components/fastclick/lib/fastclick.js"></script>
 
+      <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
       <script>
         $(document).ready(function() {
-          console.log('lol')
           $.get("/admin/get_model/")
           .done(function(data) {
             console.log(data);
@@ -194,6 +193,7 @@ script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
               var td12='<td><button id="button_delete_'+data[i]["id_cloudant"]+'" value="'+data[i]["id_cloudant"]+'" class="btn btn-danger delete_button"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
               $("#myTable_body").append(td2+td3+td4+td5+td6+td7+td8+td9+td10+td11+td12);
             }
+            $('#myTable').DataTable();
           });
           $(document).on("click", '.delete_button',function(e) {
             var id_cloudant = this.value;
