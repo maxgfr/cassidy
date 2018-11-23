@@ -50,13 +50,15 @@
 									 <option value="Automatic">Automatic</option>
 								 </select>
 						 	</div>
-							<div class="form-group">
-								 <label style="font-size:18px" for="usage_popup">Usage</label>
-								 <select class="form-control" id="usage_popup">
-									 <option value="City">City</option>
-									 <option value="Out of city">Out of city</option>
-								 </select>
-						 	</div>
+							<!--
+								<div class="form-group">
+									 <label style="font-size:18px" for="usage_popup">Usage</label>
+									 <select class="form-control" id="usage_popup">
+										 <option value="City">City</option>
+										 <option value="Out of city">Out of city</option>
+									 </select>
+							 	</div>
+							-->
 					  	<div class="form-group">
 						    <label style="font-size:18px" for="budget_popup">Budget</label>
 						    <input type="text" id="budget_popup" name="budget_popup" value="" />
@@ -125,11 +127,10 @@
 							<div class="card-body">
 								<h5 class="card-text">Look</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
-										<div class="br-widget" id="look">
-											<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
-											<a data-rating-value="2" data-rating-text="2" class=""></a>
-											<a data-rating-value="3" data-rating-text="3" class=""></a>
-											<div class="br-current-rating">1</div>
+										<div class="br-widget">
+											<a id="look_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+											<a id="look_2" data-rating-value="2" data-rating-text="2" class=""></a>
+											<a id="look_3" data-rating-value="3" data-rating-text="3" class=""></a>
 										</div>
 									</div>
 							</div>
@@ -140,11 +141,10 @@
 							<div class="card-body">
 								<h5 class="card-text">Comfort</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
-										<div class="br-widget" id="confort">
-											<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
-											<a data-rating-value="2" data-rating-text="2" class=""></a>
-											<a data-rating-value="3" data-rating-text="3" class=""></a>
-											<div class="br-current-rating">1</div>
+										<div class="br-widget">
+											<a id="confort_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+											<a id="confort_2" data-rating-value="2" data-rating-text="2" class=""></a>
+											<a id="confort_3" data-rating-value="3" data-rating-text="3" class=""></a>
 										</div>
 									</div>
 							</div>
@@ -155,11 +155,10 @@
 							<div class="card-body">
 								<h5 class="card-text">Multimedia</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
-									<div class="br-widget" id="navigation">
-										<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
-										<a data-rating-value="2" data-rating-text="2" class=""></a>
-										<a data-rating-value="3" data-rating-text="3" class=""></a>
-										<div class="br-current-rating">1</div>
+									<div class="br-widget">
+										<a id="navigation_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+										<a id="navigation_2" data-rating-value="2" data-rating-text="2" class=""></a>
+										<a id="navigation_3" data-rating-value="3" data-rating-text="3" class=""></a>
 									</div>
 								</div>
 							</div>
@@ -170,11 +169,10 @@
 							<div class="card-body">
 								<h5 class="card-text">Assistance</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
-									<div class="br-widget" id="assistance">
-										<a data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
-										<a data-rating-value="2" data-rating-text="2" class=""></a>
-										<a data-rating-value="3" data-rating-text="3" class=""></a>
-										<div class="br-current-rating">1</div>
+									<div class="br-widget">
+										<a id="assistance_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+										<a id="assistance_2" data-rating-value="2" data-rating-text="2" class=""></a>
+										<a id="assistance_3" data-rating-value="3" data-rating-text="3" class=""></a>
 									</div>
 								</div>
 							</div>
@@ -258,14 +256,14 @@ $(document).ready(function() {
 $('#submit_popup').click(function() {
 	bv = $( "#bv_popup option:selected" ).text();
 	energie = $( "#energie_popup option:selected" ).text();
-	usage = $( "#usage_popup option:selected" ).text();
+	//usage = $( "#usage_popup option:selected" ).text();
 	if(energie == 'Gasoline') {
 		energie = 'Essence'
 	}
 	$( "#budget" ).html(from+"€ - "+to+"€");
 	$( "#energie" ).html(energie);
 	$( "#bv" ).html(bv);
-	$( "#usage" ).html(usage);
+	//$( "#usage" ).html(usage);
 	$('#myModal').modal('hide');
 	sendMessage("hello");
 });
@@ -297,7 +295,6 @@ function sendMessage(msg) {
 		data: {
 			input: msg,
 			bv: bv,
-			usage: usage,
 			energie: energie,
 			from: from,
 			to: to,
@@ -477,6 +474,32 @@ function displayData (data) {
 		$( "#watson_finition" ).html(data[0].modele);
 		$( "#watson_delai" ).html(data[0].delai + " days");
 		$( "#watson_prix" ).html(data[0].prix + " euros");
+		manageStar(data[0]);
+}
+
+function manageStar(data){
+	removeStar('navigation',3);
+	removeStar('look',3);
+	removeStar('assistance',3);
+	removeStar('confort',3);
+	selectStar('navigation',parseInt(data.multimedia));
+	selectStar('look',parseInt(data.esthetique));
+	selectStar('assistance',parseInt(data.assistance));
+	selectStar('confort',parseInt(data.confort));
+}
+
+function selectStar(type,number) {
+	var limit = number + 1;
+	for (var i = 1; i<limit; i++) {
+		$( "#"+type+"_"+i).addClass( "br-selected br-current");
+	}
+}
+
+function removeStar(type,number) {
+	var limit = number + 1;
+	for (var i = 1; i<limit; i++) {
+		$( "#"+type+"_"+i).removeClass( "br-selected br-current");
+	}
 }
 
 </script>
