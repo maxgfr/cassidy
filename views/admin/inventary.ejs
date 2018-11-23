@@ -67,8 +67,8 @@
           <ul data-widget="tree" class="sidebar-menu">
             <li class="header">Navigation</li>
             <li><a href="/admin/add"><i class="fa fa-plus"></i><span> Create a new model</span></a></li>
-            <li class="active"><a href="/admin"><i class="fa fa-list"></i><span> Factory models</span></a></li>
-            <li><a href="/admin/inventary"><i class="fa fa-clipboard"></i><span> WIP Inventary</span></a></li>
+            <li><a href="/admin"><i class="fa fa-list"></i><span> Factory models</span></a></li>
+            <li class="active"><a href="/admin/inventary"><i class="fa fa-clipboard"></i><span> WIP Inventary</span></a></li>
             <li><a href="/" target="_blank"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
           </ul>
           <!-- /.sidebar-->
@@ -78,10 +78,10 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header)-->
         <section class="content-header">
-          <h1>Models<small>Display</small></h1>
+          <h1>Models<small>Inventary</small></h1>
           <ol class="breadcrumb">
             <li><i class="fa fa-car"></i> Models</li>
-            <li class="active">Display</li>
+            <li class="active">Inventary</li>
           </ol>
         </section>
 
@@ -92,7 +92,7 @@
           <!-- Default box -->
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Display</h3>
+              <h3 class="box-title">Inventary</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -175,7 +175,7 @@
       <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
       <script>
         $(document).ready(function() {
-          $.get("/admin/get_model/")
+          $.get("/admin/get_model_inventary/")
           .done(function(data) {
             console.log(data);
             for(var i=0;i<data.length;i++) {
