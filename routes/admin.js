@@ -16,7 +16,7 @@ router.get('/get_model', function(req, res, next) {
   mydb.list({ include_docs: true }, function(err, body) {
     if (!err) {
       body.rows.forEach(function(row) {
-        if(!row.doc.inventary || row.doc.inventary == false)
+        if(!row.doc.inventary && row.doc.modele|| row.doc.inventary == false && row.doc.modele)
           data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, usage: row.doc.usage, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
       });
       res.json(data);
@@ -40,7 +40,7 @@ router.get('/get_model_inventary', function(req, res, next) {
     if (!err) {
       body.rows.forEach(function(row) {
         if(row.doc.inventary || row.doc.inventary == true)
-          data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, usage: row.doc.usage, confort: row.doc.confort, esthetique: row.doc.esthetique, assistance: row.doc.assistance, multimedia: row.doc.multimedia});
+          data.push({id_cloudant : row.doc._id, prix: row.doc.prix, delai: row.doc.delai, modele: row.doc.modele, energie: row.doc.energie, bv: row.doc.bv, usage: row.doc.usage, color: row.doc.color, options: row.doc.options});
       });
       res.json(data);
     } else {
@@ -88,6 +88,33 @@ router.post('/add', function(req, res, next) {
     return;
   }
   mydb.insert({ "prix": prix, "delai": delai, "modele": modele, "energie": energie, "bv": bv, "usage": usage, "confort": confort, "esthetique": esthetique, "assistance": assistance, "multimedia": multimedia, "inventary": inventary }, function(err, body, header) {
+    if (err) {
+      return null; res.send('[mydb.insert] ', err.message);
+    }
+    res.send("New entry in the database");
+  });
+});
+
+router.get('/add_inventary', function(req, res, next) {
+  res.render('admin/add_inventary');
+});
+
+router.post('/add_inventary', function(req, res, next) {
+  var prix = req.body.prix;
+  var delai = req.body.delai;
+  var modele = req.body.modele;
+  var energie = req.body.energie;
+  var bv = req.body.bv;
+  var usage = req.body.usage;
+  var color = req.body.color;
+  var options = req.body.options;
+  var inventary = req.body.inventary;
+  //console.log(mydb);
+  if(!mydb) {
+    res.send("No database linked...");
+    return;
+  }
+  mydb.insert({ "prix": prix, "delai": delai, "modele": modele, "energie": energie, "bv": bv, "usage": usage, "color": color, "options": options, "inventary": inventary }, function(err, body, header) {
     if (err) {
       return null; res.send('[mydb.insert] ', err.message);
     }

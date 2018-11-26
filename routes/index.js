@@ -5,10 +5,13 @@ const _ = require('lodash');
 
 const worskpace_delai = '82d35a5b-c0e2-4fd8-8ac9-df6248f0042d';
 const worskpace_main = 'e3c52413-34fd-4dd3-b407-a84919a8251e';
-var conversation_id, context_array, original_body, usage = null;
+var conversation_id, context_array, usage, number = null;
 
 router.get('/', function(req, res, next) {
   context_array = [];
+  conversation_id = '';
+  usage= '';
+  number = 0;
   if (!conversation) {
     console.log("Conversation non initialisée");
     res.render('error');
@@ -62,14 +65,15 @@ router.post('/', function(req, res, next) {
           if (err) {
             console.error(err);
           } else {
-            //console.log(response);
+            console.log(response);
             saveDialog(conversation_id, req.body.input, response.output.text[0], context_array.length);
             var object = _.find(response.entities, 'entity');
             if(object) {
-              console.log(object);
+              //console.log(object);
               _.assign(response.context, {'usage' :object.entity});
               usage = object.entity;
             }
+            number++;
             context_array.push(response.context);
             if(response.output.nodes_visited == 'Opening') {
               res.send([response.output.text[0], '', {}]);

@@ -66,9 +66,10 @@
           <!-- sidebar menu: : style can be found in sidebar.less-->
           <ul data-widget="tree" class="sidebar-menu">
             <li class="header">Navigation</li>
-            <li><a href="/admin/add"><i class="fa fa-plus"></i><span> Create a new model</span></a></li>
             <li><a href="/admin"><i class="fa fa-list"></i><span> Factory models</span></a></li>
-            <li class="active"><a href="/admin/inventary"><i class="fa fa-clipboard"></i><span> WIP Inventary</span></a></li>
+            <li class="active"><a href="/admin/inventary"><i class="fa fa-clipboard"></i><span> WIP & Inventary</span></a></li>
+            <li><a href="/admin/add"><i class="fa fa-plus"></i><span> Add entry to factory model</span></a></li>
+            <li><a href="/admin/add_inventary"><i class="fa fa-plus-circle"></i><span> Add entry to WIP & inventary</span></a></li>
             <li><a href="/" target="_blank"><i class="fa fa-comments"></i><span> Chatbot</span></a></li>
           </ul>
           <!-- /.sidebar-->
@@ -112,10 +113,8 @@
                         <th>Energy</th>
                         <th>Gearbox</th>
                         <th>Usage</th>
-                        <th>Comfort</th>
-                        <th>Look</th>
-                        <th>Assistance</th>
-                        <th>Multimedia</th>
+                        <th>Color</th>
+                        <th>Option List</th>
                         <th>Price</th>
                         <th>Time Limit</th>
                         <th></th>
@@ -183,14 +182,12 @@
               var td3='<td>'+data[i]["energie"]+'</td>';
               var td4='<td>'+data[i]["bv"]+'</td>';
               var td5='<td>'+data[i]["usage"]+'</td>';
-              var td6='<td>'+data[i]["confort"]+'</td>';
-              var td7='<td>'+data[i]["esthetique"]+'</td>';
-              var td8='<td>'+data[i]["assistance"]+'</td>';
-              var td9='<td>'+data[i]["multimedia"]+'</td>';
+              var td6='<td>'+data[i]["color"]+'</td>';
+              var td7='<td>'+data[i]["options"]+'</td>';
               var td10='<td>'+data[i]["prix"]+'</td>';
               var td11='<td>'+data[i]["delai"]+'</td>';
               var td12='<td><button id="button_delete_'+data[i]["id_cloudant"]+'" value="'+data[i]["id_cloudant"]+'" class="btn btn-danger delete_button"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>';
-              $("#myTable_body").append(td2+td3+td4+td5+td6+td7+td8+td9+td10+td11+td12);
+              $("#myTable_body").append(td2+td3+td4+td5+td6+td7+td10+td11+td12);
             }
             $('#myTable').DataTable();
           });
