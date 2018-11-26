@@ -17,9 +17,8 @@
         [{
             "credentials":
             {
-              "url": "",
-              "username": "",
-              "password": ""
+              "url": "https://gateway.watsonplatform.net/conversation/api",
+              "apiKey": ""
             },
             "label": "conversation"
         }]

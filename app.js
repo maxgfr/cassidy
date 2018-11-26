@@ -56,14 +56,15 @@ if (appEnv.services['cloudantNoSQLDB'] || appEnv.getService(/cloudant/)) {
 
 if (appEnv.services['conversation']) {
   // Load the Watson Conversation library.
-  var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+  var AssistantV2 = require('watson-developer-cloud/assistant/v2');
 
   // Initialize database with credentials
-  conversation = new ConversationV1({
-    username: appEnv.services['conversation'][0].credentials.username,
-    password: appEnv.services['conversation'][0].credentials.password,
-    version_date: ConversationV1.VERSION_DATE_2017_05_26
+  conversation =  new AssistantV2({
+   version: '2018-11-08',
+   iam_apikey: appEnv.services['conversation'][0].credentials.apiKey,
+   url: appEnv.services['conversation'][0].credentials.url
   });
+
   //console.log(conversation);
 }
 
