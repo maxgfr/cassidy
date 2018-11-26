@@ -69,7 +69,7 @@ router.post('/', function(req, res, next) {
           saveDialog(user_id, input, chatbot_response, context_array.length);
           context_array.push(response.context);
           number++;
-          res.send([chatbot_response, '', {}]);
+          res.send([chatbot_response, '', {}, usage]);
         });
       }
     }
@@ -77,7 +77,7 @@ router.post('/', function(req, res, next) {
       console.log('Found');
       var myResponse = "We found a car which matches your expectation !"
       saveDialog(user_id, input, myResponse, number);
-      res.send([myResponse, 'display_data', result]);
+      res.send([myResponse, 'display_data', result, usage]);
     }
   });
 });

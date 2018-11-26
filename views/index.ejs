@@ -332,6 +332,10 @@ function insertMessage(msg,res) {
 		var message = res[0];
 		var type = res[1];
 		var data = res[2];
+		var usage = res[3];
+		if(usage != '') {
+			$("#usage").html(usage);
+		}
 		if (type == "find_priority") {
 			findPriority(res)
 		} else if (type == "display_data") {
