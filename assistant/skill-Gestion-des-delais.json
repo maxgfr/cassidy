@@ -1,0 +1,734 @@
+{
+  "name": "Customer Care Sample Skill",
+  "intents": [
+    {
+      "intent": "Goodbye",
+      "examples": [
+        {
+          "text": "so long"
+        },
+        {
+          "text": "bye"
+        },
+        {
+          "text": "ciao"
+        },
+        {
+          "text": "arrivederci"
+        },
+        {
+          "text": "see ya"
+        },
+        {
+          "text": "good bye"
+        }
+      ],
+      "description": "Good byes"
+    },
+    {
+      "intent": "Cancel",
+      "examples": [
+        {
+          "text": "cancel that"
+        },
+        {
+          "text": "i changed my mind"
+        },
+        {
+          "text": "never mind"
+        },
+        {
+          "text": "forget it"
+        },
+        {
+          "text": "nevermind"
+        },
+        {
+          "text": "i don't want a table anymore anymore"
+        },
+        {
+          "text": "cancel the request"
+        }
+      ],
+      "description": "Cancel the current request"
+    },
+    {
+      "intent": "delaymax",
+      "examples": [
+        {
+          "text": "I want my care before summer"
+        },
+        {
+          "text": "delivery in february"
+        },
+        {
+          "text": "no"
+        },
+        {
+          "text": "I want my car maximum in 8 month"
+        },
+        {
+          "text": "I want my car maximum in 3 month"
+        },
+        {
+          "text": "I want to improve delivery date"
+        },
+        {
+          "text": "it is too late"
+        },
+        {
+          "text": "in january"
+        },
+        {
+          "text": "I would lide to have my in 3 month"
+        },
+        {
+          "text": "I would like to have my car in June"
+        }
+      ],
+      "description": "Date limite pour livraison"
+    },
+    {
+      "intent": "Thanks",
+      "examples": [
+        {
+          "text": "much appreciated"
+        },
+        {
+          "text": "thanks"
+        },
+        {
+          "text": "thank you"
+        },
+        {
+          "text": "thx"
+        },
+        {
+          "text": "thank you very much"
+        },
+        {
+          "text": "that's nice of you"
+        },
+        {
+          "text": "i appreciate it"
+        },
+        {
+          "text": "many thanks"
+        }
+      ],
+      "description": "Thanks"
+    },
+    {
+      "intent": "Customer_Care_Store_Hours",
+      "examples": [
+        {
+          "text": "What time does the central manchester store shut on a saturday?"
+        },
+        {
+          "text": "What time do stores close?"
+        },
+        {
+          "text": "What time is your store open on saturday?"
+        },
+        {
+          "text": "what are your hours"
+        },
+        {
+          "text": "will you open for christmas"
+        },
+        {
+          "text": "will you be open Memorial day"
+        },
+        {
+          "text": "when do you close"
+        },
+        {
+          "text": "how late y'all stay up till"
+        },
+        {
+          "text": "What time do you close"
+        },
+        {
+          "text": "What time do you open on Saturdays"
+        },
+        {
+          "text": "what time do you close on Sunday"
+        },
+        {
+          "text": "What time do you close today"
+        },
+        {
+          "text": "Hours of operation"
+        },
+        {
+          "text": "how late are you open tonight"
+        },
+        {
+          "text": "Are you open on Sunday"
+        },
+        {
+          "text": "how late are you open"
+        },
+        {
+          "text": "Are you closing early today"
+        },
+        {
+          "text": "Are you closed new Year's eve"
+        },
+        {
+          "text": "how early do you open on Saturdays"
+        },
+        {
+          "text": "how late are you there"
+        },
+        {
+          "text": "will you open on christmas"
+        },
+        {
+          "text": "Are the stores open early?"
+        },
+        {
+          "text": "Are you open during thanksgiving?"
+        },
+        {
+          "text": "Are you open on bank holidays?"
+        },
+        {
+          "text": "Are you open on sundays, and if so what are the hours?"
+        },
+        {
+          "text": "At what hour can I swing by?"
+        },
+        {
+          "text": "Can you tell me how late the stores are open till?"
+        },
+        {
+          "text": "Does the store in the city center opens till 8pm on weekends?"
+        },
+        {
+          "text": "How early do you open?"
+        },
+        {
+          "text": "How long are you open?"
+        },
+        {
+          "text": "Is the branch open now?"
+        },
+        {
+          "text": "What are the business hours of the store nearest to me?"
+        },
+        {
+          "text": "What are the hours of operation?"
+        },
+        {
+          "text": "What are the saturday opening times for the local store?"
+        },
+        {
+          "text": "What are ur opening hours?"
+        },
+        {
+          "text": "What are your hous?"
+        },
+        {
+          "text": "What is the opening time for the washington store?"
+        },
+        {
+          "text": "What time are you closing today?"
+        }
+      ],
+      "description": "Find business hours."
+    },
+    {
+      "intent": "General_Greetings",
+      "examples": [
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hello I am looking for some help here"
+        },
+        {
+          "text": "Hey how are you doing"
+        },
+        {
+          "text": "Hey there all"
+        },
+        {
+          "text": "Hey there"
+        },
+        {
+          "text": "Hey twin"
+        },
+        {
+          "text": "Hey you"
+        },
+        {
+          "text": "Hi advisor"
+        },
+        {
+          "text": "Hi there"
+        },
+        {
+          "text": "How are things going?"
+        },
+        {
+          "text": "How are you today?"
+        },
+        {
+          "text": "How have you been?"
+        },
+        {
+          "text": "How is it going?"
+        },
+        {
+          "text": "How r u?"
+        },
+        {
+          "text": "Looking good eve"
+        },
+        {
+          "text": "Ok take me back"
+        },
+        {
+          "text": "What's new?"
+        },
+        {
+          "text": "What's up?"
+        },
+        {
+          "text": "Who is this?"
+        },
+        {
+          "text": "You there"
+        },
+        {
+          "text": "hi"
+        },
+        {
+          "text": "yo"
+        },
+        {
+          "text": "hiya"
+        },
+        {
+          "text": "Good day"
+        },
+        {
+          "text": "Good evening"
+        },
+        {
+          "text": "Good morning"
+        },
+        {
+          "text": "Hello Agent"
+        },
+        {
+          "text": "Have you been well?"
+        },
+        {
+          "text": "Greetings"
+        },
+        {
+          "text": "Good to see you"
+        }
+      ],
+      "description": "Greetings"
+    },
+    {
+      "intent": "Help",
+      "examples": [
+        {
+          "text": "i need assistance"
+        },
+        {
+          "text": "help me"
+        },
+        {
+          "text": "help me decide"
+        },
+        {
+          "text": "help"
+        },
+        {
+          "text": "can you assist me"
+        },
+        {
+          "text": "can you help"
+        }
+      ],
+      "description": "Ask for help"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "reply",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "yes",
+          "synonyms": [
+            "definitely",
+            "go for it",
+            "let's do it",
+            "ok",
+            "please",
+            "sure",
+            "why not",
+            "yeah",
+            "yes",
+            "you bet",
+            "you betcha",
+            "yep"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "no",
+          "synonyms": [
+            "definitely not",
+            "don't think so",
+            "dont think so",
+            "i think not",
+            "nope",
+            "not at this time",
+            "not now"
+          ]
+        }
+      ]
+    }
+  ],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-07-10"
+    }
+  },
+  "description": "Virtual assistant demo skill",
+  "dialog_nodes": [
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "What is your maximum delay expected"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_6_1542921165059",
+      "metadata": {},
+      "conditions": "$delaymaxset:no",
+      "dialog_node": "node_7_1542922084887",
+      "previous_sibling": "node_9_1542983443197"
+    },
+    {
+      "type": "standard",
+      "title": "set maximum delay",
+      "output": {
+        "text": {
+          "values": [
+            "ok checking for configurations close to your requirements available in $delaymax month"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_6_1542921165059",
+      "context": {
+        "delaymax": "@sys-number"
+      },
+      "metadata": {},
+      "conditions": "#delaymax",
+      "dialog_node": "node_9_1542983443197"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Hello, your current configuration can be available in $delay month. Does it fit with your expectations or constraints"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Opening",
+      "context": {
+        "delay": 6
+      },
+      "disabled": true,
+      "metadata": {},
+      "conditions": "true",
+      "dialog_node": "node_1_1542920639711",
+      "previous_sibling": "node_3_1542920922898"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "you said yes"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Opening",
+      "disabled": true,
+      "metadata": {},
+      "conditions": "@reply:yes",
+      "dialog_node": "node_2_1542920744074",
+      "previous_sibling": "node_1_1542920639711"
+    },
+    {
+      "type": "standard",
+      "title": "delay ok",
+      "output": {},
+      "parent": "Opening",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@reply",
+      "dialog_node": "node_3_1542920922898",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Hello. Good evening",
+            "Hi. Good evening",
+            "Hello. How can I help this evening?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_13_1502484041694",
+      "metadata": {},
+      "conditions": "now().after('17:00:00')",
+      "dialog_node": "node_15_1488295465298",
+      "previous_sibling": "node_1_1495022305143"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Hello. Good afternoon",
+            "Hi there. It's a beautiful afternoon",
+            "Good afternoon. How can I help?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_13_1502484041694",
+      "metadata": {},
+      "conditions": "now().after('12:00:00') && now().before('16:59:59')",
+      "dialog_node": "node_1_1495022305143",
+      "previous_sibling": "node_16_1488295517679"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Hello",
+            "Hi there",
+            "Hi. How can I help"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_13_1502484041694",
+      "metadata": {},
+      "dialog_node": "node_28_1522448362216",
+      "previous_sibling": "node_15_1488295465298"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Hello. Good morning",
+            "It's a beautiful morning. Hello",
+            "Hi there. How can I help you this morning?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_13_1502484041694",
+      "metadata": {},
+      "conditions": "now().after('04:00:00') && now().before('11:59:59')",
+      "dialog_node": "node_16_1488295517679"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "You're welcome. Just let me know if you need anything else",
+            "No problem. Just let me know if you need anything else",
+            "My pleasure. Just let me know if you need anything else"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_1_1516824993307",
+      "metadata": {},
+      "conditions": "#Thanks",
+      "dialog_node": "node_2_1468243505617",
+      "previous_sibling": "node_12_1468329566917"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "So long",
+            "See ya",
+            "Good bye"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_1_1516824993307",
+      "metadata": {},
+      "conditions": "#Goodbye",
+      "dialog_node": "node_12_1468329566917",
+      "previous_sibling": "node_13_1502484041694"
+    },
+    {
+      "type": "standard",
+      "output": {},
+      "parent": "node_1_1516824993307",
+      "metadata": {},
+      "conditions": "#General_Greetings",
+      "dialog_node": "node_13_1502484041694"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Ok fine. I invite you to pass the order. Thank you for your confidence. I will direct you to the final ordering system"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_3_1542920922898",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_12_1468329566917"
+      },
+      "conditions": "@reply:yes",
+      "dialog_node": "node_4_1542920967987",
+      "previous_sibling": "node_6_1542921165059"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Ok let's try to optimise this delay"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_3_1542920922898",
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_6_1542921165059"
+      },
+      "conditions": "@reply:no",
+      "dialog_node": "node_5_1542921052174",
+      "previous_sibling": "node_4_1542920967987"
+    },
+    {
+      "type": "standard",
+      "title": "delay  nok",
+      "output": {},
+      "parent": "node_3_1542920922898",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_9_1542983443197"
+      },
+      "conditions": "@reply:no",
+      "dialog_node": "node_6_1542921165059",
+      "digress_out": "allow_all"
+    },
+    {
+      "type": "folder",
+      "title": "Small Talk",
+      "metadata": {},
+      "digress_in": "not_available",
+      "dialog_node": "node_1_1516824993307",
+      "previous_sibling": "Opening"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "text": {
+          "values": [
+            "I didn't understand can you try again"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "metadata": {},
+      "conditions": "anything_else",
+      "digress_in": "returns",
+      "dialog_node": "node_2_1467831978407",
+      "digress_out": "allow_all",
+      "previous_sibling": "node_1_1516824993307"
+    },
+    {
+      "type": "standard",
+      "title": "Opening",
+      "output": {
+        "text": {
+          "values": [
+            "Hello, your current configuration can be available in $delay month. Does it fit with your expectations or constraints"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "context": {
+        "delay": 6,
+        "delaymax": "",
+        "delaymaxset": "no"
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "welcome",
+      "digress_in": "does_not_return",
+      "dialog_node": "Opening",
+      "digress_out": "allow_all"
+    }
+  ],
+  "workspace_id": "b29c24b7-46ac-4523-830a-c27e4f81e1e7",
+  "counterexamples": [],
+  "learning_opt_out": false,
+  "status": "Available"
+}
