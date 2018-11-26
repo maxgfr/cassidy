@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const uuidv4 = require('uuid/v4');
+const _ = require('lodash');
 
 const worskpace_delai = '82d35a5b-c0e2-4fd8-8ac9-df6248f0042d';
 const worskpace_main = 'e3c52413-34fd-4dd3-b407-a84919a8251e';
-var conversation_id, context_array  = null;
+var conversation_id, context_array, original_body, usage = null;
 
 router.get('/', function(req, res, next) {
   context_array = [];
@@ -32,39 +33,52 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  var bdy = req.body;
+  var input = req.body.input;
   if(context_array.length == 0) {
     context_array.push({
-      "context": {
-        "Gear": req.body.bv,
-        "Energy": req.body.energie,
-        "budget": req.body.to,
-        "vehicle": "5008",
-        "timezone": "Europe/Paris",
-        "conversation_id": conversation_id
-      }
+      gearbox: req.body.bv,
+      energy: req.body.energie,
+      from: req.body.from,
+      to: req.body.to,
+      vehicle: '5008',
+      timezone: 'Europe/Paris',
+      conversation_id: conversation_id
     });
   }
-  console.log(context_array);
-  makeCloudantRequest(bdy, function(result){
+  //console.log(context_array);
+  makeCloudantRequest(req.body, function(result){
     if(result == null || result.length != 1) {
       console.log('Not found');
-      conversation.message({
-        input: {
-          text: req.body.input
-        },
-        context: context_array[context_array.length - 1],
-        workspace_id: worskpace_main
-      }, function(err, response) {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(response);
-          saveDialog(conversation_id, req.body.input, response.output.text[0], context_array.length);
-          context_array.push(response.context);
-          res.send([response.output.text[0], '', {}]);
-        }
-      });
+      if(usage) {
+        console.log('On a l"usage');
+      } else {
+        conversation.message({
+          input: {
+            text: input
+          },
+          context: context_array[context_array.length - 1],
+          workspace_id: worskpace_main
+        }, function(err, response) {
+          if (err) {
+            console.error(err);
+          } else {
+            //console.log(response);
+            saveDialog(conversation_id, req.body.input, response.output.text[0], context_array.length);
+            var object = _.find(response.entities, 'entity');
+            if(object) {
+              console.log(object);
+              _.assign(response.context, {'usage' :object.entity});
+              usage = object.entity;
+            }
+            context_array.push(response.context);
+            if(response.output.nodes_visited == 'Opening') {
+              res.send([response.output.text[0], '', {}]);
+            } else {
+              res.send([response.output.text[0], '', {}]);
+            }
+          }
+        });
+      }
     }
     else {
       console.log('Found');
@@ -72,7 +86,7 @@ router.post('/', function(req, res, next) {
       saveDialog(conversation_id, req.body.input, myResponse, number);
       res.send([myResponse, 'display_data', result]);
     }
-  }.bind(req));
+  });
 });
 
 function makeCloudantRequest(params, callback) {
@@ -81,7 +95,10 @@ function makeCloudantRequest(params, callback) {
     delete params["input"];
     delete params["from"];
     delete params["to"];
-    console.log(params);
+    if(usage) {
+      params["usage"] = usage;
+    }
+    //console.log(params);
     var data = [];
     if(!mydb) {
       callback(data);
