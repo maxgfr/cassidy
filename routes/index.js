@@ -19,11 +19,9 @@ router.get('/', function(req, res, next) {
     console.log("Conversation initialisée");
     createSession(assistant_main, function(result) {
       session_main = result.session_id;
-      //
     });
     createSession(assistant_delai, function(result) {
       session_delai = result.session_id;
-      //sendConversationMessage(assistant_delai,session_delai, '', function(result){console.log(result)});
     });
     res.render('index', {
       conversation: conversation
@@ -50,13 +48,12 @@ router.post('/', function(req, res, next) {
       console.log('Not found');
       if(usage) {
         console.log('On a l"usage');
-        sendConversationMessage(assistant_delai, session_delai, input, context_array[context_array.length - 1], function(result){
+        sendConversationMessage(assistant_delai, session_delai, input, context_array[context_array.length - 1], function(response){
           console.log(response);
         });
       } else {
-        sendConversationMessage(assistant_main, session_main, input, context_array[context_array.length - 1], function(result){
-          console.log(response);
-          saveDialog(user_id, req.body.input, response.output.text[0], context_array.length);
+        sendConversationMessage(assistant_main, session_main, input, context_array[context_array.length - 1], function(response){
+          saveDialog(user_id, input, response.output.generic[0].text, context_array.length);
           var object = _.find(response.entities, 'entity');
           if(object) {
             //console.log(object);
@@ -65,18 +62,14 @@ router.post('/', function(req, res, next) {
           }
           number++;
           context_array.push(response.context);
-          if(response.output.nodes_visited == 'Opening') {
-            res.send([response.output.text[0], '', {}]);
-          } else {
-            res.send([response.output.text[0], '', {}]);
-          }
+          res.send([response.output.generic[0].text, '', {}]);
         });
       }
     }
     else {
       console.log('Found');
       var myResponse = "We found a car which matches your expectation !"
-      saveDialog(user_id, req.body.input, myResponse, number);
+      saveDialog(user_id, input, myResponse, number);
       res.send([myResponse, 'display_data', result]);
     }
   });
@@ -151,7 +144,6 @@ function sendConversationMessage(assistant_id, session_id, msg, context, callbac
       if (err) {
         console.error(err);
       } else {
-        console.log(response);
         callback(response);
       }
     });

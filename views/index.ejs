@@ -265,7 +265,7 @@ $('#submit_popup').click(function() {
 	$( "#bv" ).html(bv);
 	//$( "#usage" ).html(usage);
 	$('#myModal').modal('hide');
-	sendMessage("hello");
+	sendMessage("");
 });
 
 $('.message-submit').click(function() {
@@ -311,17 +311,17 @@ function sendMessage(msg) {
 }
 
 function insertMessage(msg,res) {
-	var time_to_rep = 1000 + + (Math.random() * 20) * 100;
-	if ($.trim(msg) == '') {
-		return false;
-	}
-	if(!first_message) {
+	var time_to_rep = 1000 + (Math.random() * 20) * 100;
+	if(first_message) {
+		first_message = false;
+	} else {
+		if ($.trim(msg) == '') {
+			return false;
+		}
 		time_to_rep = 100;
 		$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
 		$('.message-input').val(null);
 		updateScrollbar();
-	} else {
-		first_message = false;
 	}
 	setTimeout(function() {
 		if ($('.message-input').val() != '') {
