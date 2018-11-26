@@ -5,9 +5,10 @@ const _ = require('lodash');
 
 const assistant_delai = '6c7e70c7-be84-422d-9b45-8f0a45e8bc32';
 const assistant_main = '8ad1f141-a944-4aac-b49c-d992c7b5fa62';
-var context_array, usage, number, session_delai, session_main, user_id = null;
+var context_array, usage, number, session_delai, session_main, user_id, entity_list = null;
 
 router.get('/', function(req, res, next) {
+  entity_list = {}
   context_array = [];
   session_delai = session_main  = usage = '';
   user_id = uuidv4();
@@ -49,20 +50,26 @@ router.post('/', function(req, res, next) {
       if(usage) {
         console.log('On a l"usage');
         sendConversationMessage(assistant_delai, session_delai, input, context_array[context_array.length - 1], function(response){
-          console.log(response);
         });
       } else {
         sendConversationMessage(assistant_main, session_main, input, context_array[context_array.length - 1], function(response){
-          saveDialog(user_id, input, response.output.generic[0].text, context_array.length);
-          var object = _.find(response.entities, 'entity');
-          if(object) {
-            //console.log(object);
-            _.assign(response.context, {'usage' :object.entity});
-            usage = object.entity;
+          var chatbot_response = '';
+          for(var i=0; i<response.output.generic.length; i++) {
+            //console.log(response.output.generic[i]);
+            chatbot_response +=  response.output.generic[i].text + '. ';
           }
-          number++;
+          for(var i=0; i<response.output.entities.length; i++) {
+            //console.log(response.output.entities[i]);
+            entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
+          }
+          if(entity_list["usage"]) {
+            usage = entity_list["usage"];
+            _.assign(response.context, {'usage' : entity_list["usage"]});
+          }
+          saveDialog(user_id, input, chatbot_response, context_array.length);
           context_array.push(response.context);
-          res.send([response.output.generic[0].text, '', {}]);
+          number++;
+          res.send([chatbot_response, '', {}]);
         });
       }
     }
@@ -144,6 +151,7 @@ function sendConversationMessage(assistant_id, session_id, msg, context, callbac
       if (err) {
         console.error(err);
       } else {
+        console.log(response);
         callback(response);
       }
     });
