@@ -77,10 +77,10 @@ router.post('/', function(req, res, next) {
     if(result == null || result.length != 1) {
       console.log('Not found');
       if (usage && criteria && !color) {
-        makeCloudantClosest(req.body, function(res){
-          res.send(['We found a car. Now tell me the color', 'display_data', res, text_usage]);
+        makeCloudantClosest(req.body, function(myResult){
+          res.send(['We found a car. Now tell me the color', 'display_data', myResult, text_usage]);
         });
-      } 
+      }
       else {
         if (usage && criteria && color) {
           current_assistant = assistant_delai;
@@ -101,20 +101,17 @@ router.post('/', function(req, res, next) {
             //console.log(response.output.entities[i]);
             entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
           }
+          var priority = '';
           if(entity_list["usage"]) {
             text_usage = entity_list["usage"];
             _.assign(response.context, {'usage' : entity_list["usage"]});
             usage = true;
-            saveDialog(user_id, input, chatbot_response, context_array.length);
-            context_array.push(response.context);
-            num_msg++;
-            res.send([chatbot_response, 'find_priority', {}, text_usage]);
-          } else {
-            saveDialog(user_id, input, chatbot_response, context_array.length);
-            context_array.push(response.context);
-            num_msg++;
-            res.send([chatbot_response, '', {}, text_usage]);
+            priority = 'find_priority';
           }
+          saveDialog(user_id, input, chatbot_response, context_array.length);
+          context_array.push(response.context);
+          num_msg++;
+          res.send([chatbot_response, priority, {}, text_usage]);
         });
       }
     }

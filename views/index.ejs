@@ -389,8 +389,7 @@ function findPriority (res, message) {
 			dataType: 'json',
 			success: function (resultat) {
 				console.log(resultat)
-				var message = resultat[0];
-				displayMessage(message);
+				displayData(resultat[2], resultat[0]);
 			},
 			error: function (data) {
 				console.log('Error:', data);
