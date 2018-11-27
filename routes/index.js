@@ -49,12 +49,14 @@ router.get('/', function(req, res, next) {
     console.log("Conversation initialisée");
     createSession(assistant_main, function(result) {
       session_main = result.session_id;
+      console.log('Session main : ',session_main)
     });
     createSession(assistant_delai, function(result) {
       session_delai = result.session_id;
-    });
-    res.render('index', {
-      conversation: conversation
+      console.log('Session delai : ',session_delai)
+      res.render('index', {
+        conversation: conversation
+      });
     });
   }
 });
