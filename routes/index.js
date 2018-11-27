@@ -70,8 +70,35 @@ router.post('/', function(req, res, next) {
       }
       sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
         console.log('input:', input);
-        var rep = ananlyseOutput(response, input);
-        res.send([rep, '', {}, usage]);
+        chatbot_response = '';
+        for(var i=0; i<response.output.generic.length; i++) {
+          //console.log(response.output.generic[i]);
+          chatbot_response += response.output.generic[i].text + '. ';
+        }
+        for(var i=0; i<response.output.entities.length; i++) {
+          //console.log(response.output.entities[i]);
+          entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
+        }
+        if(entity_list["usage"]) {
+          usage = entity_list["usage"];
+          _.assign(response.context, {'usage' : entity_list["usage"]});
+          // Initialization chatbot 2
+          sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response2){
+            console.log(chatbot_response);
+            for(var i=0; i<response2.output.generic.length; i++) {
+              //console.log(response2.output.generic[i]);
+              chatbot_response +=  response2.output.generic[i].text + '. ';
+            }
+            saveDialog(user_id, input, chatbot_response, context_array.length);
+            context_array.push(response2.context);
+            number++;
+          });
+        } else {
+          saveDialog(user_id, input, chatbot_response, context_array.length);
+          context_array.push(response.context);
+          number++;
+        }
+        res.send([chatbot_response, '', {}, usage]);
       });
     }
     else {
@@ -155,40 +182,6 @@ function sendConversationMessage(assistant_id, session_id, msg, context, callbac
         callback(response);
       }
     });
-}
-
-function ananlyseOutput(response, input) {
-  chatbot_response = '';
-  for(var i=0; i<response.output.generic.length; i++) {
-    //console.log(response.output.generic[i]);
-    chatbot_response += response.output.generic[i].text + '. ';
-  }
-  for(var i=0; i<response.output.entities.length; i++) {
-    //console.log(response.output.entities[i]);
-    entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
-  }
-  if(entity_list["usage"]) {
-    usage = entity_list["usage"];
-    _.assign(response.context, {'usage' : entity_list["usage"]});
-    // Initialization chatbot 2
-    sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response2){
-      console.log(chatbot_response);
-      for(var i=0; i<response2.output.generic.length; i++) {
-        //console.log(response2.output.generic[i]);
-        chatbot_response +=  response2.output.generic[i].text + '. ';
-      }
-      saveDialog(user_id, input, chatbot_response, context_array.length);
-      context_array.push(response2.context);
-      number++;
-      return chatbot_response;
-    });
-  } else {
-    saveDialog(user_id, input, chatbot_response, context_array.length);
-    context_array.push(response.context);
-    number++;
-    return chatbot_response;
-  }
-
 }
 
 function decisionGet (mdl, callback) {
