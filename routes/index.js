@@ -80,42 +80,43 @@ router.post('/', function(req, res, next) {
         makeCloudantClosest(req.body, function(res){
           res.send(['We found a car. Now tell me the color', 'display_data', res, text_usage]);
         });
-        return;
-      }
-      else if (usage && criteria && color) {
-        current_assistant = assistant_delai;
-        current_session = session_delai;
-      }
+      } 
       else {
-        current_assistant = assistant_main;
-        current_session = session_main;
+        if (usage && criteria && color) {
+          current_assistant = assistant_delai;
+          current_session = session_delai;
+        }
+        else {
+          current_assistant = assistant_main;
+          current_session = session_main;
+        }
+        sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
+          //console.log('input:', input);
+          chatbot_response = '';
+          for(var i=0; i<response.output.generic.length; i++) {
+            //console.log(response.output.generic[i]);
+            chatbot_response += response.output.generic[i].text + '. ';
+          }
+          for(var i=0; i<response.output.entities.length; i++) {
+            //console.log(response.output.entities[i]);
+            entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
+          }
+          if(entity_list["usage"]) {
+            text_usage = entity_list["usage"];
+            _.assign(response.context, {'usage' : entity_list["usage"]});
+            usage = true;
+            saveDialog(user_id, input, chatbot_response, context_array.length);
+            context_array.push(response.context);
+            num_msg++;
+            res.send([chatbot_response, 'find_priority', {}, text_usage]);
+          } else {
+            saveDialog(user_id, input, chatbot_response, context_array.length);
+            context_array.push(response.context);
+            num_msg++;
+            res.send([chatbot_response, '', {}, text_usage]);
+          }
+        });
       }
-      sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
-        //console.log('input:', input);
-        chatbot_response = '';
-        for(var i=0; i<response.output.generic.length; i++) {
-          //console.log(response.output.generic[i]);
-          chatbot_response += response.output.generic[i].text + '. ';
-        }
-        for(var i=0; i<response.output.entities.length; i++) {
-          //console.log(response.output.entities[i]);
-          entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
-        }
-        if(entity_list["usage"]) {
-          text_usage = entity_list["usage"];
-          _.assign(response.context, {'usage' : entity_list["usage"]});
-          usage = true;
-          saveDialog(user_id, input, chatbot_response, context_array.length);
-          context_array.push(response.context);
-          num_msg++;
-          res.send([chatbot_response, 'find_priority', {}, text_usage]);
-        } else {
-          saveDialog(user_id, input, chatbot_response, context_array.length);
-          context_array.push(response.context);
-          num_msg++;
-          res.send([chatbot_response, '', {}, text_usage]);
-        }
-      });
     }
     else {
       console.log('Found');
@@ -141,7 +142,7 @@ function makeCloudantRequest(params, callback) {
     if(!mydb) {
       callback(data);
     }
-    mydb.find({ selector: params }, function(err, result) {
+    mydb.find({ selector: selector }, function(err, result) {
       if (!err) {
         for (var i = 0; i < result.docs.length; i++) {
           if (result.docs[i].prix < to && result.docs[i].prix > from) {
@@ -175,14 +176,14 @@ function makeCloudantClosest(params, callback) {
     if(text_usage) {
       selector["usage"] = text_usage;
     }
-    console.log(selector);
+    console.log(selector, from, to);
     var data = [];
     var resultat = [];
     var actual_value = 100;
     if(!mydb) {
       callback(data);
     }
-    mydb.find({ selector: params }, function(err, result) {
+    mydb.find({ selector: selector }, function(err, result) {
       if (!err) {
         for (var i = 0; i < result.docs.length; i++) {
           if (result.docs[i].prix < to && result.docs[i].prix > from) {
