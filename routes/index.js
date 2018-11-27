@@ -99,7 +99,7 @@ router.post('/', function(req, res, next) {
       if(val_u == 'YES') {
         isOptions = true;
         car['prix'] = parseInt(car["prix"]) + price_all_options;
-        res.send(['We updated the price with the options', 'display_data', car, text_usage]);
+        res.send(['We updated the price with the options selected.', 'display_data', car, text_usage]);
         return;
       }
       if(val_u == 'NO') {
