@@ -14,8 +14,8 @@ const appEnvOpts = vcapLocal ? { vcap: vcapLocal} : {}
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 /* End - Read Credentials */
 
-const assistant_delai = '6c7e70c7-be84-422d-9b45-8f0a45e8bc32';
-const assistant_main = '8ad1f141-a944-4aac-b49c-d992c7b5fa62';
+const assistant_delai = '37a53322-9d8d-4d34-a865-ad3dfb971a91';
+const assistant_main = '90e40c7d-06ae-44f6-ae73-af3b21a649b7';
 var context_array,
   text_usage,
   num_msg,

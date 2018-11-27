@@ -409,7 +409,7 @@
   "metadata": {
     "api_version": {
       "major_version": "v1",
-      "minor_version": "2018-07-10"
+      "minor_version": "2018-09-20"
     }
   },
   "description": "Virtual assistant demo skill",
