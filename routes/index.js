@@ -54,9 +54,9 @@ router.get('/', function(req, res, next) {
     createSession(assistant_delai, function(result) {
       session_delai = result.session_id;
       console.log('Session delai : ',session_delai)
-      res.render('index', {
-        conversation: conversation
-      });
+    });
+    res.render('index', {
+      conversation: conversation
     });
   }
 });
@@ -295,7 +295,7 @@ function decisionGet (mdl, callback) {
   if (appEnv.services['decision']) {
     var headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'ApiKey '+appEnv.services['decision'][0].credentials.apiKey
+        'Authorization': 'ApiKey '+appEnv.services['decision'][0].credentials.apikey
     };
 
     var dataString = '{"modele":"'+mdl+'"}';

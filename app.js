@@ -61,7 +61,7 @@ if (appEnv.services['conversation']) {
   // Initialize database with credentials
   conversation =  new AssistantV2({
    version: '2018-11-08',
-   iam_apikey: appEnv.services['conversation'][0].credentials.apiKey,
+   iam_apikey: appEnv.services['conversation'][0].credentials.apikey,
    url: appEnv.services['conversation'][0].credentials.url
   });
 
