@@ -311,157 +311,94 @@ function sendMessage(msg) {
 }
 
 function insertMessage(msg,res) {
-	var time_to_rep = 1000 + (Math.random() * 20) * 100;
 	if(first_message) {
 		first_message = false;
 	} else {
 		if ($.trim(msg) == '') {
 			return false;
 		}
-		time_to_rep = 100;
 		$('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
 		$('.message-input').val(null);
 		updateScrollbar();
 	}
-	setTimeout(function() {
-		if ($('.message-input').val() != '') {
-			return false;
-		}
-		$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
-		updateScrollbar();
-		var message = res[0];
-		var type = res[1];
-		var data = res[2];
-		var usage = res[3];
-		if(usage != '') {
-			$("#usage").html(usage);
-		}
-		if (type == "find_priority") {
-			findPriority(res)
-		} else if (type == "display_data") {
-			displayData(data);
-		}
+	if ($('.message-input').val() != '') {
+		return false;
+	}
+	$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+	updateScrollbar();
+	var message = res[0];
+	var type = res[1];
+	var data = res[2];
+	var usage = res[3];
+	if(usage != '') {
+		$("#usage").html(usage);
+	}
+	if (type == "find_priority") {
+		findPriority(res, message)
+	} else if (type == "display_data") {
+		displayData(data, message);
+	} else {
 		displayMessage(message);
-	}, time_to_rep);
+	}
 }
 
-function findPriority (res) {
-	setTimeout(function() {
-		var name_image = res[2].name_image;
-		var justifications = res[2].justifications;
-		console.log(justifications);
-		var button = '';
-		for (var i=0; i<justifications.length ; i++) {
-			console.log(justifications[i].text,justifications[i].justification);
-			button += '<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="'+justifications[i].justification+'">'+justifications[i].text,+'</button>';
+function findPriority (res, message) {
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	});
+
+	$("#msg-box").addClass('invisible');
+
+	$('.message.loading').remove();
+
+	$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+		'<br/></br/><p class="small">Look<select id="Look" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
+		'<p class="small">Comfort<select id="Comfort" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
+		'<p class="small">Multimedia<select id="Multimedia" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
+		'<p class="small">Assistance<select id="Assistance" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
+		'<button id="validate" class="btn btn-md" style="background: #1976d2; border: none; color: white;">DONE</button>' +
+		'</div>').appendTo($('.mCSB_container')).addClass('new');
+
+	$('.rating').barrating({
+		theme: 'fontawesome-stars'
+	});
+
+	$( "#validate").click(function() {
+		var Look = $( "#Look option:selected" ).text();
+		var Comfort = $( "#Comfort option:selected" ).text();
+		var Multimedia = $( "#Multimedia option:selected" ).text();
+		var Assistance = $( "#Assistance option:selected" ).text();
+		$("#msg-box").removeClass('invisible');
+		$("#validate").remove();
+		var data = {
+			esthetique : Look,
+			confort : Comfort,
+			multimedia : Multimedia,
+			assistance : Assistance,
+			input: 'pref_selectionned',
+			bv: bv,
+			energie: energie,
+			from: from,
+			to: to,
 		}
-		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
+		manageStar(data);
+		$.ajax({
+			type: "POST",
+			url: "/",
+			data: data,
+			dataType: 'json',
+			success: function (resultat) {
+				console.log(resultat)
+				var message = resultat[0];
+				displayMessage(message);
+			},
+			error: function (data) {
+				console.log('Error:', data);
+			}
 		});
-		$("#msg-box").addClass('invisible');
-		$('.message.loading').remove();
-		if (name_image != '') {
-			$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-
-			'<br /><p class="small">Safety<select id="Safety" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Comfort and convenience<select id="Comfort_and_Convenience" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">In-car entertainment and communication<select id="In_Car_Entertainment_and_Communication" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Interior features<select id="Interior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Exterior features<select id="Exterior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Exterior lighting and visibility<select id="Exterior_Lighting_and_Visibility" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Seating<select id="Seating" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<button id="validate" class="btn btn-md btn-success" style="background: #248A52;">DONE</button>' +
-			'</div>').appendTo($('.mCSB_container')).addClass('new');
-
-			$( ".result_car" ).remove();
-			$('<div class="result_car" align="center"><img src="'+name_image+'" class="img-responsive center-block" /><br />' + button + '</div>').appendTo($('.panel-body'));
-		} else {
-			$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-
-			'<br /><p class="small">Safety<select id="Safety" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Comfort and convenience<select id="Comfort_and_Convenience" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">In-car entertainment and communication<select id="In_Car_Entertainment_and_Communication" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Interior features<select id="Interior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Exterior features<select id="Exterior_Features" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Exterior lighting and visibility<select id="Exterior_Lighting_and_Visibility" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<p class="small">Seating<select id="Seating" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></p>'+
-
-			'<button id="validate" class="btn btn-md btn-success" style="background: #248A52;">DONE</button>' +
-			'</div>').appendTo($('.mCSB_container')).addClass('new');
-		}
-
-
-
-		$('.rating').barrating({
-			theme: 'fontawesome-stars'
-		});
-		$( "#validate").click(function() {
-			info = [];
-			var Safety = document.getElementById("Safety");
-			info[0] = Safety.options[Safety.selectedIndex].value;
-			var Comfort_and_Convenience = document.getElementById("Comfort_and_Convenience");
-			info[1] = Comfort_and_Convenience.options[Comfort_and_Convenience.selectedIndex].value;
-			var In_Car_Entertainment_and_Communication = document.getElementById("In_Car_Entertainment_and_Communication");
-			info[2] = In_Car_Entertainment_and_Communication.options[In_Car_Entertainment_and_Communication.selectedIndex].value;
-			var Interior_Features = document.getElementById("Interior_Features");
-			info[3] = Interior_Features.options[Interior_Features.selectedIndex].value;
-			var Exterior_Features = document.getElementById("Exterior_Features");
-			info[4] = Exterior_Features.options[Exterior_Features.selectedIndex].value;
-			var Exterior_Lighting_and_Visibility = document.getElementById("Exterior_Lighting_and_Visibility");
-			info[5] = Exterior_Lighting_and_Visibility.options[Exterior_Lighting_and_Visibility.selectedIndex].value;
-			var Seating = document.getElementById("Seating");
-			info[6] = Seating.options[Seating.selectedIndex].value;
-
-			$("#msg-box").removeClass('invisible');
-			$("#validate").remove();
-			$.ajax({
-				type: "POST",
-				url: "/giveinfo",
-				data: {input: {
-					Safety : info[0],
-					Comfort_and_Convenience : info[1] ,
-					In_Car_Entertainment_and_Communication : info[2],
-					Interior_Features : info[3],
-					Exterior_Features : info[4],
-					Exterior_Lighting_and_Visibility : info[5],
-					Seating : info[6]
-				}},
-				dataType: 'json',
-				success: function (resultat) {
-					if ($('.message-input').val() != '') {
-						return false;
-					}
-					$('<div class="message loading new"><figure class="avatar"><img src="images/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
-					updateScrollbar();
-					setTimeout(function() {
-						$('.message.loading').remove();
-						$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + resultat[0].output.text[0] +
-						'</div>').appendTo($('.mCSB_container')).addClass('new');
-						updateScrollbar();
-						i++;
-					}, 1000 + (Math.random() * 20) * 100);
-				},
-				error: function (data) {
-					console.log('Error:', data);
-				}
-			});
-		});
-		updateScrollbar();
-		i++;
-	}, 1000 + (Math.random() * 20) * 100);
+	});
+	updateScrollbar();
+	i++;
 }
 
 function displayMessage (message) {
@@ -471,14 +408,15 @@ function displayMessage (message) {
 		'</div>').appendTo($('.mCSB_container')).addClass('new');
 		updateScrollbar();
 		i++;
-	}, 1000 + (Math.random() * 20) * 100);
+	}, 100 + (Math.random() * 20) * 100);
 }
 
-function displayData (data) {
-		$( "#watson_finition" ).html(data[0].modele);
-		$( "#watson_delai" ).html(data[0].delai + " days");
-		$( "#watson_prix" ).html(data[0].prix + " euros");
-		manageStar(data[0]);
+function displayData (data, message) {
+		$( "#watson_finition" ).html(data.modele);
+		$( "#watson_delai" ).html(data.delai + " days");
+		$( "#watson_prix" ).html(data.prix + " euros");
+		manageStar(data);
+		displayMessage(message);
 }
 
 function manageStar(data){

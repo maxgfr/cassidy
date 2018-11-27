@@ -16,14 +16,26 @@ const appEnv = cfenv.getAppEnv(appEnvOpts);
 
 const assistant_delai = '6c7e70c7-be84-422d-9b45-8f0a45e8bc32';
 const assistant_main = '8ad1f141-a944-4aac-b49c-d992c7b5fa62';
-var context_array, usage, number, session_delai, session_main, user_id, entity_list, chatbot_response = null;
+var context_array,
+  text_usage,
+  num_msg,
+  session_delai,
+  session_main,
+  user_id,
+  entity_list,
+  text_color,
+  chatbot_response,
+  criteria,
+  color,
+  usage = null;
 
 router.get('/', function(req, res, next) {
   entity_list = {}
   context_array = [];
-  session_delai = session_main  = usage = chatbot_response = '';
+  session_delai = session_main  = text_usage = chatbot_response = text_color = '';
+  criteria = color = usage = false;
   user_id = uuidv4();
-  number = 0;
+  num_msg = 0;
   if (!conversation) {
     console.log("Conversation non initialisée");
     res.render('error');
@@ -56,20 +68,30 @@ router.post('/', function(req, res, next) {
       user_id: user_id
     });
   }
+  if(input === 'pref_selectionned') {
+    criteria = true;
+  }
   //decisionGet('ACTIVE', function(result){console.log(result)});
   //console.log(context_array);
   makeCloudantRequest(req.body, function(result){
     if(result == null || result.length != 1) {
       console.log('Not found');
-      if(usage) {
+      if (usage && criteria && !color) {
+        makeCloudantClosest(req.body, function(res){
+          res.send(['We found a car. Now tell me the color', 'display_data', res, text_usage]);
+        });
+        return;
+      }
+      else if (usage && criteria && color) {
         current_assistant = assistant_delai;
         current_session = session_delai;
-      } else {
+      }
+      else {
         current_assistant = assistant_main;
         current_session = session_main;
       }
       sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
-        console.log('input:', input);
+        //console.log('input:', input);
         chatbot_response = '';
         for(var i=0; i<response.output.generic.length; i++) {
           //console.log(response.output.generic[i]);
@@ -80,31 +102,26 @@ router.post('/', function(req, res, next) {
           entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
         }
         if(entity_list["usage"]) {
-          usage = entity_list["usage"];
+          text_usage = entity_list["usage"];
           _.assign(response.context, {'usage' : entity_list["usage"]});
-          // Initialization chatbot 2
-          sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response2){
-            for(var i=0; i<response2.output.generic.length; i++) {
-              chatbot_response +=  response2.output.generic[i].text + '. ';
-            }
-            saveDialog(user_id, input, chatbot_response, context_array.length);
-            context_array.push(response2.context);
-            number++;
-            //res.send([chatbot_response, '', {}, usage]);
-          });
+          usage = true;
+          saveDialog(user_id, input, chatbot_response, context_array.length);
+          context_array.push(response.context);
+          num_msg++;
+          res.send([chatbot_response, 'find_priority', {}, text_usage]);
         } else {
           saveDialog(user_id, input, chatbot_response, context_array.length);
           context_array.push(response.context);
-          number++;
-          res.send([chatbot_response, '', {}, usage]);
+          num_msg++;
+          res.send([chatbot_response, '', {}, text_usage]);
         }
       });
     }
     else {
       console.log('Found');
-      var myResponse = "We found a car which matches your expectation !"
-      saveDialog(user_id, input, myResponse, number);
-      res.send([myResponse, 'display_data', result, usage]);
+      var myResponse = "We found a car which matches your expectation ! Now, choose a color."
+      saveDialog(user_id, input, myResponse, num_msg);
+      res.send([myResponse, 'display_data', result[0], text_usage]);
     }
   });
 });
@@ -112,13 +129,14 @@ router.post('/', function(req, res, next) {
 function makeCloudantRequest(params, callback) {
     var from = params["from"];
     var to = params["to"];
-    delete params["input"];
-    delete params["from"];
-    delete params["to"];
-    if(usage) {
-      params["usage"] = usage;
+    var selector = _.cloneDeep(params);
+    delete selector["input"];
+    delete selector["from"];
+    delete selector["to"];
+    if(text_usage) {
+      selector["usage"] = text_usage;
     }
-    //console.log(params);
+    console.log(selector)
     var data = [];
     if(!mydb) {
       callback(data);
@@ -132,6 +150,59 @@ function makeCloudantRequest(params, callback) {
           }
         }
         callback(data);
+      } else {
+        console.log(err);
+        callback(data);
+      }
+    });
+}
+
+function makeCloudantClosest(params, callback) {
+    var esthetique = params["esthetique"];
+    var confort = params["confort"];
+    var multimedia = params["multimedia"];
+    var assistance = params["assistance"];
+    var from = params["from"];
+    var to = params["to"];
+    var selector = _.cloneDeep(params);
+    delete selector["input"];
+    delete selector["from"];
+    delete selector["to"];
+    delete selector["esthetique"];
+    delete selector["confort"];
+    delete selector["multimedia"];
+    delete selector["assistance"];
+    if(text_usage) {
+      selector["usage"] = text_usage;
+    }
+    console.log(selector);
+    var data = [];
+    var resultat = [];
+    var actual_value = 100;
+    if(!mydb) {
+      callback(data);
+    }
+    mydb.find({ selector: params }, function(err, result) {
+      if (!err) {
+        for (var i = 0; i < result.docs.length; i++) {
+          if (result.docs[i].prix < to && result.docs[i].prix > from) {
+            data.push(result.docs[i])
+          }
+        }
+        for (var i = 0; i < data.length; i++) {
+          var dif_confort = Math.abs(data[i].confort - confort);
+          var dif_esthetique = Math.abs(data[i].esthetique - esthetique);
+          var dif_assistance = Math.abs(data[i].assistance - assistance);
+          var dif_multimedia = Math.abs(data[i].multimedia - multimedia);
+          var total_dif = dif_confort + dif_esthetique + dif_assistance + dif_multimedia;
+          if(total_dif<actual_value) {
+            actual_value = total_dif;
+            resultat.push(data[i])
+          }
+        }
+        console.log(data);
+        console.log(resultat);
+        callback(resultat[resultat.length - 1]);
       } else {
         console.log(err);
         callback(data);
