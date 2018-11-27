@@ -21,6 +21,15 @@
               "apiKey": ""
             },
             "label": "conversation"
+        }],
+        "decision":
+        [{
+            "credentials":
+            {
+              "url": "https://decision-composer.ibm.com/rest/public/v1/execution/5bfc13942846520012a113d5/execute/v14",
+              "apiKey": ""
+            },
+            "label": "decision"
         }]
     }
 }
