@@ -180,7 +180,7 @@
 					</div>
 				</div>
 				<div class="result_car" align="center">
-					<img id='img_car' src="images/5008AccessWhite.jpg" class="img-responsive center-block"/>
+					<img id='image_id' src="images/5008AccessWhite.jpg" class="img-responsive center-block"/>
 				</div>
 				<div class="row" style="margin-top:10px;">
 					<div class="col-sm-4">
@@ -413,8 +413,7 @@ function displayMessage (message) {
 }
 
 function changeColor (data, message) {
-	var picurl = 'images/5008_'+data.color+'.png';
-	document.getElementById("image_id").src=picurl;
+	$("#image_id").attr("src", 'images/5008_'+data.color+'.png');
 	displayData(data,message);
 }
 

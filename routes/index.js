@@ -35,12 +35,13 @@ var context_array,
 
 router.get('/', function(req, res, next) {
   car = {};
+  options_odm = {};
   entity_list = {};
   context_array = [];
   session_delai = session_main  = text_usage = chatbot_response = text_color = '';
   criteria = color = usage = isOptions = false;
   user_id = uuidv4();
-  num_msg = 0;
+  num_msg = price_all_options = 0;
   if (!conversation) {
     console.log("Conversation non initialisée");
     res.render('error');
@@ -73,77 +74,91 @@ router.post('/', function(req, res, next) {
       user_id: user_id
     });
   }
+  var val_u = input.toUpperCase();
   if(input === 'pref_selectionned') {
     criteria = true;
   }
-  console.log(input.toUpperCase());
-  if(input.toUpperCase().localeCompare('BLACK')== 0 || input.toUpperCase().localeCompare('BLUE') == 0 || input.toUpperCase().localeCompare('PEARL')== 0) {
+  if(val_u == 'BLACK' || val_u == 'PEARL' || val_u == 'BLUE') {
     color = true;
-    _.assign(car, {'color' : input.toUpperCase()});
-    decisionGet(car.modele, function(result){
+    _.assign(car, {'color' : val_u});
+    console.log(car);
+    decisionGet(car.modele.toUpperCase(), function(result){
       console.log(result);
-      res.send(['Here is your new car.', 'change_color',  text_usage]);
-    });
-    return;
-  }
-  if(input.toUpperCase() === 'OUI' || input.toUpperCase() === 'NON') {
-    isOptions = true;
-    car['prix'] = car['prix'] + price_all_options;
-    res.send(['We updated the price with the options', 'display_data', car, text_usage]);
-  }
-  //decisionGet('ACTIVE', function(result){console.log(result)});
-  //console.log(context_array);
-  makeCloudantRequest(req.body, function(result){
-    if(result == null || result.length != 1) {
-      console.log('Not found');
-      if (usage && criteria && !color) {
-        makeCloudantClosest(req.body, function(myResult){
-          car = myResult;
-          res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', myResult, text_usage]);
-        });
+      options_odm = JSON.parse(result);
+      car["prix"] = parseInt(car["prix"]) + 650;
+      var reponseuh = 'Here is your new car. According to your stats, the users have choosen those options :';
+      for(var i = 0; i< options_odm.resultat.PRIX.length; i++) {
+        price_all_options += options_odm.resultat.PRIX[i];
       }
-      else {
-        if (usage && criteria && color) {
-          current_assistant = assistant_delai;
-          current_session = session_delai;
+      for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
+        reponseuh += ' - ' + options_odm.resultat.OPTIONS[i]
+      }
+      res.send([reponseuh, 'change_color', car, text_usage]);
+    });
+  } else {
+      if(val_u == 'YES') {
+        isOptions = true;
+        car['prix'] = parseInt(car["prix"]) + price_all_options;
+        res.send(['We updated the price with the options', 'display_data', car, text_usage]);
+        return;
+      }
+      if(val_u == 'NO') {
+        isOptions = true;
+        res.send(['It is ok, we will set 0 options', 'display_data', car, text_usage]);
+        return;
+      }
+      makeCloudantRequest(req.body, function(result){
+        if(result == null || result.length != 1) {
+          console.log('Not found');
+          if (usage && criteria && !color) {
+            makeCloudantClosest(req.body, function(myResult){
+              car = myResult;
+              res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', myResult, text_usage]);
+            });
+          }
+          else {
+            if (usage && criteria && color) {
+              current_assistant = assistant_delai;
+              current_session = session_delai;
+            }
+            else {
+              current_assistant = assistant_main;
+              current_session = session_main;
+            }
+            sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
+              //console.log('input:', input);
+              chatbot_response = '';
+              for(var i=0; i<response.output.generic.length; i++) {
+                //console.log(response.output.generic[i]);
+                chatbot_response += response.output.generic[i].text + '. ';
+              }
+              for(var i=0; i<response.output.entities.length; i++) {
+                //console.log(response.output.entities[i]);
+                entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
+              }
+              var priority = '';
+              if(entity_list["usage"]) {
+                text_usage = entity_list["usage"];
+                _.assign(response.context, {'usage' : entity_list["usage"]});
+                usage = true;
+                priority = 'find_priority';
+              }
+              saveDialog(user_id, input, chatbot_response, context_array.length);
+              context_array.push(response.context);
+              num_msg++;
+              res.send([chatbot_response, priority, {}, text_usage]);
+            });
+          }
         }
         else {
-          current_assistant = assistant_main;
-          current_session = session_main;
+          console.log('Found');
+          car = result[0];
+          var myResponse = "We found a car which matches your expectation ! Now, choose a color."
+          saveDialog(user_id, input, myResponse, num_msg);
+          res.send([myResponse, 'display_data', result[0], text_usage]);
         }
-        sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
-          //console.log('input:', input);
-          chatbot_response = '';
-          for(var i=0; i<response.output.generic.length; i++) {
-            //console.log(response.output.generic[i]);
-            chatbot_response += response.output.generic[i].text + '. ';
-          }
-          for(var i=0; i<response.output.entities.length; i++) {
-            //console.log(response.output.entities[i]);
-            entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
-          }
-          var priority = '';
-          if(entity_list["usage"]) {
-            text_usage = entity_list["usage"];
-            _.assign(response.context, {'usage' : entity_list["usage"]});
-            usage = true;
-            priority = 'find_priority';
-          }
-          saveDialog(user_id, input, chatbot_response, context_array.length);
-          context_array.push(response.context);
-          num_msg++;
-          res.send([chatbot_response, priority, {}, text_usage]);
-        });
-      }
+      });
     }
-    else {
-      console.log('Found');
-      car = result[0];
-      var myResponse = "We found a car which matches your expectation ! Now, choose a color."
-      saveDialog(user_id, input, myResponse, num_msg);
-      res.send([myResponse, 'display_data', result[0], text_usage]);
-    }
-  });
 });
 
 function makeCloudantRequest(params, callback) {
