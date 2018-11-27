@@ -5,12 +5,12 @@ const _ = require('lodash');
 
 const assistant_delai = '6c7e70c7-be84-422d-9b45-8f0a45e8bc32';
 const assistant_main = '8ad1f141-a944-4aac-b49c-d992c7b5fa62';
-var context_array, usage, number, session_delai, session_main, user_id, entity_list = null;
+var context_array, usage, number, session_delai, session_main, user_id, entity_list, chatbot_response = null;
 
 router.get('/', function(req, res, next) {
   entity_list = {}
   context_array = [];
-  session_delai = session_main  = usage = '';
+  session_delai = session_main  = usage = chatbot_response = '';
   user_id = uuidv4();
   number = 0;
   if (!conversation) {
@@ -48,28 +48,16 @@ router.post('/', function(req, res, next) {
     if(result == null || result.length != 1) {
       console.log('Not found');
       if(usage) {
-        console.log('On a l"usage');
         sendConversationMessage(assistant_delai, session_delai, input, context_array[context_array.length - 1], function(response){
+          console.log('input:', input);
+          var rep = ananlyseOutput(response, input);
+          res.send([rep, '', {}, usage]);
         });
       } else {
         sendConversationMessage(assistant_main, session_main, input, context_array[context_array.length - 1], function(response){
-          var chatbot_response = '';
-          for(var i=0; i<response.output.generic.length; i++) {
-            //console.log(response.output.generic[i]);
-            chatbot_response +=  response.output.generic[i].text + '. ';
-          }
-          for(var i=0; i<response.output.entities.length; i++) {
-            //console.log(response.output.entities[i]);
-            entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
-          }
-          if(entity_list["usage"]) {
-            usage = entity_list["usage"];
-            _.assign(response.context, {'usage' : entity_list["usage"]});
-          }
-          saveDialog(user_id, input, chatbot_response, context_array.length);
-          context_array.push(response.context);
-          number++;
-          res.send([chatbot_response, '', {}, usage]);
+          console.log('input:', input);
+          var rep = ananlyseOutput(response, input);
+          res.send([rep, '', {}, usage]);
         });
       }
     }
@@ -155,6 +143,39 @@ function sendConversationMessage(assistant_id, session_id, msg, context, callbac
         callback(response);
       }
     });
+}
+
+function ananlyseOutput(response, input) {
+  chatbot_response = '';
+  for(var i=0; i<response.output.generic.length; i++) {
+    //console.log(response.output.generic[i]);
+    chatbot_response +=  response.output.generic[i].text + '. ';
+  }
+  for(var i=0; i<response.output.entities.length; i++) {
+    //console.log(response.output.entities[i]);
+    entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
+  }
+  if(entity_list["usage"]) {
+    usage = entity_list["usage"];
+    _.assign(response.context, {'usage' : entity_list["usage"]});
+    // Initialization chatbot 2
+    sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
+      for(var i=0; i<response.output.generic.length; i++) {
+        //console.log(response.output.generic[i]);
+        chatbot_response +=  response.output.generic[i].text + '. ';
+      }
+      saveDialog(user_id, input, chatbot_response, context_array.length);
+      context_array.push(response.context);
+      number++;
+      return chatbot_response;
+    });
+  } else {
+    saveDialog(user_id, input, chatbot_response, context_array.length);
+    context_array.push(response.context);
+    number++;
+    return chatbot_response;
+  }
+
 }
 
 module.exports = router;
