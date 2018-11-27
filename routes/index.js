@@ -27,13 +27,18 @@ var context_array,
   chatbot_response,
   criteria,
   color,
+  isOptions,
+  car,
+  price_all_options,
+  options_odm,
   usage = null;
 
 router.get('/', function(req, res, next) {
-  entity_list = {}
+  car = {};
+  entity_list = {};
   context_array = [];
   session_delai = session_main  = text_usage = chatbot_response = text_color = '';
-  criteria = color = usage = false;
+  criteria = color = usage = isOptions = false;
   user_id = uuidv4();
   num_msg = 0;
   if (!conversation) {
@@ -71,6 +76,21 @@ router.post('/', function(req, res, next) {
   if(input === 'pref_selectionned') {
     criteria = true;
   }
+  console.log(input.toUpperCase());
+  if(input.toUpperCase().localeCompare('BLACK')== 0 || input.toUpperCase().localeCompare('BLUE') == 0 || input.toUpperCase().localeCompare('PEARL')== 0) {
+    color = true;
+    _.assign(car, {'color' : input.toUpperCase()});
+    decisionGet(car.modele, function(result){
+      console.log(result);
+      res.send(['Here is your new car.', 'change_color',  text_usage]);
+    });
+    return;
+  }
+  if(input.toUpperCase() === 'OUI' || input.toUpperCase() === 'NON') {
+    isOptions = true;
+    car['prix'] = car['prix'] + price_all_options;
+    res.send(['We updated the price with the options', 'display_data', car, text_usage]);
+  }
   //decisionGet('ACTIVE', function(result){console.log(result)});
   //console.log(context_array);
   makeCloudantRequest(req.body, function(result){
@@ -78,7 +98,8 @@ router.post('/', function(req, res, next) {
       console.log('Not found');
       if (usage && criteria && !color) {
         makeCloudantClosest(req.body, function(myResult){
-          res.send(['We found a car. Now tell me the color', 'display_data', myResult, text_usage]);
+          car = myResult;
+          res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', myResult, text_usage]);
         });
       }
       else {
@@ -117,6 +138,7 @@ router.post('/', function(req, res, next) {
     }
     else {
       console.log('Found');
+      car = result[0];
       var myResponse = "We found a car which matches your expectation ! Now, choose a color."
       saveDialog(user_id, input, myResponse, num_msg);
       res.send([myResponse, 'display_data', result[0], text_usage]);

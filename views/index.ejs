@@ -180,7 +180,7 @@
 					</div>
 				</div>
 				<div class="result_car" align="center">
-					<img src="images/5008AccessWhite.jpg" class="img-responsive center-block"/>
+					<img id='img_car' src="images/5008AccessWhite.jpg" class="img-responsive center-block"/>
 				</div>
 				<div class="row" style="margin-top:10px;">
 					<div class="col-sm-4">
@@ -337,6 +337,8 @@ function insertMessage(msg,res) {
 		findPriority(res, message)
 	} else if (type == "display_data") {
 		displayData(data, message);
+	} else if (type == "change_color") {
+		changeColor(data, message);
 	} else {
 		displayMessage(message);
 	}
@@ -408,6 +410,12 @@ function displayMessage (message) {
 		updateScrollbar();
 		i++;
 	}, 100 + (Math.random() * 20) * 100);
+}
+
+function changeColor (data, message) {
+	var picurl = 'images/5008_'+data.color+'.png';
+	document.getElementById("image_id").src=picurl;
+	displayData(data,message);
 }
 
 function displayData (data, message) {
