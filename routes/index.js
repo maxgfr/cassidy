@@ -45,7 +45,6 @@ router.post('/', function(req, res, next) {
   var input = req.body.input;
   var current_assistant = '';
   var current_session = '';
-  decisionGet('ACTIVE');
   if(context_array.length == 0) {
     context_array.push({
       gearbox: req.body.bv,
@@ -57,6 +56,7 @@ router.post('/', function(req, res, next) {
       user_id: user_id
     });
   }
+  //decisionGet('ACTIVE', function(result){console.log(result)});
   //console.log(context_array);
   makeCloudantRequest(req.body, function(result){
     if(result == null || result.length != 1) {
@@ -84,21 +84,20 @@ router.post('/', function(req, res, next) {
           _.assign(response.context, {'usage' : entity_list["usage"]});
           // Initialization chatbot 2
           sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response2){
-            console.log(chatbot_response);
             for(var i=0; i<response2.output.generic.length; i++) {
-              //console.log(response2.output.generic[i]);
               chatbot_response +=  response2.output.generic[i].text + '. ';
             }
             saveDialog(user_id, input, chatbot_response, context_array.length);
             context_array.push(response2.context);
             number++;
+            //res.send([chatbot_response, '', {}, usage]);
           });
         } else {
           saveDialog(user_id, input, chatbot_response, context_array.length);
           context_array.push(response.context);
           number++;
+          res.send([chatbot_response, '', {}, usage]);
         }
-        res.send([chatbot_response, '', {}, usage]);
       });
     }
     else {
