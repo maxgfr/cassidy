@@ -307,6 +307,8 @@ function decisionGet (mdl, callback) {
         body: dataString
     };
 
+    console.log(options);
+
     request(options, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             //console.log(body);
