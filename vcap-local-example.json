@@ -17,8 +17,12 @@
         [{
             "credentials":
             {
-              "url": "https://gateway.watsonplatform.net/conversation/api",
-              "apiKey": ""
+              "apikey": "",
+              "iam_apikey_description": "",
+              "iam_apikey_name": "",
+              "iam_role_crn": "",
+              "iam_serviceid_crn": "",
+              "url": "https://gateway.watsonplatform.net/assistant/api"
             },
             "label": "conversation"
         }],
