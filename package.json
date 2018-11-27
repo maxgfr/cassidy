@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "admin-lte": "^2.4.2",
+    "axios": "^0.18.0",
     "body-parser": "~1.18.2",
     "cfenv": "^1.0.4",
     "cloudant": "^1.10.0",
@@ -23,6 +24,7 @@
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "pug": "^2.0.0-rc.4",
+    "request": "^2.88.0",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
     "swig": "^1.4.2",

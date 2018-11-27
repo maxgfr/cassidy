@@ -2,6 +2,17 @@ const express = require('express');
 const router = express.Router();
 const uuidv4 = require('uuid/v4');
 const _ = require('lodash');
+const axios = require('axios');
+const request = require('request');
+/* Read Credentials */
+const cfenv = require("cfenv");
+var vcapLocal;
+try {
+  vcapLocal = require('../vcap-local.json');
+} catch (e) { }
+const appEnvOpts = vcapLocal ? { vcap: vcapLocal} : {}
+const appEnv = cfenv.getAppEnv(appEnvOpts);
+/* End - Read Credentials */
 
 const assistant_delai = '6c7e70c7-be84-422d-9b45-8f0a45e8bc32';
 const assistant_main = '8ad1f141-a944-4aac-b49c-d992c7b5fa62';
@@ -32,6 +43,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   var input = req.body.input;
+  var current_assistant = '';
+  var current_session = '';
+  decisionGet('ACTIVE');
   if(context_array.length == 0) {
     context_array.push({
       gearbox: req.body.bv,
@@ -48,18 +62,17 @@ router.post('/', function(req, res, next) {
     if(result == null || result.length != 1) {
       console.log('Not found');
       if(usage) {
-        sendConversationMessage(assistant_delai, session_delai, input, context_array[context_array.length - 1], function(response){
-          console.log('input:', input);
-          var rep = ananlyseOutput(response, input);
-          res.send([rep, '', {}, usage]);
-        });
+        current_assistant = assistant_delai;
+        current_session = session_delai;
       } else {
-        sendConversationMessage(assistant_main, session_main, input, context_array[context_array.length - 1], function(response){
-          console.log('input:', input);
-          var rep = ananlyseOutput(response, input);
-          res.send([rep, '', {}, usage]);
-        });
+        current_assistant = assistant_main;
+        current_session = session_main;
       }
+      sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
+        console.log('input:', input);
+        var rep = ananlyseOutput(response, input);
+        res.send([rep, '', {}, usage]);
+      });
     }
     else {
       console.log('Found');
@@ -125,7 +138,6 @@ function createSession(assistant_id, callback) {
     });
 }
 
-
 function sendConversationMessage(assistant_id, session_id, msg, context, callback) {
     conversation.message({
         assistant_id: assistant_id,
@@ -149,7 +161,7 @@ function ananlyseOutput(response, input) {
   chatbot_response = '';
   for(var i=0; i<response.output.generic.length; i++) {
     //console.log(response.output.generic[i]);
-    chatbot_response +=  response.output.generic[i].text + '. ';
+    chatbot_response += response.output.generic[i].text + '. ';
   }
   for(var i=0; i<response.output.entities.length; i++) {
     //console.log(response.output.entities[i]);
@@ -159,13 +171,14 @@ function ananlyseOutput(response, input) {
     usage = entity_list["usage"];
     _.assign(response.context, {'usage' : entity_list["usage"]});
     // Initialization chatbot 2
-    sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
-      for(var i=0; i<response.output.generic.length; i++) {
-        //console.log(response.output.generic[i]);
-        chatbot_response +=  response.output.generic[i].text + '. ';
+    sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response2){
+      console.log(chatbot_response);
+      for(var i=0; i<response2.output.generic.length; i++) {
+        //console.log(response2.output.generic[i]);
+        chatbot_response +=  response2.output.generic[i].text + '. ';
       }
       saveDialog(user_id, input, chatbot_response, context_array.length);
-      context_array.push(response.context);
+      context_array.push(response2.context);
       number++;
       return chatbot_response;
     });
@@ -176,6 +189,31 @@ function ananlyseOutput(response, input) {
     return chatbot_response;
   }
 
+}
+
+function decisionGet (mdl, callback) {
+  if (appEnv.services['decision']) {
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'ApiKey '+appEnv.services['decision'][0].credentials.apiKey
+    };
+
+    var dataString = '{"modele":"'+mdl+'"}';
+
+    var options = {
+        url: appEnv.services['decision'][0].credentials.url,
+        method: 'POST',
+        headers: headers,
+        body: dataString
+    };
+
+    request(options, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            //console.log(body);
+            callback(body);
+        }
+    });
+  }
 }
 
 module.exports = router;
