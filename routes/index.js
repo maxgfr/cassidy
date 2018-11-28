@@ -2,17 +2,7 @@ const express = require('express');
 const router = express.Router();
 const uuidv4 = require('uuid/v4');
 const _ = require('lodash');
-const axios = require('axios');
 const request = require('request');
-/* Read Credentials */
-const cfenv = require("cfenv");
-var vcapLocal;
-try {
-  vcapLocal = require('../vcap-local.json');
-} catch (e) { }
-const appEnvOpts = vcapLocal ? { vcap: vcapLocal} : {}
-const appEnv = cfenv.getAppEnv(appEnvOpts);
-/* End - Read Credentials */
 
 const assistant_delai = '37a53322-9d8d-4d34-a865-ad3dfb971a91';
 const assistant_main = '90e40c7d-06ae-44f6-ae73-af3b21a649b7';
@@ -292,30 +282,28 @@ function sendConversationMessage(assistant_id, session_id, msg, context, callbac
 }
 
 function decisionGet (mdl, callback) {
-  if (appEnv.services['decision']) {
-    var headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'ApiKey '+appEnv.services['decision'][0].credentials.apikey
-    };
+  var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'ApiKey '+process.env.DECISION_API_KEY
+  };
 
-    var dataString = '{"modele":"'+mdl+'"}';
+  var dataString = '{"modele":"'+mdl+'"}';
 
-    var options = {
-        url: appEnv.services['decision'][0].credentials.url,
-        method: 'POST',
-        headers: headers,
-        body: dataString
-    };
+  var options = {
+      url: process.env.DECISION_URL,
+      method: 'POST',
+      headers: headers,
+      body: dataString
+  };
 
-    console.log(options);
+  console.log(options);
 
-    request(options, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            //console.log(body);
-            callback(body);
-        }
-    });
-  }
+  request(options, function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+          //console.log(body);
+          callback(body);
+      }
+  });
 }
 
 module.exports = router;
