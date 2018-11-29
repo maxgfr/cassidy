@@ -55,15 +55,29 @@ router.post('/', function(req, res, next) {
   var input = req.body.input;
   var current_assistant = '';
   var current_session = '';
+  var array_context = [];
+  array_context.push({
+    gearbox: req.body.bv,
+    energy: req.body.energie,
+    from: req.body.from,
+    to: req.body.to,
+    vehicle: '5008',
+    timezone: 'Europe/Paris',
+    user_id: user_id
+  })
   if(context_array.length == 0) {
     context_array.push({
-      gearbox: req.body.bv,
-      energy: req.body.energie,
-      from: req.body.from,
-      to: req.body.to,
-      vehicle: '5008',
-      timezone: 'Europe/Paris',
-      user_id: user_id
+      context: {
+        skills: {
+          gearbox: req.body.bv,
+          energy: req.body.energie,
+          from: req.body.from,
+          to: req.body.to,
+          vehicle: '5008',
+          timezone: 'Europe/Paris',
+          user_id: user_id
+        }
+      }
     });
   }
   var val_u = input.toUpperCase();
