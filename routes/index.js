@@ -67,8 +67,8 @@ router.post('/', function(req, res, next) {
   })
   if(context_array.length == 0) {
     context_array.push({
-      context: {
-        skills: {
+      skills: {
+        propName: {
           gearbox: req.body.bv,
           energy: req.body.energie,
           from: req.body.from,
