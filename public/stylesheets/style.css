@@ -131,7 +131,8 @@ Messages
     -webkit-flex: 1 1 auto;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-weight: 500;
     overflow: hidden;
     position: relative;
     margin-top: 70px;

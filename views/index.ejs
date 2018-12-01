@@ -90,33 +90,33 @@
 				<div class="row justify-content-center" style="margin-bottom:10px;">
 					<div class="col-md-3" style="padding-bottom:10px;">
 						<div class="card">
-							<div class="card-header" style="font-size:18px">Budget</div>
+							<div class="card-header" style="font-size:25px">Budget</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 14px;" id="budget">Not specified</p>
+								<p class="card-text" style="font-size: 20px;" id="budget">Not specified</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="card">
-							<div class="card-header" style="font-size:18px">Energy</div>
+							<div class="card-header" style="font-size:25px">Energy</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 15px;" id="energie">Not specified</p>
+								<p class="card-text" style="font-size: 20px;" id="energie">Not specified</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="card">
-							<div class="card-header" style="font-size:15px">Gearbox</div>
+							<div class="card-header" style="font-size:25px">Gearbox</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 15px;" id="bv">Not specified</p>
+								<p class="card-text" style="font-size: 20px;" id="bv">Not specified</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="card">
-							<div class="card-header" style="font-size:15px">Usage</div>
+							<div class="card-header" style="font-size:25px">Usage</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 15px;" id="usage">Not specified</p>
+								<p class="card-text" style="font-size: 20px;" id="usage">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -125,7 +125,7 @@
 					<div class="col-sm-3" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Look</h5>
+								<h5 class="card-text" style="font-size:25px">Look</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
 										<div class="br-widget">
 											<a id="look_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -139,7 +139,7 @@
 					<div class="col-sm-3" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Comfort</h5>
+								<h5 class="card-text" style="font-size:25px">Comfort</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
 										<div class="br-widget">
 											<a id="confort_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -153,7 +153,7 @@
 					<div class="col-sm-3">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Multimedia</h5>
+								<h5 class="card-text" style="font-size:25px">Multimedia</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
 									<div class="br-widget">
 										<a id="navigation_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -167,7 +167,7 @@
 					<div class="col-sm-3">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
 							<div class="card-body">
-								<h5 class="card-text">Assistance</h5>
+								<h5 class="card-text" style="font-size:25px">Assistance</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
 									<div class="br-widget">
 										<a id="assistance_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
@@ -186,21 +186,21 @@
 					<div class="col-sm-4">
 						<div class="card text-white mb-3" style="background-color: #63a4ff;">
 							<div class="card-body">
-								<h5 class="card-text text-center" id="watson_finition">Model</h5>
+								<h5 class="card-text text-center" id="watson_finition" style="font-size:25px">Model</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #63a4ff;">
 							<div class="card-body">
-								<h5 class="card-text" id="watson_delai">Time limit</h5>
+								<h5 class="card-text" id="watson_delai" style="font-size:25px">Time limit</h5>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-4">
 						<div class="card text-white mb-3 text-center" style="background-color: #63a4ff;">
 							<div class="card-body">
-								<h5 class="card-text" id="watson_prix">Price</h5>
+								<h5 class="card-text" id="watson_prix" style="font-size:25px">Price</h5>
 							</div>
 						</div>
 					</div>
@@ -260,9 +260,14 @@ $('#submit_popup').click(function() {
 	if(energie == 'Gasoline') {
 		energie = 'Essence'
 	}
-	$( "#budget" ).html(from+"€ - "+to+"€");
-	$( "#energie" ).html(energie);
-	$( "#bv" ).html(bv);
+	$( "#budget" ).html(from+"€ - "+to+"€").css("font-weight", "bold");
+	$( "#energie" ).html(energie).css("font-weight", "bold");
+	$( "#bv" ).html(bv).css("font-weight", "bold");
+	for(i=0;i<10;i++) {
+		$("#budget").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+		$("#energie").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+		$("#bv").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+	}
 	//$( "#usage" ).html(usage);
 	$('#myModal').modal('hide');
 	sendMessage("");
@@ -331,7 +336,10 @@ function insertMessage(msg,res) {
 	var data = res[2];
 	var usage = res[3];
 	if(usage != '') {
-		$("#usage").html(usage);
+		$("#usage").html(usage).css("font-weight", "bold");
+		for(i=0;i<10;i++) {
+    	$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+  	}
 	}
 	if (type == "find_priority") {
 		findPriority(res, message)
@@ -418,9 +426,14 @@ function changeColor (data, message) {
 }
 
 function displayData (data, message) {
-		$( "#watson_finition" ).html(data.modele);
-		$( "#watson_delai" ).html(data.delai + " days");
-		$( "#watson_prix" ).html(data.prix + " euros");
+		$( "#watson_finition" ).html(data.modele).css("font-weight", "bold");
+		$( "#watson_delai" ).html(data.delai + " days").css("font-weight", "bold");
+		$( "#watson_prix" ).html(data.prix + " euros").css("font-weight", "bold");
+		for(i=0;i<10;i++) {
+    	$("#watson_finition").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+			$("#watson_delai").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+			$("#watson_prix").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+  	}
 		manageStar(data);
 		displayMessage(message);
 }

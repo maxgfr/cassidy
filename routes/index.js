@@ -4,13 +4,15 @@ const uuidv4 = require('uuid/v4');
 const _ = require('lodash');
 const request = require('request');
 
-const assistant_delai = '37a53322-9d8d-4d34-a865-ad3dfb971a91';
-const assistant_main = '90e40c7d-06ae-44f6-ae73-af3b21a649b7';
+const assistant_delai = 'da2663a3-b5b3-4784-856a-1d8bc7f80d3a';
+const assistant_main = '31230de8-925f-42a8-99d3-0c6139733c71';
+const assistant_max = '188405aa-5d2d-482a-a416-dcfaaec224eb';
 var context_array,
   text_usage,
   num_msg,
   session_delai,
   session_main,
+  session_max,
   user_id,
   entity_list,
   text_color,
@@ -28,7 +30,7 @@ router.get('/', function(req, res, next) {
   options_odm = {};
   entity_list = {};
   context_array = [];
-  session_delai = session_main  = text_usage = chatbot_response = text_color = '';
+  session_delai = session_main  = session_max = text_usage = chatbot_response = text_color = '';
   criteria = color = usage = isOptions = false;
   user_id = uuidv4();
   num_msg = price_all_options = 0;
@@ -37,13 +39,17 @@ router.get('/', function(req, res, next) {
     res.render('error');
   } else {
     console.log("Conversation initialisée");
-    createSession(assistant_main, function(result) {
+    createSession(assistant_main, (result) => {
       session_main = result.session_id;
       console.log('Session main : ',session_main)
     });
-    createSession(assistant_delai, function(result) {
+    createSession(assistant_delai, (result) => {
       session_delai = result.session_id;
       console.log('Session delai : ',session_delai)
+    });
+    createSession(assistant_max, (result) => {
+      session_max = result.session_id;
+      console.log('Session max : ',session_max)
     });
     res.render('index', {
       conversation: conversation
@@ -56,82 +62,62 @@ router.post('/', function(req, res, next) {
   var current_assistant = '';
   var current_session = '';
   var array_context = [];
-  array_context.push({
-    gearbox: req.body.bv,
-    energy: req.body.energie,
-    from: req.body.from,
-    to: req.body.to,
-    vehicle: '5008',
-    timezone: 'Europe/Paris',
-    user_id: user_id
-  })
   if(context_array.length == 0) {
     context_array.push({
-      skills: {
-        propName: {
-          gearbox: req.body.bv,
-          energy: req.body.energie,
-          from: req.body.from,
-          to: req.body.to,
-          vehicle: '5008',
-          timezone: 'Europe/Paris',
-          user_id: user_id
+      "global": {
+        "system": {
+          "turn_count": 0
+        }
+      },
+      "skills": {
+        "main skill": {
+          "user_defined": {
+            "gearbox": req.body.bv,
+            "energy": req.body.energie,
+            "from": req.body.from,
+            "to": req.body.to,
+            "vehicle": '5008',
+            "user_id": user_id
+          }
         }
       }
     });
   }
-  var val_u = input.toUpperCase();
+  var val_uppercase = input.toUpperCase();
   if(input === 'pref_selectionned') {
     criteria = true;
   }
-  if(val_u == 'BLACK' || val_u == 'PEARL' || val_u == 'BLUE') {
-    color = true;
-    _.assign(car, {'color' : val_u});
-    console.log(car);
-    decisionGet(car.modele.toUpperCase(), function(result){
-      console.log(result);
-      options_odm = JSON.parse(result);
-      car["prix"] = parseInt(car["prix"]) + 650;
-      var reponseuh = 'Here is your new car. According to your stats, the users have choosen those options :';
-      for(var i = 0; i< options_odm.resultat.PRIX.length; i++) {
-        price_all_options += options_odm.resultat.PRIX[i];
-      }
-      for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
-        reponseuh += ' - ' + options_odm.resultat.OPTIONS[i]
-      }
-      res.send([reponseuh, 'change_color', car, text_usage]);
-    });
-  } else {
-      if(val_u == 'YES') {
+      if(val_uppercase == 'YES') {
         isOptions = true;
         car['prix'] = parseInt(car["prix"]) + price_all_options;
         res.send(['We updated the price with the options selected.', 'display_data', car, text_usage]);
         return;
       }
-      if(val_u == 'NO') {
+      if(val_uppercase == 'NO') {
         isOptions = true;
         res.send(['It is ok, we will set 0 options', 'display_data', car, text_usage]);
         return;
       }
-      makeCloudantRequest(req.body, function(result){
+    makeCloudantRequest(req.body, (result) => {
         if(result == null || result.length != 1) {
           console.log('Not found');
           if (usage && criteria && !color) {
-            makeCloudantClosest(req.body, function(myResult){
+            makeCloudantClosest(req.body, (myResult) => {
+              current_assistant = assistant_max;
+              current_session = session_max;
               car = myResult;
               res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', myResult, text_usage]);
             });
           }
-          else {
-            if (usage && criteria && color) {
+          else if (usage && criteria && color) {
               current_assistant = assistant_delai;
               current_session = session_delai;
-            }
-            else {
+          }
+          else {
               current_assistant = assistant_main;
               current_session = session_main;
-            }
-            sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
+          }
+          sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
               //console.log('input:', input);
               chatbot_response = '';
               for(var i=0; i<response.output.generic.length; i++) {
@@ -148,23 +134,49 @@ router.post('/', function(req, res, next) {
                 _.assign(response.context, {'usage' : entity_list["usage"]});
                 usage = true;
                 priority = 'find_priority';
+                saveDialog(user_id, input, chatbot_response, context_array.length);
+                context_array.push(response.context);
+                num_msg++;
+                res.send([chatbot_response, priority, {}, text_usage]);
               }
-              saveDialog(user_id, input, chatbot_response, context_array.length);
-              context_array.push(response.context);
-              num_msg++;
-              res.send([chatbot_response, priority, {}, text_usage]);
+              else if(entity_list["color"]) {
+                color = true;
+                _.assign(car, {'color' : entity_list["color"]});
+                console.log(car);
+                decisionGet(car.modele.toUpperCase(), (result) => {
+                  console.log(result);
+                  options_odm = JSON.parse(result);
+                  car["prix"] = parseInt(car["prix"]) + 650;
+                  var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :';
+                  for(var i = 0; i< options_odm.resultat.PRIX.length; i++) {
+                    price_all_options += options_odm.resultat.PRIX[i];
+                  }
+                  for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
+                    reponseuh += ' - ' + options_odm.resultat.OPTIONS[i]
+                  }
+                  saveDialog(user_id, input, reponseuh, context_array.length);
+                  context_array.push(response.context);
+                  num_msg++;
+                  res.send([reponseuh, 'change_color', car, text_usage]);
+                });
+              } else {
+                saveDialog(user_id, input, chatbot_response, context_array.length);
+                context_array.push(response.context);
+                num_msg++;
+                res.send([chatbot_response, priority, {}, text_usage]);
+              }
             });
-          }
         }
         else {
           console.log('Found');
           car = result[0];
           var myResponse = "We found a car which matches your expectation ! Now, choose a color."
+          current_assistant = assistant_max;
+          current_session = session_max;
           saveDialog(user_id, input, myResponse, num_msg);
           res.send([myResponse, 'display_data', result[0], text_usage]);
         }
       });
-    }
 });
 
 function makeCloudantRequest(params, callback) {
@@ -283,13 +295,17 @@ function sendConversationMessage(assistant_id, session_id, msg, context, callbac
         context: context,
         input: {
           'message_type': 'text',
-          'text': msg
+          'text': msg,
+          'options': {
+            'return_context': true
+          }
         }
       }, function(err, response) {
       if (err) {
         console.error(err);
       } else {
-        console.log(response);
+        //console.log(response);
+        //console.log(JSON.stringify(response, null, 2));
         callback(response);
       }
     });
