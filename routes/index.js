@@ -188,11 +188,11 @@ router.post('/find_options', function(req, res, next) {
     } else if(val_uppercase == 'NO') {
       message = 'It is ok, we will set 0 options.';
     }
-    /*sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
+    sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
         var data = analyseResponse(response);
         message += '<br>' + data.response;
         res.send([message, 'display_data', car, '/find_delai']);
-      });*/
+    });
   } else {
     res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', 'display_data', car, 'find_options']);
   }
@@ -208,23 +208,15 @@ router.post('/find_delai', function(req, res, next) {
         var additional = {
           from: req.body.from,
           to: req.body.to,
-          esthetique: req.body.esthetique,
-          confort: req.body.confort,
-          multimedia: req.body.multimedia,
-          assistance: req.body.assistance,
         }
+        var delai = data.entities["sys-number"] * 30;
         var selector = _.cloneDeep(req.body);
         selector["usage"] = text_usage;
-        delete selector["input"];
-        delete selector["from"];
-        delete selector["to"];
-        delete selector["esthetique"];
-        delete selector["confort"];
-        delete selector["multimedia"];
-        delete selector["assistance"];
-        cloudantFindClosestCar(additional, selector, function(myResult) {
+        selector["inventary"] = true;
+        selector["delai"] = delai;
+        cloudantFindClosestCarInventary(additional, selector, function(myResult) {
           car = myResult;
-          res.send([data.response+'<br>'+'Here is the car', 'display_data', car, '/find_delai']);
+          res.send([data.response, 'display_data', car, '/find_delai']);
         });
       }
       else {
@@ -254,8 +246,6 @@ function analyseResponse (response) {
 
 function cloudantFindClosestCarInventary(additional, params, callback) {
     var data = [];
-    var resultat = [];
-    var actual_value = 100;
     if(!mydb) {
       callback(null);
     }
@@ -266,20 +256,8 @@ function cloudantFindClosestCarInventary(additional, params, callback) {
             data.push(result.docs[i])
           }
         }
-        for (var i = 0; i < data.length; i++) {
-          var dif_confort = Math.abs(data[i].confort - additional.confort);
-          var dif_esthetique = Math.abs(data[i].esthetique - additional.esthetique);
-          var dif_assistance = Math.abs(data[i].assistance - additional.assistance);
-          var dif_multimedia = Math.abs(data[i].multimedia - additional.multimedia);
-          var total_dif = dif_confort + dif_esthetique + dif_assistance + dif_multimedia;
-          if(total_dif<actual_value) {
-            actual_value = total_dif;
-            resultat.push(data[i])
-          }
-        }
         console.log(data);
-        console.log(resultat);
-        callback(resultat[resultat.length - 1]);
+        callback(data[data.length - 1]);
       } else {
         console.log(err);
         callback(null);
