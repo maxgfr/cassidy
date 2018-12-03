@@ -336,9 +336,8 @@ function insertMessage(msg,res) {
 	var type = res[1];
 	var data = res[2];
 	urlWatson = res[3];
-	var usage = data.usage;
-	if(usage != '') {
-		$("#usage").html(usage).css("font-weight", "bold");
+	if(data.usage && data.usage != '') {
+		$("#usage").html(data.usage).css("font-weight", "bold");
 		for(i=0;i<10;i++) {
     	$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
   	}
@@ -401,6 +400,7 @@ function findPriority (res, message) {
 			dataType: 'json',
 			success: function (resultat) {
 				console.log(resultat)
+				urlWatson = resultat[3];
 				displayData(resultat[2], resultat[0]);
 			},
 			error: function (data) {
