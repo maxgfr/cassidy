@@ -17,6 +17,7 @@ var context_array,
   user_id,
   isColor,
   isOptions,
+  isDelai,
   car,
   price_all_options,
   options_odm,
@@ -28,7 +29,7 @@ router.get('/', function(req, res, next) {
   options_odm = {};
   context_array = [];
   text_usage = text_color = '';
-  isColor = isUsage = isOptions = false;
+  isColor = isUsage = isOptions = isDelai = false;
   num_msg = price_all_options = 0;
   if (!conversation) {
     console.log("Conversation non initialisée");
@@ -167,10 +168,10 @@ router.post('/find_color', function(req, res, next) {
           res.send([reponseuh, 'change_color', car, '/find_options']);
         });
       } else {
-        saveDialog(user_id, input, data.chatbot_rep, context_array.length);
+        saveDialog(user_id, input, data.response, context_array.length);
         context_array.push(response.context);
         num_msg++;
-        res.send([data.chatbot_rep, '', car, '/find_color']);
+        res.send([data.response, '', car, '/find_color']);
       }
     });
 });
@@ -178,14 +179,20 @@ router.post('/find_color', function(req, res, next) {
 router.post('/find_options', function(req, res, next) {
   var input = req.body.input;
   var val_uppercase = input.toUpperCase();
-  if(val_uppercase == 'YES') {
+  if(val_uppercase == 'YES' || val_uppercase == 'NO') {
+    var message = '';
     isOptions = true;
-    car['prix'] = parseInt(car["prix"]) + price_all_options;
-    res.send(['We updated the price with the options selected.', 'display_data', car, '/find_delai']);
-  }
-  else if (val_uppercase == 'NO') {
-    isOptions = true;
-    res.send(['It is ok, we will set 0 options', 'display_data', car, '/find_delai']);
+    if(val_uppercase == 'YES') {
+      car['prix'] = parseInt(car["prix"]) + price_all_options;
+      message = 'We updated the price with the options selected.';
+    } else if(val_uppercase == 'NO') {
+      message = 'It is ok, we will set 0 options.';
+    }
+    /*sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
+        var data = analyseResponse(response);
+        message += '<br>' + data.response;
+        res.send([message, 'display_data', car, '/find_delai']);
+      });*/
   } else {
     res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', 'display_data', car, 'find_options']);
   }
@@ -194,6 +201,41 @@ router.post('/find_options', function(req, res, next) {
 router.post('/find_delai', function(req, res, next) {
   var input = req.body.input;
   console.log(input);
+  sendConversationMessage(assistant_delai, session_delai, input, context_array[context_array.length - 1], function(response){
+      var data = analyseResponse(response);
+      if(data.entities["sys-number"]) {
+        isDelai = true;
+        var additional = {
+          from: req.body.from,
+          to: req.body.to,
+          esthetique: req.body.esthetique,
+          confort: req.body.confort,
+          multimedia: req.body.multimedia,
+          assistance: req.body.assistance,
+        }
+        var selector = _.cloneDeep(req.body);
+        selector["usage"] = text_usage;
+        delete selector["input"];
+        delete selector["from"];
+        delete selector["to"];
+        delete selector["esthetique"];
+        delete selector["confort"];
+        delete selector["multimedia"];
+        delete selector["assistance"];
+        cloudantFindClosestCar(additional, selector, function(myResult) {
+          car = myResult;
+          res.send([data.response+'<br>'+'Here is the car', 'display_data', car, '/find_delai']);
+        });
+      }
+      else {
+        saveDialog(user_id, input, data.response, context_array.length);
+        context_array.push(response.context);
+        num_msg++;
+        res.send([data.response, '', car, '/find_delai']);
+      }
+
+    });
+
 });
 
 function analyseResponse (response) {
@@ -208,6 +250,41 @@ function analyseResponse (response) {
     entity_rep[response.output.entities[i].entity] = response.output.entities[i].value;
   }
   return {entities: entity_rep, response: chatbot_rep};
+}
+
+function cloudantFindClosestCarInventary(additional, params, callback) {
+    var data = [];
+    var resultat = [];
+    var actual_value = 100;
+    if(!mydb) {
+      callback(null);
+    }
+    mydb.find({ selector: params }, function(err, result) {
+      if (!err) {
+        for (var i = 0; i < result.docs.length; i++) {
+          if (result.docs[i].prix < additional.to && result.docs[i].prix > additional.from) {
+            data.push(result.docs[i])
+          }
+        }
+        for (var i = 0; i < data.length; i++) {
+          var dif_confort = Math.abs(data[i].confort - additional.confort);
+          var dif_esthetique = Math.abs(data[i].esthetique - additional.esthetique);
+          var dif_assistance = Math.abs(data[i].assistance - additional.assistance);
+          var dif_multimedia = Math.abs(data[i].multimedia - additional.multimedia);
+          var total_dif = dif_confort + dif_esthetique + dif_assistance + dif_multimedia;
+          if(total_dif<actual_value) {
+            actual_value = total_dif;
+            resultat.push(data[i])
+          }
+        }
+        console.log(data);
+        console.log(resultat);
+        callback(resultat[resultat.length - 1]);
+      } else {
+        console.log(err);
+        callback(null);
+      }
+    });
 }
 
 function cloudantFindPreciselyCar(additional, params, callback) {
