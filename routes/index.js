@@ -149,7 +149,7 @@ router.post('/find_color', function(req, res, next) {
       var data = analyseResponse(response);
       if(data.entities["color"]) {
         isColor = true;
-        text_color = data.entities["color"];
+        text_color = data.entities["color"].toUpperCase();
         console.log(text_color)
         _.assign(car, {'color' : text_color});
         decisionGet(car.modele.toUpperCase(), (result) => {
