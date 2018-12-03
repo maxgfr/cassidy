@@ -9,16 +9,13 @@ const assistant_main = '31230de8-925f-42a8-99d3-0c6139733c71';
 const assistant_max = '188405aa-5d2d-482a-a416-dcfaaec224eb';
 var context_array,
   text_usage,
+  text_color,
   num_msg,
   session_delai,
   session_main,
   session_max,
   user_id,
-  entity_list,
-  text_color,
-  chatbot_response,
-  criteria,
-  color,
+  isColor,
   isOptions,
   car,
   price_all_options,
@@ -26,13 +23,12 @@ var context_array,
   usage = null;
 
 router.get('/', function(req, res, next) {
+  user_id = uuidv4();
   car = {};
   options_odm = {};
-  entity_list = {};
   context_array = [];
-  session_delai = session_main  = session_max = text_usage = chatbot_response = text_color = '';
-  criteria = color = usage = isOptions = false;
-  user_id = uuidv4();
+  text_usage = text_color = '';
+  isColor = isUsage = isOptions = false;
   num_msg = price_all_options = 0;
   if (!conversation) {
     console.log("Conversation non initialisée");
@@ -57,11 +53,14 @@ router.get('/', function(req, res, next) {
   }
 });
 
-router.post('/', function(req, res, next) {
+router.post('/find_car', function(req, res, next) {
   var input = req.body.input;
-  var current_assistant = '';
-  var current_session = '';
-  var array_context = [];
+  var from = req.body.from;
+  var to = req.body.to;
+  var selector = _.cloneDeep(req.body);
+  delete selector["input"];
+  delete selector["from"];
+  delete selector["to"];
   if(context_array.length == 0) {
     context_array.push({
       "global": {
@@ -83,118 +82,135 @@ router.post('/', function(req, res, next) {
       }
     });
   }
-  var val_uppercase = input.toUpperCase();
-  if(input === 'pref_selectionned') {
-    criteria = true;
-  }
-      if(val_uppercase == 'YES') {
-        isOptions = true;
-        car['prix'] = parseInt(car["prix"]) + price_all_options;
-        res.send(['We updated the price with the options selected.', 'display_data', car, text_usage]);
-        return;
+  cloudantFindPreciselyCar(from, to, selector, (result) => {
+      if(result == null || result.length != 1) {
+        sendConversationMessage(assistant_main, session_main, input, context_array[context_array.length - 1], function(response){
+            var data = analyseResponse(response);
+            if(data.entity_rep["usage"]) {
+              isUsage = true;
+              text_usage = data.entity_rep["usage"];
+              _.assign(response.context, {'usage' : data.entity_rep["usage"]});
+              saveDialog(user_id, input, data.chatbot_rep, context_array.length);
+              context_array.push(response.context);
+              num_msg++;
+              res.send([data.chatbot_rep, 'find_priority', {usage: text_usage}, '/find_closest_car']);
+            } else {
+              saveDialog(user_id, input, data.chatbot_rep, context_array.length);
+              context_array.push(response.context);
+              num_msg++;
+              res.send([data.chatbot_rep, '', {usage: text_usage}, '/find_car']);
+            }
+          });
       }
-      if(val_uppercase == 'NO') {
-        isOptions = true;
-        res.send(['It is ok, we will set 0 options', 'display_data', car, text_usage]);
-        return;
+      else {
+        car = result[0];
+        car["usage"]= '';
+        saveDialog(user_id, input, myResponse, num_msg);
+        res.send(["We found a car which matches your expectation ! Now, choose a color.", 'display_data', car, '/find_color']);
       }
-    makeCloudantRequest(req.body, (result) => {
-        if(result == null || result.length != 1) {
-          console.log('Not found');
-          if (usage && criteria && !color) {
-            makeCloudantClosest(req.body, (myResult) => {
-              current_assistant = assistant_max;
-              current_session = session_max;
-              car = myResult;
-              res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', myResult, text_usage]);
-            });
-          }
-          else if (usage && criteria && color) {
-              current_assistant = assistant_delai;
-              current_session = session_delai;
-          }
-          else {
-              current_assistant = assistant_main;
-              current_session = session_main;
-          }
-          sendConversationMessage(current_assistant, current_session, input, context_array[context_array.length - 1], function(response){
-              //console.log('input:', input);
-              chatbot_response = '';
-              for(var i=0; i<response.output.generic.length; i++) {
-                //console.log(response.output.generic[i]);
-                chatbot_response += response.output.generic[i].text + '. ';
-              }
-              for(var i=0; i<response.output.entities.length; i++) {
-                //console.log(response.output.entities[i]);
-                entity_list[response.output.entities[i].entity] = response.output.entities[i].value;
-              }
-              var priority = '';
-              if(entity_list["usage"]) {
-                text_usage = entity_list["usage"];
-                _.assign(response.context, {'usage' : entity_list["usage"]});
-                usage = true;
-                priority = 'find_priority';
-                saveDialog(user_id, input, chatbot_response, context_array.length);
-                context_array.push(response.context);
-                num_msg++;
-                res.send([chatbot_response, priority, {}, text_usage]);
-              }
-              else if(entity_list["color"]) {
-                color = true;
-                _.assign(car, {'color' : entity_list["color"]});
-                console.log(car);
-                decisionGet(car.modele.toUpperCase(), (result) => {
-                  console.log(result);
-                  options_odm = JSON.parse(result);
-                  car["prix"] = parseInt(car["prix"]) + 650;
-                  var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :';
-                  for(var i = 0; i< options_odm.resultat.PRIX.length; i++) {
-                    price_all_options += options_odm.resultat.PRIX[i];
-                  }
-                  for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
-                    reponseuh += ' - ' + options_odm.resultat.OPTIONS[i]
-                  }
-                  saveDialog(user_id, input, reponseuh, context_array.length);
-                  context_array.push(response.context);
-                  num_msg++;
-                  res.send([reponseuh, 'change_color', car, text_usage]);
-                });
-              } else {
-                saveDialog(user_id, input, chatbot_response, context_array.length);
-                context_array.push(response.context);
-                num_msg++;
-                res.send([chatbot_response, priority, {}, text_usage]);
-              }
-            });
-        }
-        else {
-          console.log('Found');
-          car = result[0];
-          var myResponse = "We found a car which matches your expectation ! Now, choose a color."
-          current_assistant = assistant_max;
-          current_session = session_max;
-          saveDialog(user_id, input, myResponse, num_msg);
-          res.send([myResponse, 'display_data', result[0], text_usage]);
-        }
-      });
+    });
 });
 
-function makeCloudantRequest(params, callback) {
-    var from = params["from"];
-    var to = params["to"];
-    var selector = _.cloneDeep(params);
-    delete selector["input"];
-    delete selector["from"];
-    delete selector["to"];
-    if(text_usage) {
-      selector["usage"] = text_usage;
-    }
-    console.log(selector)
+router.post('/find_closest_car', function(req, res, next) {
+  var input = req.body.input;
+  var from = req.body.from;
+  var to = req.body.to;
+  var esthetique = req.body.esthetique;
+  var confort = req.body.confort;
+  var multimedia = req.body.multimedia;
+  var assistance = req.body.assistance;
+  var selector = _.cloneDeep(req.body);
+  delete selector["input"];
+  delete selector["from"];
+  delete selector["to"];
+  delete selector["esthetique"];
+  delete selector["confort"];
+  delete selector["multimedia"];
+  delete selector["assistance"];
+  if(text_usage) {
+    selector["usage"] = text_usage;
+  }
+  cloudantFindClosestCar(selector, (myResult) => {
+    isCar = true;
+    car = myResult;
+    car["usage"]= text_usage;
+    res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', car, '/find_color']);
+  });
+});
+
+router.post('/find_color', function(req, res, next) {
+  var input = req.body.input;
+  sendConversationMessage(assistant_max, session_max, input, context_array[context_array.length - 1], function(response){
+      var data = analyseResponse(response);
+      if(data.entity_rep["color"]) {
+        isColor = true;
+        text_color = data.entity_rep["color"];
+        _.assign(car, {'color' : text_color});
+        decisionGet(car.modele.toUpperCase(), (result) => {
+          options_odm = JSON.parse(result);
+          car["prix"] = parseInt(car["prix"]) + 650;
+          var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :';
+          for(var i = 0; i< options_odm.resultat.PRIX.length; i++) {
+            price_all_options += options_odm.resultat.PRIX[i];
+          }
+          for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
+            reponseuh += '<br> - ' + options_odm.resultat.OPTIONS[i]
+          }
+          saveDialog(user_id, input, reponseuh, context_array.length);
+          context_array.push(response.context);
+          num_msg++;
+          res.send([reponseuh, 'change_color', car, '/find_options']);
+        });
+      } else {
+        saveDialog(user_id, input, data.chatbot_rep, context_array.length);
+        context_array.push(response.context);
+        num_msg++;
+        res.send([data.chatbot_rep, '', car, '/find_color']);
+      }
+    });
+});
+
+router.post('/find_options', function(req, res, next) {
+  var input = req.body.input;
+  var val_uppercase = input.toUpperCase();
+  if(val_uppercase == 'YES') {
+    isOptions = true;
+    car['prix'] = parseInt(car["prix"]) + price_all_options;
+    res.send(['We updated the price with the options selected.', 'display_data', car, '/find_delai']);
+  }
+  else if (val_uppercase == 'NO') {
+    isOptions = true;
+    res.send(['It is ok, we will set 0 options', 'display_data', car, '/find_delai']);
+  } else {
+    res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', 'display_data', car, 'find_options']);
+  }
+});
+
+router.post('/find_delai', function(req, res, next) {
+  var input = req.body.input;
+  console.log(input);
+});
+
+function analyseResponse (response) {
+  var chatbot_rep =  "";
+  var entity_rep = [];
+  for(var i=0; i<response.output.generic.length; i++) {
+    //console.log(response.output.generic[i]);
+    chatbot_rep += response.output.generic[i].text + '. ';
+  }
+  for(var i=0; i<response.output.entities.length; i++) {
+    //console.log(response.output.entities[i]);
+    entity_rep[response.output.entities[i].entity] = response.output.entities[i].value;
+  }
+  return {entities: entity_rep, response: chatbot_rep};
+}
+
+function cloudantFindPreciselyCar(from, to, params, callback) {
     var data = [];
     if(!mydb) {
       callback(data);
     }
-    mydb.find({ selector: selector }, function(err, result) {
+    mydb.find({ selector: params }, function(err, result) {
       if (!err) {
         for (var i = 0; i < result.docs.length; i++) {
           if (result.docs[i].prix < to && result.docs[i].prix > from) {
@@ -210,32 +226,14 @@ function makeCloudantRequest(params, callback) {
     });
 }
 
-function makeCloudantClosest(params, callback) {
-    var esthetique = params["esthetique"];
-    var confort = params["confort"];
-    var multimedia = params["multimedia"];
-    var assistance = params["assistance"];
-    var from = params["from"];
-    var to = params["to"];
-    var selector = _.cloneDeep(params);
-    delete selector["input"];
-    delete selector["from"];
-    delete selector["to"];
-    delete selector["esthetique"];
-    delete selector["confort"];
-    delete selector["multimedia"];
-    delete selector["assistance"];
-    if(text_usage) {
-      selector["usage"] = text_usage;
-    }
-    console.log(selector, from, to);
+function cloudantFindClosestCar(from, to, params, callback) {
     var data = [];
     var resultat = [];
     var actual_value = 100;
     if(!mydb) {
       callback(data);
     }
-    mydb.find({ selector: selector }, function(err, result) {
+    mydb.find({ selector: params }, function(err, result) {
       if (!err) {
         for (var i = 0; i < result.docs.length; i++) {
           if (result.docs[i].prix < to && result.docs[i].prix > from) {

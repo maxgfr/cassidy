@@ -226,6 +226,7 @@ var to = 55000;
 var bv = '';
 var energie = '';
 var usage = '';
+var urlWatson = '/find_car';
 var first_message = true;
 
 var saveResult = function (data) {
@@ -296,7 +297,7 @@ function updateScrollbar() {
 function sendMessage(msg) {
 	$.ajax({
 		type: "POST",
-		url: "/",
+		url: urlWatson,
 		data: {
 			input: msg,
 			bv: bv,
@@ -334,7 +335,8 @@ function insertMessage(msg,res) {
 	var message = res[0];
 	var type = res[1];
 	var data = res[2];
-	var usage = res[3];
+	urlWatson = res[3];
+	var usage = data.usage;
 	if(usage != '') {
 		$("#usage").html(usage).css("font-weight", "bold");
 		for(i=0;i<10;i++) {
@@ -394,7 +396,7 @@ function findPriority (res, message) {
 		manageStar(data);
 		$.ajax({
 			type: "POST",
-			url: "/",
+			url: urlWatson,
 			data: data,
 			dataType: 'json',
 			success: function (resultat) {
