@@ -21,13 +21,13 @@ var context_array,
   car,
   price_all_options,
   options_odm,
+  choose_car,
   usage = null;
 
 router.get('/', function(req, res, next) {
   user_id = uuidv4();
-  car = {};
-  options_odm = {};
-  context_array = [];
+  car = options_odm = {};
+  context_array = choose_car = [];
   text_usage = text_color = '';
   isColor = isUsage = isOptions = isDelai = false;
   num_msg = price_all_options = 0;
@@ -134,11 +134,14 @@ router.post('/find_closest_car', function(req, res, next) {
   delete selector["multimedia"];
   delete selector["assistance"];
   cloudantFindClosestCar(additional, selector, function(myResult) {
-    isCar = true;
-    car = myResult;
-    //console.log('Usage: ', text_usage);
-    _.assign(car, {'usage' : text_usage});
-    res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', car, '/find_color']);
+    if(myResult == null) {
+      res.send(['We don\'t find a car which matches those criterias with this usage : '+text_usage+ '. Please tell me another usage :', '', {usage: text_usage}, '/find_car']);
+    } else {
+      isCar = true;
+      car = myResult;
+      _.assign(car, {'usage' : text_usage});
+      res.send(['We found a car that best matches your expectation. Now tell me the color', 'display_data', car, '/find_color']);
+    }
   });
 });
 
@@ -194,7 +197,7 @@ router.post('/find_options', function(req, res, next) {
         res.send([message, 'display_data', car, '/find_delai']);
     });
   } else {
-    res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', 'display_data', car, 'find_options']);
+    res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', 'display_data', car, '/find_options']);
   }
 });
 
@@ -208,15 +211,34 @@ router.post('/find_delai', function(req, res, next) {
         var additional = {
           from: req.body.from,
           to: req.body.to,
+          delai: String(data.entities["sys-number"] * 30)
         }
-        var delai = data.entities["sys-number"] * 30;
         var selector = _.cloneDeep(req.body);
         selector["usage"] = text_usage;
         selector["inventary"] = true;
-        selector["delai"] = delai;
+        delete selector["input"];
+        delete selector["from"];
+        delete selector["to"];
         cloudantFindClosestCarInventary(additional, selector, function(myResult) {
-          car = myResult;
-          res.send([data.response, 'display_data', car, '/find_delai']);
+          if(myResult == null) {
+            res.send(['We don\'t find a car in our WIP & Inventary which matches your criterias.', '', car, '/find_car']);
+          } else {
+            var resp = data.response;
+            choose_car = myResult;
+            var num = 1;
+            for (var i=0; i<myResult.length; i++) {
+              resp += '<br>-> '+num+' possibility<br>';
+              resp += '&emsp;Model: '+myResult[i].modele+'<br>';
+              resp += '&emsp;Energy: '+myResult[i].energie+'<br>';
+              resp += '&emsp;Gearbox: '+myResult[i].bv+'<br>';
+              resp += '&emsp;Options: '+myResult[i].options+'<br>';
+              resp += '&emsp;Price: '+myResult[i].prix+'<br>';
+              resp += '&emsp;Time Limit: '+myResult[i].delai+' days<br>';
+              num++;
+            }
+            resp += 'Now, tell me the corresponding number for your choice';
+            res.send([resp, '', car, '/choose_car']);
+          }
         });
       }
       else {
@@ -228,6 +250,19 @@ router.post('/find_delai', function(req, res, next) {
 
     });
 
+});
+
+router.post('/choose_car', function(req, res, next) {
+  try{
+    var result_number = parseInt(req.body.input) - 1;
+    res.send(['We updated the view with the car that you selected.', 'display_data', choose_car[result_number], '/final']);
+  } catch(e) {
+    res.send(['Tell me a good number please...', 'display_data', car, '/choose_car']);
+  }
+});
+
+router.post('/final', function(req, res, next) {
+    res.send(['I have finished to help you. :)', '', car, '/final']);
 });
 
 function analyseResponse (response) {
@@ -252,12 +287,12 @@ function cloudantFindClosestCarInventary(additional, params, callback) {
     mydb.find({ selector: params }, function(err, result) {
       if (!err) {
         for (var i = 0; i < result.docs.length; i++) {
-          if (result.docs[i].prix < additional.to && result.docs[i].prix > additional.from) {
+          if (result.docs[i].prix < additional.to && result.docs[i].prix > additional.from &&result.docs[i].delai < additional.delai) {
             data.push(result.docs[i])
           }
         }
         console.log(data);
-        callback(data[data.length - 1]);
+        callback(data);
       } else {
         console.log(err);
         callback(null);
