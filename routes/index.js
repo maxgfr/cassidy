@@ -101,7 +101,7 @@ router.post('/find_car', function(req, res, next) {
               saveDialog(user_id, input, data.response, context_array.length);
               context_array.push(response.context);
               num_msg++;
-              res.send([data.response, '', {usage: text_usage}, '/find_car']);
+              res.send([data.response, '', {}, '/find_car']);
             }
           });
       }
@@ -135,7 +135,7 @@ router.post('/find_closest_car', function(req, res, next) {
   delete selector["assistance"];
   cloudantFindClosestCar(additional, selector, function(myResult) {
     if(myResult == null) {
-      res.send(['We don\'t find a car which matches those criterias with this usage : '+text_usage+ '. Please tell me another usage :', '', {usage: text_usage}, '/find_car']);
+      res.send(['We don\'t find a car which matches those criterias with this usage : '+text_usage+ '. Please tell me another usage :', '', {}, '/find_car']);
     } else {
       isCar = true;
       car = myResult;
@@ -174,7 +174,7 @@ router.post('/find_color', function(req, res, next) {
         saveDialog(user_id, input, data.response, context_array.length);
         context_array.push(response.context);
         num_msg++;
-        res.send([data.response, '', car, '/find_color']);
+        res.send([data.response, '', {}, '/find_color']);
       }
     });
 });
@@ -197,7 +197,7 @@ router.post('/find_options', function(req, res, next) {
         res.send([message, 'display_data', car, '/find_delai']);
     });
   } else {
-    res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', 'display_data', car, '/find_options']);
+    res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', '', {}, '/find_options']);
   }
 });
 
@@ -217,17 +217,19 @@ router.post('/find_delai', function(req, res, next) {
         selector["usage"] = text_usage;
         selector["inventary"] = true;
         delete selector["input"];
+        delete selector["bv"];
+        delete selector["energie"];
         delete selector["from"];
         delete selector["to"];
         cloudantFindClosestCarInventary(additional, selector, function(myResult) {
           if(myResult == null || myResult.length == 0) {
-            res.send(['We don\'t find a car in our WIP & Inventary which matches your criterias, so your potential car is not updated.', '', car, '/final']);
+            res.send(['We don\'t find a car in our WIP & Inventary which matches your criterias, so your potential car is not updated.', '', {}, '/final']);
           } else {
             var resp = data.response;
             choose_car = myResult;
             var num = 1;
             for (var i=0; i<myResult.length; i++) {
-              resp += '<br>-> '+num+' possibility<br>';
+              resp += '<br>-> '+num+' choice<br>';
               resp += '&emsp;Model: '+myResult[i].modele+'<br>';
               resp += '&emsp;Energy: '+myResult[i].energie+'<br>';
               resp += '&emsp;Gearbox: '+myResult[i].bv+'<br>';
@@ -237,7 +239,7 @@ router.post('/find_delai', function(req, res, next) {
               num++;
             }
             resp += 'Now, tell me the corresponding number for your choice';
-            res.send([resp, '', car, '/choose_car']);
+            res.send([resp, '', {}, '/choose_car']);
           }
         });
       }
@@ -245,7 +247,7 @@ router.post('/find_delai', function(req, res, next) {
         saveDialog(user_id, input, data.response, context_array.length);
         context_array.push(response.context);
         num_msg++;
-        res.send([data.response, '', car, '/find_delai']);
+        res.send([data.response, '', {}, '/find_delai']);
       }
 
     });
@@ -255,14 +257,14 @@ router.post('/find_delai', function(req, res, next) {
 router.post('/choose_car', function(req, res, next) {
   var result_number = parseInt(req.body.input) - 1;
   if(!isNumber(result_number)) {
-    res.send(['Tell me a good number please...', 'display_data', car, '/choose_car']);
+    res.send(['Tell me a good number please...', '', {}, '/choose_car']);
   } else {
-    res.send(['We updated the view with the car that you selected.', 'display_data', choose_car[result_number], '/final']);
+    res.send(['We will order the car that you selected.', '', {}, '/final']);
   }
 });
 
 router.post('/final', function(req, res, next) {
-    res.send(['I have finished to help you. :)', '', car, '/final']);
+    res.send(['I have finished to help you. :)', '', {}, '/final']);
 });
 
 function analyseResponse (response) {

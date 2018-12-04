@@ -336,12 +336,6 @@ function insertMessage(msg,res) {
 	var type = res[1];
 	var data = res[2];
 	urlWatson = res[3];
-	if(data.usage && data.usage != '') {
-		$("#usage").html(data.usage).css("font-weight", "bold");
-		for(i=0;i<10;i++) {
-    	$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
-  	}
-	}
 	if (type == "find_priority") {
 		findPriority(res, message)
 	} else if (type == "display_data") {
@@ -361,6 +355,15 @@ function findPriority (res, message) {
 	$("#msg-box").addClass('invisible');
 
 	$('.message.loading').remove();
+
+	if(res.usage) {
+		if(res.usage != '') {
+			$("#usage").html(res.usage).css("font-weight", "bold");
+			for(i=0;i<10;i++) {
+				$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+			}
+		}
+	}
 
 	$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
 		'<br/></br/><p class="small">Look<select id="Look" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
@@ -428,6 +431,14 @@ function changeColor (data, message) {
 }
 
 function displayData (data, message) {
+		if(data.usage) {
+			if(data.usage != '') {
+				$("#usage").html(data.usage).css("font-weight", "bold");
+				for(i=0;i<10;i++) {
+					$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+				}
+			}
+		}
 		$( "#watson_finition" ).html(data.modele).css("font-weight", "bold");
 		$( "#watson_delai" ).html(data.delai + " days").css("font-weight", "bold");
 		$( "#watson_prix" ).html(data.prix + " euros").css("font-weight", "bold");
