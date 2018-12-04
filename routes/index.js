@@ -220,8 +220,8 @@ router.post('/find_delai', function(req, res, next) {
         delete selector["from"];
         delete selector["to"];
         cloudantFindClosestCarInventary(additional, selector, function(myResult) {
-          if(myResult == null) {
-            res.send(['We don\'t find a car in our WIP & Inventary which matches your criterias.', '', car, '/find_car']);
+          if(myResult == null || myResult.length == 0) {
+            res.send(['We don\'t find a car in our WIP & Inventary which matches your criterias, so your potential car is not updated.', '', car, '/final']);
           } else {
             var resp = data.response;
             choose_car = myResult;
@@ -253,11 +253,11 @@ router.post('/find_delai', function(req, res, next) {
 });
 
 router.post('/choose_car', function(req, res, next) {
-  try{
-    var result_number = parseInt(req.body.input) - 1;
-    res.send(['We updated the view with the car that you selected.', 'display_data', choose_car[result_number], '/final']);
-  } catch(e) {
+  var result_number = parseInt(req.body.input) - 1;
+  if(!isNumber(result_number)) {
     res.send(['Tell me a good number please...', 'display_data', car, '/choose_car']);
+  } else {
+    res.send(['We updated the view with the car that you selected.', 'display_data', choose_car[result_number], '/final']);
   }
 });
 
@@ -427,6 +427,10 @@ function decisionGet (mdl, callback) {
           callback(body);
       }
   });
+}
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 module.exports = router;

@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const _ = require('lodash');
+
 var context_array= [];
 var number = 0;
 
@@ -120,6 +122,67 @@ router.post('/add_inventary', function(req, res, next) {
     }
     res.send("New entry in the database");
   });
+});
+
+router.get('/get_conv', function(req, res, next) {
+  var data = {};
+  if(!mydb) {
+    return;
+  }
+  mydb.list({ include_docs: true }, function(err, body) {
+    if (!err) {
+      body.rows.forEach(function(row) {
+        if(row.doc.user_id){
+          var data_object = {};
+          data_object[row.doc.user_id] = {id_cloudant: row.doc._id, question: row.doc.question, response: row.doc.response, ordre: row.doc.ordre};
+          _.merge(data, data_object);
+        }
+      });
+      //console.log(data)
+      res.render('admin/conv', {data: data});
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+router.get('/get_conv_id', function(req, res, next) {
+  var merge = {};
+  console.log(req.query)
+  var id_user = req.query.id_user;
+  if(!mydb) {
+    res.json(merge);
+    return;
+  }
+  mydb.find({ selector: { user_id: id_user}}, function(err, result) {
+    if (!err) {
+      for (var i = 0; i < result.docs.length; i++) {
+        var data_object = {};
+        data_object[result.docs[i].user_id] = [{id_cloudant: result.docs[i]._id, question: result.docs[i].question, response: result.docs[i].response, ordre: result.docs[i].ordre}];
+        _.merge(merge, data_object);
+      }
+      res.json(merge);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+router.delete('/get_conv', function(req, res, next) {
+  var id = req.body.id_cloudant;
+  var query = { selector: { _id: id}};
+  mydb.find(query, function(err, data) {
+    if(!err) {
+      //console.log(data,data.docs, data.docs[0], data.docs[0]["_rev"]);
+      mydb.destroy(id, data.docs[0]["_rev"],function(err, body, header) {
+        if (!err) {
+          console.log("Deleted with success", id);
+        }
+        res.json(id);
+      });
+    }
+  });
+
 });
 
 module.exports = router;
