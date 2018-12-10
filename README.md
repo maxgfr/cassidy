@@ -48,3 +48,23 @@
     -d '{"modele":"ACTIVE"}' \
     "https://decision-composer.ibm.com/rest/public/v1/execution/5bfc13942846520012a113d5/execute/v14"
 ```
+## How does it look like ?
+
+
+### Chatbot part  :
+
+<div align="center">
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/front1.png"/>
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/front2.png"/>
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/front3.png"/>
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/front4.png"/>
+</div>
+
+### Backoffice part  :
+
+<div align="center">
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/back1.png"/>
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/back2.png"/>
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/back3.png"/>
+  <img src="https://github.com/maxgfr/cassidy/blob/master/.github/back4.png"/>
+</div>
