@@ -158,13 +158,11 @@ router.post('/find_color', function(req, res, next) {
         decisionGet(car.modele.toUpperCase(), (result) => {
           options_odm = JSON.parse(result);
           car["prix"] = parseInt(car["prix"]) + 650;
-          var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :';
-          for(var i = 0; i< options_odm.resultat.PRIX.length; i++) {
-            price_all_options += options_odm.resultat.PRIX[i];
-          }
+          var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :<br>';
           for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
-            reponseuh += '<br> - ' + options_odm.resultat.OPTIONS[i]
+            reponseuh += '<br><input type="checkbox" name="options[]" value="'+options_odm.resultat.PRIX[i]+'"> '+options_odm.resultat.OPTIONS[i];
           }
+          reponseuh += '<br><br><button id="validate_options" class="btn btn-md" style="background: #1976d2; border: none; color: white;">DONE</button>';
           saveDialog(user_id, input, reponseuh, context_array.length);
           context_array.push(response.context);
           num_msg++;
@@ -181,24 +179,20 @@ router.post('/find_color', function(req, res, next) {
 
 router.post('/find_options', function(req, res, next) {
   var input = req.body.input;
-  var val_uppercase = input.toUpperCase();
-  if(val_uppercase == 'YES' || val_uppercase == 'NO') {
-    var message = '';
-    isOptions = true;
-    if(val_uppercase == 'YES') {
-      car['prix'] = parseInt(car["prix"]) + price_all_options;
-      message = 'We updated the price with the options selected.';
-    } else if(val_uppercase == 'NO') {
-      message = 'It is ok, we will set 0 options.';
-    }
-    sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
-        var data = analyseResponse(response);
-        message += '<br>' + data.response;
-        res.send([message, 'display_data', car, '/find_delai']);
-    });
+  var price_all_options = req.body.price_options;
+  console.log(price_all_options)
+  isOptions = true;
+  car['prix'] = parseInt(car["prix"]) + parseInt(price_all_options);
+  if (parseInt(price_all_options) == 0) {
+    message = 'Right. You have selected 0 options.';
   } else {
-    res.send(['Can you tell me yes or no instead of saying complex sentences, I\'m so tiredddd today', '', {}, '/find_options']);
+    message = 'We updated the price with the options selected.';
   }
+  sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
+      var data = analyseResponse(response);
+      message += '<br>' + data.response;
+      res.send([message, 'display_data', car, '/find_delai']);
+  });
 });
 
 router.post('/find_delai', function(req, res, next) {

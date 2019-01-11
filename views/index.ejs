@@ -339,10 +339,10 @@ function insertMessage(msg,res) {
 	if (type == "find_priority") {
 		findPriority(res, message)
 	} else if (type == "display_data") {
-		displayData(data, message);
+		displayDataMessage(data, message);
 	} else if (type == "change_color") {
 		changeColor(data, message);
-	} else {
+	}  else {
 		displayMessage(message);
 	}
 }
@@ -404,7 +404,7 @@ function findPriority (res, message) {
 			success: function (resultat) {
 				console.log(resultat)
 				urlWatson = resultat[3];
-				displayData(resultat[2], resultat[0]);
+				displayDataMessage(resultat[2], resultat[0]);
 			},
 			error: function (data) {
 				console.log('Error:', data);
@@ -426,11 +426,61 @@ function displayMessage (message) {
 }
 
 function changeColor (data, message) {
+	displayData(data);
 	$("#image_id").attr("src", 'images/5008_'+data.color+'.png');
-	displayData(data,message);
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
+	});
+
+	$("#msg-box").addClass('invisible');
+
+	$('.message.loading').remove();
+
+	$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+		'</div>').appendTo($('.mCSB_container')).addClass('new');
+
+	$('.rating').barrating({
+		theme: 'fontawesome-stars'
+	});
+
+	$( "#validate_options").click(function() {
+		var checkboxes = document.getElementsByName('options[]');
+		var price_options = 0;
+		for (var i=0; i<checkboxes.length; i++) {
+		    if (checkboxes[i].checked) {
+		        price_options += parseInt(checkboxes[i].value);
+		    }
+		}
+		$("#msg-box").removeClass('invisible');
+		$("#validate_options").remove();
+		var data = {
+			price_options : price_options,
+			bv: bv,
+			energie: energie,
+			from: from,
+			to: to,
+		}
+		manageStar(data);
+		$.ajax({
+			type: "POST",
+			url: urlWatson,
+			data: data,
+			dataType: 'json',
+			success: function (resultat) {
+				console.log(resultat)
+				urlWatson = resultat[3];
+				displayDataMessage(resultat[2], resultat[0]);
+			},
+			error: function (data) {
+				console.log('Error:', data);
+			}
+		});
+	});
+	updateScrollbar();
+	i++;
 }
 
-function displayData (data, message) {
+function displayDataMessage (data, message) {
 		if(data.usage) {
 			if(data.usage != '') {
 				$("#usage").html(data.usage).css("font-weight", "bold");
@@ -449,6 +499,26 @@ function displayData (data, message) {
   	}
 		manageStar(data);
 		displayMessage(message);
+}
+
+function displayData (data) {
+		if(data.usage) {
+			if(data.usage != '') {
+				$("#usage").html(data.usage).css("font-weight", "bold");
+				for(i=0;i<10;i++) {
+					$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+				}
+			}
+		}
+		$( "#watson_finition" ).html(data.modele).css("font-weight", "bold");
+		$( "#watson_delai" ).html(data.delai + " days").css("font-weight", "bold");
+		$( "#watson_prix" ).html(data.prix + " euros").css("font-weight", "bold");
+		for(i=0;i<10;i++) {
+    	$("#watson_finition").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+			$("#watson_delai").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+			$("#watson_prix").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
+  	}
+		manageStar(data);
 }
 
 function manageStar(data){
