@@ -92,7 +92,7 @@
 						<div class="card">
 							<div class="card-header" style="font-size:25px">Budget</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 20px;" id="budget">Not specified</p>
+								<p class="card-text" style="font-size: 20px; color:red;" id="budget">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -100,7 +100,7 @@
 						<div class="card">
 							<div class="card-header" style="font-size:25px">Energy</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 20px;" id="energie">Not specified</p>
+								<p class="card-text" style="font-size: 20px; color:red;" id="energie">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -108,7 +108,7 @@
 						<div class="card">
 							<div class="card-header" style="font-size:25px">Gearbox</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 20px;" id="bv">Not specified</p>
+								<p class="card-text" style="font-size: 20px; color:red;" id="bv">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -116,7 +116,7 @@
 						<div class="card">
 							<div class="card-header" style="font-size:25px">Usage</div>
 							<div class="card-body">
-								<p class="card-text" style="font-size: 20px;" id="usage">Not specified</p>
+								<p class="card-text" style="font-size: 20px; color:red;" id="usage">Not specified</p>
 							</div>
 						</div>
 					</div>
@@ -128,7 +128,7 @@
 								<h5 class="card-text" style="font-size:25px">Look</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
 										<div class="br-widget">
-											<a id="look_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+											<a id="look_1" data-rating-value="1" data-rating-text="1" class=""></a>
 											<a id="look_2" data-rating-value="2" data-rating-text="2" class=""></a>
 											<a id="look_3" data-rating-value="3" data-rating-text="3" class=""></a>
 										</div>
@@ -142,7 +142,7 @@
 								<h5 class="card-text" style="font-size:25px">Comfort</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
 										<div class="br-widget">
-											<a id="confort_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+											<a id="confort_1" data-rating-value="1" data-rating-text="1" class=""></a>
 											<a id="confort_2" data-rating-value="2" data-rating-text="2" class=""></a>
 											<a id="confort_3" data-rating-value="3" data-rating-text="3" class=""></a>
 										</div>
@@ -156,7 +156,7 @@
 								<h5 class="card-text" style="font-size:25px">Multimedia</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
 									<div class="br-widget">
-										<a id="navigation_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+										<a id="navigation_1" data-rating-value="1" data-rating-text="1" class=""></a>
 										<a id="navigation_2" data-rating-value="2" data-rating-text="2" class=""></a>
 										<a id="navigation_3" data-rating-value="3" data-rating-text="3" class=""></a>
 									</div>
@@ -170,7 +170,7 @@
 								<h5 class="card-text" style="font-size:25px">Assistance</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
 									<div class="br-widget">
-										<a id="assistance_1" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a>
+										<a id="assistance_1" data-rating-value="1" data-rating-text="1" class=""></a>
 										<a id="assistance_2" data-rating-value="2" data-rating-text="2" class=""></a>
 										<a id="assistance_3" data-rating-value="3" data-rating-text="3" class=""></a>
 									</div>
@@ -261,9 +261,9 @@ $('#submit_popup').click(function() {
 	if(energie == 'Gasoline') {
 		energie = 'Essence'
 	}
-	$( "#budget" ).html(from+"€ - "+to+"€").css("font-weight", "bold");
-	$( "#energie" ).html(energie).css("font-weight", "bold");
-	$( "#bv" ).html(bv).css("font-weight", "bold");
+	$( "#budget" ).html(from+"€ - "+to+"€").css("font-weight", "bold").css("color", "black");
+	$( "#energie" ).html(energie).css("font-weight", "bold").css("color", "black");
+	$( "#bv" ).html(bv).css("font-weight", "bold").css("color", "black");
 	for(i=0;i<10;i++) {
 		$("#budget").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
 		$("#energie").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
@@ -365,7 +365,9 @@ function findPriority (res, message) {
 		}
 	}
 
-	$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
+	$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message + '</div>').appendTo($('.mCSB_container')).addClass('new');
+
+	$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + 'Please select the rating below :' +
 		'<br/></br/><p class="small">Look<select id="Look" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
 		'<p class="small">Comfort<select id="Comfort" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
 		'<p class="small">Multimedia<select id="Multimedia" class="rating small"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></p>'+
@@ -416,13 +418,18 @@ function findPriority (res, message) {
 }
 
 function displayMessage (message) {
-	setTimeout(function() {
-		$('.message.loading').remove();
-		$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + message +
-		'</div>').appendTo($('.mCSB_container')).addClass('new');
-		updateScrollbar();
-		i++;
+	setTimeout(() => {
+		var array = message.split('.');
+		for(var i=0; i<array.length; i++) {
+				if(array[i].length > 4) {
+						$('.message.loading').remove();
+						$('<div class="message new"><figure class="avatar"><img src="images/bot.png" /></figure>' + array[i] +
+						'</div>').appendTo($('.mCSB_container')).addClass('new');
+						updateScrollbar();
+				}
+		}
 	}, 100 + (Math.random() * 20) * 100);
+
 }
 
 function changeColor (data, message) {
@@ -483,7 +490,7 @@ function changeColor (data, message) {
 function displayDataMessage (data, message) {
 		if(data.usage) {
 			if(data.usage != '') {
-				$("#usage").html(data.usage).css("font-weight", "bold");
+				$("#usage").html(data.usage).css("font-weight", "bold").css("color", "black");
 				for(i=0;i<10;i++) {
 					$("#usage").fadeTo('slow', 0.5).fadeTo('slow', 1.0);
 				}

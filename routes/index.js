@@ -160,7 +160,7 @@ router.post('/find_color', function(req, res, next) {
           car["prix"] = parseInt(car["prix"]) + 650;
           var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :<br>';
           for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
-            reponseuh += '<br><input type="checkbox" name="options[]" value="'+options_odm.resultat.PRIX[i]+'"> '+options_odm.resultat.OPTIONS[i];
+            reponseuh += '<br><input type="checkbox" name="options[]" value="'+options_odm.resultat.PRIX[i]+'"> '+options_odm.resultat.OPTIONS[i]+ ' - ' + options_odm.resultat.PRIX[i] + '€';
           }
           reponseuh += '<br><br><button id="validate_options" class="btn btn-md" style="background: #1976d2; border: none; color: white;">DONE</button>';
           saveDialog(user_id, input, reponseuh, context_array.length);

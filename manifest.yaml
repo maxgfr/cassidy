@@ -1,4 +1,4 @@
 applications:
- - name: cassidy-prod
+ - name: cassidy-dev
    random-route: true
    memory: 256M
