@@ -238,6 +238,8 @@ router.post('/find_delai', function(req, res, next) {
               var weeks =  parseInt(days / 7)
               if(weeks == 0) {
                 weeks = 'right now';
+              } else {
+                weeks = weeks + ' weeks';
               }
               resp += '-> '+num+' choice<br>';
               resp += '&emsp;Model: <span style="color:#f3f716">'+myResult[i].modele+'</span><br>';
@@ -247,7 +249,7 @@ router.post('/find_delai', function(req, res, next) {
               resp += '&emsp;Gearbox: <span style="color:#f3f716">'+myResult[i].bv+'</span><br>';
               resp += '&emsp;Options: <span style="color:#f3f716">'+myResult[i].options+'</span><br>';
               resp += '&emsp;Price: <span style="color:#f3f716">'+myResult[i].prix+'</span><br>';
-              resp += '&emsp;Time Limit: <span style="color:#f3f716">'+weeks+' weeks</span><br>.';
+              resp += '&emsp;Time Limit: <span style="color:#f3f716">'+weeks+'</span><br>.';
               num++;
             }
             resp += 'Now, tell me the corresponding number for your choice';
@@ -280,7 +282,7 @@ router.post('/choose_car', function(req, res, next) {
       car.modele = car_choosen.modele;
       car.usage = car_choosen.usage;
       car.delai = car_choosen.delai;
-      car.price = parseInt(car_choosen.prix);
+      car.prix = parseInt(car_choosen.prix);
       car.color = color.toUpperCase();
       console.log(car);
       res.send(['We will order the car that you selected.', 'change_color', car, '/final']);
