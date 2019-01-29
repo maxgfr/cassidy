@@ -273,7 +273,7 @@ router.post('/choose_car', function(req, res, next) {
   if(!isNumber(result_number)) {
     res.send(['Tell me a good number please...', '', {}, '/choose_car']);
   } else {
-    if(result_number !=0) {
+    if(result_number >= 0) {
       console.log(car);
       var car_choosen = choose_car[result_number];
       var color = car_choosen.color;
