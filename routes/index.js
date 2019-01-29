@@ -203,14 +203,18 @@ router.post('/find_delai', function(req, res, next) {
       if(data.entities["sys-number"]) {
         isDelai = true;
         var watson_delay = 0;
+        var resp = '';
         if(data.entities["period"] == 'months') {
           watson_delay = data.entities["sys-number"] * 30;
         }
-        if(data.entities["period"] == 'weeks') {
+        else if(data.entities["period"] == 'weeks') {
           watson_delay = data.entities["sys-number"] * 7;
         }
-        if(data.entities["period"] == 'days') {
+        else if(data.entities["period"] == 'days') {
           watson_delay = data.entities["sys-number"];
+        } else {
+          watson_delay = data.entities["sys-number"] * 7;
+          resp += 'By default, I suppose that you mean' + data.entities["sys-number"] + ' weeks. Otherwise, you should precise the format (days, weeks or months) in your response.';
         }
         var additional = {
           from: req.body.from,
@@ -227,9 +231,10 @@ router.post('/find_delai', function(req, res, next) {
         delete selector["to"];
         cloudantFindClosestCarInventary(additional, selector, function(myResult) {
           if(myResult == null || myResult.length == 0) {
-            res.send(['We don\'t find a car in our WIP & Inventary which matches your criterias, so your potential car is not updated.', '', {}, '/final']);
+            resp += 'We don\'t find a car in our WIP & Inventary which matches your criterias, so your potential car is not updated.';
+            res.send([resp, '', {}, '/final']);
           } else {
-            var resp = data.response;
+            resp += data.response;
             choose_car = myResult;
             var num = 1;
             resp += '-> 0 to keep your initial choice<br>.';
