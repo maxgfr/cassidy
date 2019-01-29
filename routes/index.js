@@ -158,7 +158,7 @@ router.post('/find_color', function(req, res, next) {
         decisionGet(car.modele.toUpperCase(), (result) => {
           options_odm = JSON.parse(result);
           car["prix"] = parseInt(car["prix"]) + 650;
-          var reponseuh = 'Here is your new car. According to our stats, the users have choosen those options :<br>';
+          var reponseuh = 'Here is your new car. People who have selected this trim have also chosen these options :<br>';
           for(var i = 0; i< options_odm.resultat.OPTIONS.length; i++) {
             reponseuh += '<br><input type="checkbox" name="options[]" value="'+options_odm.resultat.PRIX[i]+'"> '+options_odm.resultat.OPTIONS[i]+ ' - ' + options_odm.resultat.PRIX[i] + '€';
           }
@@ -190,7 +190,7 @@ router.post('/find_options', function(req, res, next) {
   }
   sendConversationMessage(assistant_delai, session_delai, '', context_array[context_array.length - 1], function(response){
       var data = analyseResponse(response);
-      message += '<br>' + data.response;
+      message += data.response;
       res.send([message, 'display_data', car, '/find_delai']);
   });
 });
@@ -202,10 +202,20 @@ router.post('/find_delai', function(req, res, next) {
       var data = analyseResponse(response);
       if(data.entities["sys-number"]) {
         isDelai = true;
+        var watson_delay = 0;
+        if(data.entities["period"] == 'months') {
+          watson_delay = data.entities["sys-number"] * 30;
+        }
+        if(data.entities["period"] == 'weeks') {
+          watson_delay = data.entities["sys-number"] * 7;
+        }
+        if(data.entities["period"] == 'days') {
+          watson_delay = data.entities["sys-number"];
+        }
         var additional = {
           from: req.body.from,
           to: req.body.to,
-          delai: String(data.entities["sys-number"] * 30)
+          delai: String(watson_delay)
         }
         var selector = _.cloneDeep(req.body);
         selector["usage"] = text_usage;
@@ -222,14 +232,22 @@ router.post('/find_delai', function(req, res, next) {
             var resp = data.response;
             choose_car = myResult;
             var num = 1;
+            resp += '-> 0 to keep your initial choice<br>.';
             for (var i=0; i<myResult.length; i++) {
-              resp += '<br>-> '+num+' choice<br>';
-              resp += '&emsp;Model: '+myResult[i].modele+'<br>';
-              resp += '&emsp;Energy: '+myResult[i].energie+'<br>';
-              resp += '&emsp;Gearbox: '+myResult[i].bv+'<br>';
-              resp += '&emsp;Options: '+myResult[i].options+'<br>';
-              resp += '&emsp;Price: '+myResult[i].prix+'<br>';
-              resp += '&emsp;Time Limit: '+myResult[i].delai+' days<br>';
+              var days = parseInt(myResult[i].delai);
+              var weeks =  parseInt(days / 7)
+              if(weeks == 0) {
+                weeks = 'right now';
+              }
+              resp += '-> '+num+' choice<br>';
+              resp += '&emsp;Model: <span style="color:#f3f716">'+myResult[i].modele+'</span><br>';
+              resp += '&emsp;Color: <span style="color:#f3f716">'+myResult[i].color+'</span><br>';
+              resp += '&emsp;Usage: <span style="color:#f3f716">'+myResult[i].usage+'</span><br>';
+              resp += '&emsp;Energy: <span style="color:#f3f716">'+myResult[i].energie+'</span><br>';
+              resp += '&emsp;Gearbox: <span style="color:#f3f716">'+myResult[i].bv+'</span><br>';
+              resp += '&emsp;Options: <span style="color:#f3f716">'+myResult[i].options+'</span><br>';
+              resp += '&emsp;Price: <span style="color:#f3f716">'+myResult[i].prix+'</span><br>';
+              resp += '&emsp;Time Limit: <span style="color:#f3f716">'+weeks+' weeks</span><br>.';
               num++;
             }
             resp += 'Now, tell me the corresponding number for your choice';
@@ -253,7 +271,23 @@ router.post('/choose_car', function(req, res, next) {
   if(!isNumber(result_number)) {
     res.send(['Tell me a good number please...', '', {}, '/choose_car']);
   } else {
-    res.send(['We will order the car that you selected.', '', {}, '/final']);
+    if(result_number !=0) {
+      console.log(car);
+      var car_choosen = choose_car[result_number];
+      var color = car_choosen.color;
+      car.bv = car_choosen.bv;
+      car.energie = car_choosen.energie;
+      car.modele = car_choosen.modele;
+      car.usage = car_choosen.usage;
+      car.delai = car_choosen.delai;
+      car.price = parseInt(car_choosen.prix);
+      car.color = color.toUpperCase();
+      console.log(car);
+      res.send(['We will order the car that you selected.', 'change_color', car, '/final']);
+    } else {
+      res.send(['Right, you keep your initial choice.', '', {}, '/final']);
+    }
+
   }
 });
 
