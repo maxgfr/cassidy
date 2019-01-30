@@ -70,6 +70,27 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="lookModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 style="font-size:25px" class="modal-title">Look</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          	<span aria-hidden="true">&times;</span>
+        	</button>
+				</div>
+				<ul class="list">
+					<li style="font-size:15px">Electrically folding exterior mirrors with LED reception lights</li>
+					<li style="font-size:15px">Dual zone automatic air conditioning</li>
+					<li style="font-size:15px">Kids Pack</li>
+					<li style="font-size:15px">Central locking of doors with remote control</li>
+					<li style="font-size:15px">Rear side windows and rear window</li>
+					<li style="font-size:15px">Access and hands-free start</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 	<div class="left">
 		<div class="chat">
 			<div class="messages">
@@ -124,6 +145,7 @@
 				<div class="row" style="margin-top:10px;">
 					<div class="col-sm-3" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
+							<button id='infolook' style="background-color: #828282;" href="#" class="btn btn-sm btn-block float-right"><i class="fa fa-info-circle"></i></button>
 							<div class="card-body">
 								<h5 class="card-text" style="font-size:25px">Look</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
@@ -138,6 +160,7 @@
 					</div>
 					<div class="col-sm-3" style="padding-bottom:10px;">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
+							<button style="background-color: #828282;" href="#" class="btn btn-sm btn-block float-right"><i class="fa fa-info-circle"></i></button>
 							<div class="card-body">
 								<h5 class="card-text" style="font-size:25px">Comfort</h5>
 									<div class="br-wrapper br-theme-fontawesome-stars">
@@ -152,6 +175,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
+							<button style="background-color: #828282;" href="#" class="btn btn-sm btn-block float-right"><i class="fa fa-info-circle"></i></button>
 							<div class="card-body">
 								<h5 class="card-text" style="font-size:25px">Multimedia</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
@@ -166,6 +190,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="card text-white mb-3 text-center" style="background-color: #1976d2;">
+							<button style="background-color: #828282;" href="#" class="btn btn-sm btn-block float-right"><i class="fa fa-info-circle"></i></button>
 							<div class="card-body">
 								<h5 class="card-text" style="font-size:25px">Assistance</h5>
 								<div class="br-wrapper br-theme-fontawesome-stars">
@@ -252,6 +277,10 @@ $(document).ready(function() {
 	});
 	$('#myModal').modal('show');
 	$messages.mCustomScrollbar();
+});
+
+$('#infolook').click(function() {
+	$('#lookModal').modal('show');
 });
 
 $('#submit_popup').click(function() {

@@ -135,7 +135,7 @@ router.post('/find_closest_car', function(req, res, next) {
   delete selector["assistance"];
   cloudantFindClosestCar(additional, selector, function(myResult) {
     if(myResult == null) {
-      res.send(['We don\'t find a car which matches those criterias with this usage : '+text_usage+ '. Please tell me another usage :', '', {}, '/find_car']);
+      res.send(['We don\'t find a car which matches those criterias with this usage : '+text_usage+ '. Please review your criterias.', '', {}, '/final']);
     } else {
       isCar = true;
       car = myResult;
@@ -299,7 +299,7 @@ router.post('/choose_car', function(req, res, next) {
 });
 
 router.post('/final', function(req, res, next) {
-    res.send(['I have finished to help you. :)', '', {}, '/final']);
+    res.send(['I have finished to help you. :). If you want to retry, reload this page', '', {}, '/final']);
 });
 
 function analyseResponse (response) {
