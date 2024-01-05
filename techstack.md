@@ -1,7 +1,8 @@
 <!--
---- Readme.md Snippet without images Start ---
+&lt;--- Readme.md Snippet without images Start ---&gt;
 ## Tech Stack
 maxgfr/cassidy is built on the following main stack:
+
 - [Cloudant](https://cloudant.com) – NoSQL Database as a Service
 - [Mocha](http://mochajs.org/) – Javascript Testing Framework
 - [gulp](http://gulpjs.com/) – JS Build Tools / JS Task Runners
@@ -42,11 +43,13 @@ maxgfr/cassidy is built on the following main stack:
 - [Docker](https://www.docker.com/) – Virtual Machine Platforms & Containers
 
 Full tech stack [here](/techstack.md)
---- Readme.md Snippet without images End ---
 
---- Readme.md Snippet with images Start ---
+&lt;--- Readme.md Snippet without images End ---&gt;
+
+&lt;--- Readme.md Snippet with images Start ---&gt;
 ## Tech Stack
 maxgfr/cassidy is built on the following main stack:
+
 - <img width='25' height='25' src='https://img.stackshare.io/service/217/4c038300b0d6a0ad5640932319a994e8.png' alt='Cloudant'/> [Cloudant](https://cloudant.com) – NoSQL Database as a Service
 - <img width='25' height='25' src='https://img.stackshare.io/service/832/mocha.png' alt='Mocha'/> [Mocha](http://mochajs.org/) – Javascript Testing Framework
 - <img width='25' height='25' src='https://img.stackshare.io/service/844/iruTC031.png' alt='gulp'/> [gulp](http://gulpjs.com/) – JS Build Tools / JS Task Runners
@@ -87,14 +90,15 @@ maxgfr/cassidy is built on the following main stack:
 - <img width='25' height='25' src='https://img.stackshare.io/service/586/n4u37v9t_400x400.png' alt='Docker'/> [Docker](https://www.docker.com/) – Virtual Machine Platforms & Containers
 
 Full tech stack [here](/techstack.md)
---- Readme.md Snippet with images End ---
+
+&lt;--- Readme.md Snippet with images End ---&gt;
 -->
 <div align="center">
 
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [maxgfr/cassidy](https://github.com/maxgfr/cassidy)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|112<br/>Tools used|11/10/23 <br/>Report generated|
+|112<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -576,9 +580,9 @@ Full tech stack [here](/techstack.md)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
-|[sphinx_rtd_theme](https://pypi.org/sphinx_rtd_theme)|N/A|11/19/18|Maxime Golfier |MIT|N/A|
+|[sphinx_rtd_theme](https://pypi.org/project/sphinx_rtd_theme)|N/A|11/19/18|Maxime Golfier |MIT|N/A|
 
 <br/>
 <div align='center'>
 
-Generated via [Stack File](https://github.com/apps/stack-file)
+Generated via [Stack File](https://github.com/marketplace/stack-file)
