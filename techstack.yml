@@ -1,7 +1,8 @@
 repo_name: maxgfr/cassidy
 report_id: 1ecf1ac6bdd27d9e365fd8acb01762e7
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-10T09:19:01+00:00'
+timestamp: '2024-01-05T08:56:21+00:00'
 requested_by: maxgfr
 provider: github
 branch: master
@@ -15,6 +16,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/6727/css.png
+  detection_source_url: https://github.com/maxgfr/cassidy
   detection_source: Repo Metadata
 - name: CoffeeScript
   description: A little language that compiles into JavaScript
@@ -26,7 +28,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1178/slQydAMv.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/PACE/pace.coffee
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -39,6 +41,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/maxgfr/cassidy
   detection_source: Repo Metadata
 - name: Python
   description: A clear and powerful object-oriented programming language, comparable
@@ -49,6 +52,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/993/pUBY5pVj.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/docs/requirements.txt
   detection_source: public/bower_components/bootstrap-datepicker/docs/requirements.txt
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -61,6 +65,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/989/ruby.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/Gemfile
   detection_source: public/bower_components/bootstrap/Gemfile
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -74,6 +79,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/1014/IoPy1dce_400x400.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -88,8 +94,8 @@ tools:
   category: Languages & Frameworks
   sub_category: Front-End Frameworks
   image_url: https://img.stackshare.io/service/1101/C9QJ7V3X.png
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/bootstrap-timepicker/bower.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: Chart.js
@@ -101,8 +107,8 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/3866/_GD1-XrU_400x400.jpg
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/admin-lte/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: ExpressJS
@@ -116,7 +122,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Microframeworks (Backend)
   image_url: https://img.stackshare.io/service/1163/hashtag.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -130,7 +136,7 @@ tools:
   category: Languages & Frameworks
   sub_category: CSS Pre-processors / Extensions
   image_url: https://img.stackshare.io/service/1170/default_957cbc0168b4d37265e264469c888f776e57f42c.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -143,7 +149,8 @@ tools:
   category: Languages & Frameworks
   sub_category: CSS Pre-processors / Extensions
   image_url: https://img.stackshare.io/service/1171/jCR2zNJV.png
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-daterangepicker/package.json
+  detection_source: public/bower_components/bootstrap-daterangepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: Select2
@@ -156,7 +163,7 @@ tools:
   category: Libraries
   sub_category: Javascript UI Libraries
   image_url: https://img.stackshare.io/service/7488/select2.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -170,8 +177,8 @@ tools:
   category: Libraries
   sub_category: Javascript UI Libraries
   image_url: https://img.stackshare.io/service/1021/lxEKmMnB_400x400.jpg
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: jQuery UI
@@ -184,7 +191,7 @@ tools:
   category: Libraries
   sub_category: Javascript UI Libraries
   image_url: https://img.stackshare.io/service/1022/jqueryui_avatar_96.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -196,6 +203,7 @@ tools:
   category: Data Stores
   sub_category: NoSQL Database as a Service
   image_url: https://img.stackshare.io/service/217/4c038300b0d6a0ad5640932319a994e8.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-26 17:02:40.000000000 Z
@@ -208,7 +216,7 @@ tools:
   category: Application Hosting
   sub_category: Realtime Backend / API
   image_url: https://img.stackshare.io/service/1161/vI0ZZlhZ_400x400.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -222,7 +230,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Javascript Testing Framework
   image_url: https://img.stackshare.io/service/1725/chai.png
-  detection_source_url: public/bower_components/morris.js/bower.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/bower.json
   detection_source: public/bower_components/morris.js/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -235,6 +243,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Virtual Machine Platforms & Containers
   image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/maxgfr/cassidy
   detection_source: Repo Metadata
 - name: Dotenv
   description: Loads environment variables from .env for Nodejs projects
@@ -245,6 +254,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Server Configuration and Automation
   image_url: https://img.stackshare.io/service/8067/default_90dcb1286af7685c68df319c764b80704df1155b.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-28 08:39:56.000000000 Z
@@ -256,6 +266,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/maxgfr/cassidy
   detection_source: Repo Metadata
 - name: Grunt
   description: The JavaScript Task Runner
@@ -266,8 +277,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: JS Build Tools / JS Task Runners
   image_url: https://img.stackshare.io/service/845/falgg2jybmhgk16y62lr.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/morris.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: JSHint
@@ -278,7 +289,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Code Review
   image_url: https://img.stackshare.io/service/1945/mzh2bRes_400x400.png
-  detection_source: public/bower_components/chart.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/Flot/package.json
+  detection_source: public/bower_components/Flot/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: JUnit
@@ -290,6 +302,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Testing Frameworks
   image_url: https://img.stackshare.io/service/2020/874086.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/jquery-ui/package.json
   detection_source: public/bower_components/jquery-ui/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -304,7 +317,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Javascript Testing Framework
   image_url: https://img.stackshare.io/service/832/mocha.png
-  detection_source_url: public/bower_components/morris.js/bower.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/bower.json
   detection_source: public/bower_components/morris.js/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -316,6 +329,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Package Managers
   image_url: https://img.stackshare.io/service/2637/6I3oEOP4_400x400.jpg
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -329,7 +343,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Headless Browsers
   image_url: https://img.stackshare.io/service/1832/phantomjs.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -341,6 +355,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Hosted Package Repository
   image_url: https://img.stackshare.io/service/12572/-RIWgodF_400x400.jpg
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/docs/requirements.txt
   detection_source: public/bower_components/bootstrap-datepicker/docs/requirements.txt
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -353,7 +368,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/852/1781835.png
-  detection_source_url: public/bower_components/raphael/bower.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/raphael/bower.json
   detection_source: public/bower_components/raphael/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -365,6 +380,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Package Managers
   image_url: https://img.stackshare.io/service/12795/5jL6-BA5_400x400.jpeg
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/Gemfile
   detection_source: public/bower_components/bootstrap/Gemfile
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -376,6 +392,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Javascript Testing Framework
   image_url: https://img.stackshare.io/service/3509/logo.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/bower.json
   detection_source: public/bower_components/morris.js/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -388,7 +405,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Continuous Integration
   image_url: https://img.stackshare.io/service/460/Lu6cGu0z_400x400.png
-  detection_source: public/bower_components/select2/.travis.yml
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/Flot/.travis.yml
+  detection_source: public/bower_components/Flot/.travis.yml
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: Webpack
@@ -401,7 +419,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: JS Build Tools / JS Task Runners
   image_url: https://img.stackshare.io/service/1682/IMG_4636.PNG
-  detection_source_url: public/bower_components/raphael/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/raphael/yarn.lock
   detection_source: public/bower_components/raphael/webpack.config.js
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -413,7 +431,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/5848/44mC-kJ3.jpg
-  detection_source: yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
+  detection_source: public/bower_components/admin-lte/yarn.lock
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: gulp
@@ -425,6 +444,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: JS Build Tools / JS Task Runners
   image_url: https://img.stackshare.io/service/844/iruTC031.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -436,6 +456,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/select2/package.json
   detection_source: public/bower_components/select2/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -448,7 +469,7 @@ tools:
   category: Design
   sub_category: Fonts
   image_url: https://img.stackshare.io/service/3244/1_Mr1Fy00XjPGNf1Kkp_hWtw_2x.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -461,7 +482,8 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/5979/default_8b58ea1423b69bf123fae8f58e4887b9b4fdb1b4.png
-  detection_source: public/bower_components/admin-lte/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/bower.json
+  detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: Ionicons
@@ -474,8 +496,8 @@ tools:
   category: Languages & Frameworks
   sub_category: UI Components
   image_url: https://img.stackshare.io/service/5368/icon.png
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/admin-lte/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: Jekyll
@@ -488,7 +510,7 @@ tools:
   category: Application Utilities
   sub_category: Static Site Generators
   image_url: https://img.stackshare.io/service/1114/ad968c1615d956e800fa36494314f48c.jpeg
-  detection_source_url: public/bower_components/bootstrap/Gemfile.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/Gemfile.lock
   detection_source: public/bower_components/bootstrap/Gemfile
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -501,7 +523,7 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/2438/lodash.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-26 13:12:43.000000000 Z
@@ -516,8 +538,8 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/3643/Xrtdc94q_400x400.png
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/fullcalendar/bower.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: public/bower_components/admin-lte/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: Raphael
@@ -530,7 +552,7 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/3044/72f4ddedbb738d7d21702bb9b57d7754_400x400.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: public/bower_components/raphael/bower.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -543,6 +565,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/maxgfr/cassidy
   detection_source: Repo Metadata
 - name: Sphinx
   description: Open source full text search server, designed from the ground up with
@@ -553,6 +576,7 @@ tools:
   category: Application Utilities
   sub_category: Search Engines
   image_url: https://img.stackshare.io/service/1598/TtqoAo1V.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/docs/requirements.txt
   detection_source: public/bower_components/bootstrap-datepicker/docs/requirements.txt
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -566,7 +590,7 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/no-img-open-source.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-27 10:47:12.000000000 Z
@@ -580,7 +604,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15906/default_7c39a83d4acd952df89b1ebfdb94c8646324fbf1.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -594,7 +618,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16205/default_b4f5b6f31c5ab1ffee4bacf20842cd41a8f2658d.png
-  detection_source_url: public/bower_components/raphael/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/raphael/yarn.lock
   detection_source: public/bower_components/morris.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -615,7 +639,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17351/default_b8b4be8bd54f9619446b80b2bf448c0891101f2a.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -629,7 +653,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16791/default_661bbd7f9556b6c5c0b8be11cd13e1813fc5c977.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -643,7 +667,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16136/default_def3edb85d7fbd20200a5cd7d0a1679e31bc8b3d.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -657,7 +681,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15852/default_a2f722724df977d0f7752839e5d8845ab41f69d5.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -671,7 +695,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16045/default_a9b6ac3c2fe43713f9a8e43d4668d0352ad0d247.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -692,7 +716,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15818/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -713,7 +737,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16239/default_180418c6fa6cdb8f7a3500f84a8fedb884fcb3fa.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2019-01-28 11:00:26.000000000 Z
@@ -727,7 +751,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15875/default_7c39a83d4acd952df89b1ebfdb94c8646324fbf1.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -742,7 +766,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17148/default_9746cbb559e39df4afd8298f9a252dff8519e646.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -756,7 +780,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17430/default_f52a9ea80d1a46080182faf142d844b81ca11aa6.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
   detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -770,7 +794,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16021/default_924b66c04aa848a4028c1a5753a23dae0f835f86.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
   detection_source: public/bower_components/select2/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -784,8 +808,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15939/default_8b5680d4e916298d08363c291a0d6e34c07ceb15.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-coffee
@@ -798,7 +822,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16284/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
-  detection_source_url: public/bower_components/morris.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/package.json
   detection_source: public/bower_components/morris.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -812,8 +836,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16797/default_661bbd7f9556b6c5c0b8be11cd13e1813fc5c977.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
-  detection_source: public/bower_components/bootstrap/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-concat
@@ -826,8 +850,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16075/default_d4e765f8a43dcfd232c8b9ee9732058bc27c727a.png
-  detection_source_url: public/bower_components/admin-lte/yarn.lock
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-connect
@@ -840,8 +864,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16236/default_380ae3d73e22c7ca1f42b96479bcd0095dabc0d3.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-copy
@@ -854,7 +878,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16056/default_c7b204838197013798409fa2b4dafce450edc7fb.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -868,8 +892,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17982/default_4fd967542aef030b38a14a6ad69d2f385c52808d.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/bootstrap/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-cssmin
@@ -882,8 +906,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16324/default_b5c8f3c8e46d368f74a982d06d7f13291fe651ea.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/bootstrap/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-htmlmin
@@ -896,7 +920,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17474/default_e5adc22c59a44962e41dfaec51edeb42c083f2f4.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -910,8 +934,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15898/default_59a1b5716eefa3750c20936c3d53ff13a6390ee1.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-less
@@ -924,8 +948,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16581/default_536789d2630ed352dc721a1c915ab456b7660201.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/morris.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-nodeunit
@@ -938,7 +962,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16061/default_2640651a9f2aee697089f452de5088fc920bd543.png
-  detection_source_url: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/select2/package.json
   detection_source: public/bower_components/select2/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -952,8 +976,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16756/default_6e51a44775c61dcb2888547ad406a2f0cf2c344e.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-requirejs
@@ -966,7 +990,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17348/default_c1932d441699b98abea6098c6f8f65e2acb4f5ed.png
-  detection_source_url: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/select2/package.json
   detection_source: public/bower_components/select2/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -980,8 +1004,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15954/default_ac622bc364a601d766b9a6f6039f191492f54d65.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-contrib-watch
@@ -994,8 +1018,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15932/default_4dc9671df0093fd7061f6455afdf054e6cc9dacb.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-exec
@@ -1008,7 +1032,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16754/default_6dc099b12d47e378ae121fb53c336fe5d8f0ffc8.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1022,7 +1046,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17639/default_9126b5a628d81e3d41c9b1190587ab1aec9165c5.png
-  detection_source_url: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/select2/package.json
   detection_source: public/bower_components/select2/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1044,8 +1068,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16510/default_4e3259350c525d1d859fa80a938000081d7c9db8.png
-  detection_source_url: public/bower_components/admin-lte/yarn.lock
-  detection_source: public/bower_components/bootstrap/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-mocha
@@ -1058,7 +1082,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17369/default_c1932d441699b98abea6098c6f8f65e2acb4f5ed.png
-  detection_source_url: public/bower_components/morris.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/package.json
   detection_source: public/bower_components/morris.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1072,7 +1096,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17275/default_9b05b1c3b13fc328bf76b8d3fea01ff4688c0c1d.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1086,7 +1110,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16916/default_2e3ed47575edcaf407097e6171e3d4cb8681a6b3.png
-  detection_source_url: public/bower_components/admin-lte/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
   detection_source: public/bower_components/select2/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1100,8 +1124,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17562/default_3c6aa8b4297562bfc2a090966a5bc0fad1d0b678.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: grunt-shell
@@ -1114,7 +1138,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16396/default_22cf6cee54c697b5a223902962cc57a55ee80be9.png
-  detection_source_url: public/bower_components/morris.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/package.json
   detection_source: public/bower_components/morris.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1128,7 +1152,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18170/default_9988dbfaa49c66b3557cfcb4d0066fa661722714.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
   detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1142,7 +1166,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17667/default_894a45ad01fa93ac472db719cb1ef1b89f2924f0.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1155,6 +1179,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15973/default_732016a20524708efe7a4c77497fe9bfeea19ba6.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1168,7 +1193,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16446/default_5ffcf8d02a3454bd25d27d236025c6d078c3b672.png
-  detection_source_url: public/bower_components/chart.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1182,7 +1207,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16050/default_c7b204838197013798409fa2b4dafce450edc7fb.png
-  detection_source_url: public/bower_components/chart.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1196,7 +1221,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16150/default_73326c44fbfa7369fd17573edb113e5d849468bc.png
-  detection_source_url: public/bower_components/chart.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1210,7 +1235,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16655/default_783b9b6c17b863f264c1418b0eb831316f741afd.png
-  detection_source_url: public/bower_components/chart.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1223,6 +1248,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15910/default_e0a4fb1126d7400f419f0931cf1669947a5bc552.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/chart.js/package.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1236,7 +1262,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15912/default_b45165a5d30e541ab11711a34a78209b3e8ed7fd.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1250,7 +1276,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15911/default_4dc9671df0093fd7061f6455afdf054e6cc9dacb.png
-  detection_source_url: public/bower_components/admin-lte/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
   detection_source: public/bower_components/chart.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1264,7 +1290,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16163/default_73326c44fbfa7369fd17573edb113e5d849468bc.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -1278,8 +1304,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16062/default_924b66c04aa848a4028c1a5753a23dae0f835f86.png
-  detection_source_url: public/bower_components/admin-lte/yarn.lock
-  detection_source: public/bower_components/bootstrap/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
+  detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: markdown-it
@@ -1292,7 +1318,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16277/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1313,7 +1339,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16416/default_aa91da3cee4d961f0eea8ca5de77f399ec7ec794.png
-  detection_source_url: public/bower_components/morris.js/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/morris.js/package.json
   detection_source: public/bower_components/morris.js/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1327,8 +1353,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15847/default_4479dbac220be99e50e724b2df6cf415241d71fd.png
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/bootstrap-daterangepicker/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: public/bower_components/admin-lte/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
   vulnerabilities:
@@ -1360,7 +1386,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16097/default_c7b204838197013798409fa2b4dafce450edc7fb.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -1381,8 +1407,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15827/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
-  detection_source_url: public/bower_components/admin-lte/yarn.lock
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/yarn.lock
+  detection_source: public/bower_components/bootstrap-daterangepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
   vulnerabilities:
@@ -1408,7 +1434,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16304/default_1baba0e6ece19a38adfb211f686c83c781ff703a.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -1429,7 +1455,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16054/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
   detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1443,7 +1469,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16227/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -1464,8 +1490,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15823/default_5e5e8ac63beda29f31f1844df64d4b8247570a66.png
-  detection_source_url: package-lock.json
-  detection_source: public/bower_components/select2/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
+  detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-27 10:47:12.000000000 Z
   vulnerabilities:
@@ -1485,7 +1511,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15807/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/jquery-ui/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1499,7 +1525,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16361/default_92302d1bbf4c0f67b862869662b4f69002c94aad.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -1513,7 +1539,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15897/default_1d65e37e65b7f80761374f0202776043277d505d.png
-  detection_source_url: public/bower_components/admin-lte/package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/admin-lte/package-lock.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1540,7 +1566,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16496/default_55f3303d620c93eecbee69c43373d484f2be492f.png
-  detection_source_url: public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/grunt/npm-shrinkwrap.json
   detection_source: public/bower_components/bootstrap/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1554,7 +1580,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16899/default_e65289f03a07faa8d49ce16c483f18c4f8a98db9.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-09 12:43:14.000000000 Z
@@ -1575,8 +1601,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16275/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
-  detection_source_url: public/bower_components/bootstrap-datepicker/yarn.lock
-  detection_source: public/bower_components/bootstrap/package.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/yarn.lock
+  detection_source: public/bower_components/bootstrap-datepicker/package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
 - name: uuid
@@ -1589,19 +1615,20 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15916/default_e0a4fb1126d7400f419f0931cf1669947a5bc552.png
-  detection_source_url: package-lock.json
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/package-lock.json
   detection_source: package.json
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-26 11:23:33.000000000 Z
 - name: sphinx_rtd_theme
   description: Read the Docs theme for Sphinx
-  package_url: https://pypi.org/sphinx_rtd_theme
+  package_url: https://pypi.org/project/sphinx_rtd_theme
   license: MIT
   open_source: true
   hosted_saas: false
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20304/default_506725603cd9affb22ffa36e3939310b26cbf952.png
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap-datepicker/docs/requirements.txt
   detection_source: public/bower_components/bootstrap-datepicker/docs/requirements.txt
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
@@ -1615,7 +1642,7 @@ tools:
   category: Libraries
   sub_category: RubyGems Packages
   image_url: https://img.stackshare.io/package/19321/default_31ccb7684f50eae9f0c40cb9965cc32299f8935e.png
-  detection_source_url: public/bower_components/bootstrap/Gemfile.lock
+  detection_source_url: https://github.com/maxgfr/cassidy/blob/master/public/bower_components/bootstrap/Gemfile.lock
   detection_source: public/bower_components/bootstrap/Gemfile
   last_updated_by: Maxime Golfier
   last_updated_on: 2018-11-19 15:18:44.000000000 Z
